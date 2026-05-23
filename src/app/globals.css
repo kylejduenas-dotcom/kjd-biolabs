@@ -89,3 +89,22 @@ h1, h2, h3, h4, h5 {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.field-input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  color: #0a0e1a;
+  transition: all 0.15s;
+}
+.field-input::placeholder {
+  color: #94a3b8;
+}
+.field-input:focus {
+  outline: none;
+  border-color: #2dd4bf;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}

@@ -1,9 +1,38 @@
 "use client";
 
 import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "Product Inquiry",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    const supabase = createClient();
+    const { error } = await supabase.from("contact_submissions").insert({
+      name: form.name,
+      email: form.email,
+      subject: form.subject,
+      message: form.message,
+    });
+    if (error) {
+      setError("Something went wrong. Please try again.");
+      setLoading(false);
+      return;
+    }
+    setSubmitted(true);
+    setLoading(false);
+  };
 
   return (
     <div className="bg-white min-h-screen">
@@ -59,24 +88,44 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setSubmitted(true);
-                  }}
+                  onSubmit={handleSubmit}
                   className="bg-white rounded-3xl border border-slate-200/80 shadow-soft p-8"
                 >
+                  {error && (
+                    <div className="mb-5 rounded-xl bg-red-50 border border-red-200 px-3.5 py-3 text-red-700 text-sm">
+                      {error}
+                    </div>
+                  )}
                   <div className="grid sm:grid-cols-2 gap-5 mb-5">
                     <Field label="Name">
-                      <input type="text" required placeholder="Your name" className="form-input" />
+                      <input
+                        type="text"
+                        required
+                        placeholder="Your name"
+                        className="form-input"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      />
                     </Field>
                     <Field label="Email">
-                      <input type="email" required placeholder="you@laboratory.com" className="form-input" />
+                      <input
+                        type="email"
+                        required
+                        placeholder="you@laboratory.com"
+                        className="form-input"
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      />
                     </Field>
                   </div>
 
                   <div className="mb-5">
                     <Field label="Subject">
-                      <select className="form-input">
+                      <select
+                        className="form-input"
+                        value={form.subject}
+                        onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                      >
                         <option>Product Inquiry</option>
                         <option>Bulk Order</option>
                         <option>Technical Support</option>
@@ -88,15 +137,24 @@ export default function ContactPage() {
 
                   <div className="mb-6">
                     <Field label="Message">
-                      <textarea required rows={5} placeholder="How can we help?" className="form-input resize-none" />
+                      <textarea
+                        required
+                        rows={5}
+                        placeholder="How can we help?"
+                        className="form-input resize-none"
+                        value={form.message}
+                        onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      />
                     </Field>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-ink-950 text-white py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all"
+                    disabled={loading}
+                    className="w-full bg-ink-950 text-white py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2"
                   >
-                    Send Message
+                    {loading && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
+                    {loading ? "Sending…" : "Send Message"}
                   </button>
                 </form>
               )}
