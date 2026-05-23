@@ -44,7 +44,7 @@ export default function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[calc(100vh-4rem)] py-16">
+          <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-20 lg:min-h-[620px]">
             {/* Copy */}
             <div className="animate-fade-in">
               <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200/60 rounded-full px-4 py-1.5 mb-7">
@@ -54,8 +54,9 @@ export default function Home() {
                 </span>
               </div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold text-ink-950 leading-[0.95] mb-6">
-                Research Peptides You Can{" "}
+              <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-ink-950 leading-[1.02] mb-6 text-balance">
+                Research Peptides
+                <br className="hidden sm:block" /> You Can{" "}
                 <span className="text-teal-600">Verify.</span>
               </h1>
 
@@ -84,19 +85,24 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Floating vials */}
-            <div className="relative h-[420px] hidden lg:block">
-              <div className="absolute top-8 left-12 animate-float">
-                <Vial name="BPC-157" tint="mint" size="lg" />
-              </div>
-              <div className="absolute top-24 right-16 animate-float-slow">
-                <Vial name="GHK-Cu" tint="rose" size="md" />
-              </div>
-              <div className="absolute bottom-0 left-1/3 animate-float" style={{ animationDelay: "1s" }}>
-                <Vial name="TB-500" tint="sky" size="md" />
-              </div>
-              <div className="absolute bottom-12 right-8 animate-float-slow" style={{ animationDelay: "0.5s" }}>
-                <Vial name="NAD+" tint="violet" size="sm" />
+            {/* Vial composition */}
+            <div className="relative h-[460px] hidden lg:flex items-center justify-center">
+              <div className="absolute w-80 h-80 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.9), transparent 70%)" }} />
+              <div className="relative w-[440px] h-[330px]">
+                {/* ground shadow */}
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-1 w-72 h-9 rounded-[50%] bg-ink-950/10 blur-lg" />
+                {/* back-left */}
+                <div className="absolute left-3 top-12 -rotate-[14deg] animate-float-slow z-10">
+                  <Vial name="TB-500" tint="sky" size="md" />
+                </div>
+                {/* back-right */}
+                <div className="absolute right-2 top-8 rotate-[14deg] animate-float-slow z-10" style={{ animationDelay: "0.5s" }}>
+                  <Vial name="GHK-Cu" tint="rose" size="md" />
+                </div>
+                {/* front-center */}
+                <div className="absolute left-1/2 -translate-x-1/2 top-0 animate-float z-20">
+                  <Vial name="BPC-157" tint="mint" size="lg" />
+                </div>
               </div>
             </div>
           </div>

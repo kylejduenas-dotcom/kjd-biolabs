@@ -45,11 +45,20 @@ export default function Vial({
         </linearGradient>
       </defs>
 
-      {/* Cap */}
-      <rect x="40" y="6" width="40" height="10" rx="3" fill={`url(#cap-${uid})`} />
-      <rect x="42" y="14" width="36" height="20" rx="2" fill={`url(#cap-${uid})`} />
+      {/* Crimp cap */}
+      <rect x="41" y="16" width="38" height="20" rx="3" fill={`url(#cap-${uid})`} />
+      <g stroke="#94a3b8" strokeOpacity="0.45" strokeWidth="0.6">
+        <line x1="48" y1="19" x2="48" y2="33" />
+        <line x1="54" y1="19" x2="54" y2="33" />
+        <line x1="60" y1="19" x2="60" y2="33" />
+        <line x1="66" y1="19" x2="66" y2="33" />
+        <line x1="72" y1="19" x2="72" y2="33" />
+      </g>
+      {/* Flip-top button */}
+      <ellipse cx="60" cy="11" rx="13" ry="5" fill={`url(#cap-${uid})`} />
+      <ellipse cx="60" cy="10" rx="7.5" ry="2.8" fill="#e2e8f0" />
       {/* Neck */}
-      <rect x="46" y="32" width="28" height="10" fill="#ffffff" fillOpacity="0.7" />
+      <rect x="46" y="34" width="28" height="8" fill="#ffffff" fillOpacity="0.6" />
 
       {/* Body */}
       <rect

@@ -54,7 +54,7 @@ export default async function ProductPage({
             <span className="absolute top-5 left-5 text-[11px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full bg-white/70 backdrop-blur text-ink-900">
               {product.category}
             </span>
-            <div className="animate-float">
+            <div className="animate-float scale-110">
               <Vial name={product.name} tint={product.tint} size="lg" />
             </div>
           </div>
