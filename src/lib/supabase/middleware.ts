@@ -29,11 +29,12 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Protect the account area
-  if (!user && request.nextUrl.pathname.startsWith("/account")) {
+  // Protect the account + checkout areas
+  const path = request.nextUrl.pathname;
+  if (!user && (path.startsWith("/account") || path.startsWith("/checkout"))) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("redirect", request.nextUrl.pathname);
+    url.searchParams.set("redirect", path);
     return NextResponse.redirect(url);
   }
 

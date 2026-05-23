@@ -2,8 +2,9 @@
 
 import AgeGate from "@/components/AgeGate";
 import Link from "next/link";
-import { products, tintStyles } from "@/data/products";
+import { products } from "@/data/products";
 import Vial from "@/components/Vial";
+import ProductCard from "@/components/ProductCard";
 
 const featured = products.filter((p) =>
   ["bpc-157", "ghk-cu", "tb-500", "tesamorelin", "cjc-1295-ipamorelin", "nad-plus"].includes(p.slug)
@@ -183,13 +184,9 @@ export default function Home() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featured.map((product) => {
-              return (
-                <Link key={product.slug} href={`/products/${product.slug}`} className="group block">
-                  <ProductCardInline product={product} />
-                </Link>
-              );
-            })}
+            {featured.map((product) => (
+              <ProductCard key={product.slug} product={product} />
+            ))}
           </div>
         </div>
       </section>
@@ -223,33 +220,5 @@ export default function Home() {
         </div>
       </section>
     </AgeGate>
-  );
-}
-
-function ProductCardInline({ product }: { product: (typeof products)[number] }) {
-  const style = tintStyles[product.tint];
-  return (
-    <div className="h-full bg-white rounded-3xl border border-slate-200/80 overflow-hidden hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
-      <div className="h-52 flex items-center justify-center relative" style={{ background: style.bg }}>
-        <div className="group-hover:scale-105 group-hover:-translate-y-1 transition-transform duration-500">
-          <Vial name={product.name} tint={product.tint} size="md" />
-        </div>
-      </div>
-      <div className="p-6">
-        <h3 className="text-ink-950 font-display font-bold text-lg group-hover:text-teal-600 transition-colors">
-          {product.name}
-        </h3>
-        <p className="text-slate-500 text-sm mt-0.5 mb-3">{product.subtitle}</p>
-        <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-          <span className="text-xs text-slate-400 font-medium">{product.purity} Purity</span>
-          <span className="text-teal-600 text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-            View
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </span>
-        </div>
-      </div>
-    </div>
   );
 }

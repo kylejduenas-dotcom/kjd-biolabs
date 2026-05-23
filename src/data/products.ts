@@ -507,3 +507,43 @@ export const tintStyles: Record<
     cap: "#e2e8f0",
   },
 };
+
+export const productPrices: Record<string, number> = {
+  "bpc-157": 39.99,
+  "tb-500": 39.99,
+  "ghk-cu": 29.99,
+  "snap-8": 29.99,
+  "glp-3-rt": 69.99,
+  "mots-c": 39.99,
+  "5-amino-1mq": 49.99,
+  cagrilintide: 69.99,
+  "aod-9604": 49.99,
+  tesamorelin: 69.99,
+  "cjc-1295-ipamorelin": 59.99,
+  ipamorelin: 49.99,
+  kpv: 39.99,
+  "nad-plus": 69.99,
+  glutathione: 59.99,
+  "thymosin-alpha-1": 39.99,
+  epithalon: 29.99,
+  "pt-141": 29.99,
+  "melanotan-ii": 29.99,
+  "melanotan-i": 29.99,
+  "igf-1-lr3": 69.99,
+  selank: 29.99,
+  semax: 29.99,
+  dsip: 29.99,
+  "bpc-157-tb-500-wolverine": 109.99,
+  glow: 114.99,
+  klow: 129.99,
+  "bacteriostatic-water": 16.99,
+};
+
+export function priceFor(slug: string): number {
+  return productPrices[slug] ?? 0;
+}
+
+export function formatPrice(value: number): string {
+  return `$${value.toFixed(2)}`;
+}
+

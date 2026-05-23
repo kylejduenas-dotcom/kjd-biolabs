@@ -1,7 +1,8 @@
-import { products, tintStyles } from "@/data/products";
+import { products, tintStyles, priceFor, formatPrice } from "@/data/products";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Vial from "@/components/Vial";
+import AddToCartButton from "@/components/AddToCartButton";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -64,13 +65,27 @@ export default async function ProductPage({
             <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-ink-950 mb-2">
               {product.name}
             </h1>
-            <p className="text-teal-600 font-semibold text-lg mb-6">
+            <p className="text-teal-600 font-semibold text-lg mb-4">
               {product.subtitle}
             </p>
 
-            <p className="text-slate-500 leading-relaxed mb-8">
+            <p className="text-3xl font-display font-extrabold text-ink-950 mb-6">
+              {formatPrice(priceFor(product.slug))}
+            </p>
+
+            <p className="text-slate-500 leading-relaxed mb-6">
               {product.description}
             </p>
+
+            <div className="mb-8">
+              <AddToCartButton
+                slug={product.slug}
+                name={product.name}
+                subtitle={product.subtitle}
+                price={priceFor(product.slug)}
+                tint={product.tint}
+              />
+            </div>
 
             <div className="bg-soft-cream rounded-3xl border border-slate-200/70 p-6 mb-6">
               <h3 className="text-ink-950 font-display font-bold text-sm uppercase tracking-wider mb-4">

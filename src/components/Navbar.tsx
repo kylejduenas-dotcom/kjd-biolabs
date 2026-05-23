@@ -4,11 +4,13 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
+import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const { count, setOpen: setCartOpen } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -64,6 +66,20 @@ export default function Navbar() {
             ) : (
               <NavLink href="/login">Sign in</NavLink>
             )}
+            <button
+              onClick={() => setCartOpen(true)}
+              aria-label="Open cart"
+              className="relative ml-1 p-2.5 rounded-full text-slate-600 hover:text-ink-950 hover:bg-slate-100/70 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {count > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-teal-500 text-white text-[10px] font-bold flex items-center justify-center">
+                  {count}
+                </span>
+              )}
+            </button>
             <Link
               href="/products"
               className="ml-1 inline-flex items-center gap-2 bg-ink-950 hover:bg-teal-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:shadow-lg hover:shadow-ink-950/20"
@@ -100,6 +116,12 @@ export default function Navbar() {
             <MobileLink href={user ? "/account" : "/login"} onClick={() => setMobileOpen(false)}>
               {user ? "Account" : "Sign in"}
             </MobileLink>
+            <button
+              onClick={() => { setMobileOpen(false); setCartOpen(true); }}
+              className="w-full text-left block px-3 py-2.5 text-slate-700 hover:text-teal-600 text-sm font-medium rounded-lg hover:bg-slate-50"
+            >
+              Cart{count > 0 ? ` (${count})` : ""}
+            </button>
             <Link href="/products" onClick={() => setMobileOpen(false)} className="block bg-ink-950 text-white px-5 py-2.5 rounded-full text-sm font-semibold text-center mt-2">
               Browse Catalog
             </Link>
