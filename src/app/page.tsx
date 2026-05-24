@@ -259,11 +259,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">The Catalog</span>
+              <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">The Catalog</span>
               <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-2">
                 Featured Compounds
               </h2>
-              <p className="text-slate-500 text-lg">
+              <p className="text-slate-600 text-lg">
                 Research-grade, lab-tested, and ready to ship — every vial with a Certificate of Analysis.
               </p>
             </div>
@@ -302,11 +302,11 @@ export default function Home() {
       <section className="py-20 sm:py-28 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">The Science</span>
+            <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">The Science</span>
             <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-5">
               Sequence-defined peptides, built for the bench
             </h2>
-            <p className="text-slate-500 text-lg leading-relaxed mb-6">
+            <p className="text-slate-600 text-lg leading-relaxed mb-6">
               Peptides are short chains of amino acids — the precise building blocks behind
               countless biological pathways. We supply them research-grade and
               sequence-verified, so every experiment starts from a known, reproducible standard.
@@ -339,11 +339,11 @@ export default function Home() {
       <section className="py-20 sm:py-28 bg-soft-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14">
-            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">Quality</span>
+            <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">Quality</span>
             <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
               Quality you can verify, not just trust
             </h2>
-            <p className="text-slate-500 text-lg">
+            <p className="text-slate-600 text-lg">
               Every batch clears a five-point protocol — and we hand you the proof, from the
               Certificate of Analysis down to the chromatogram.
             </p>
@@ -391,7 +391,7 @@ export default function Home() {
                 <h3 className="text-ink-950 font-display font-bold text-lg mb-2">
                   {p.title}
                 </h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{p.desc}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
@@ -407,31 +407,35 @@ export default function Home() {
       <section className="py-20 sm:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14">
-            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">Our Process</span>
+            <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">Our Process</span>
             <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
               From synthesis to your bench
             </h2>
-            <p className="text-slate-500 text-lg">
+            <p className="text-slate-600 text-lg">
               Every vial moves through a controlled five-stage pipeline before it reaches you —
               synthesized, purified, analyzed, independently certified, and cold-packed.
             </p>
           </div>
 
-          <div className="relative">
-            <div className="hidden lg:block absolute top-7 left-[10%] right-[10%] h-0.5 bg-logo-gradient opacity-40" />
-            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-5 relative">
-              {processSteps.map((p, i) => (
-                <div key={p.title} className="relative text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-logo-gradient text-white flex items-center justify-center mb-4 mx-auto shadow-soft relative z-10">
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d={p.icon} />
-                    </svg>
+          <div className="relative rounded-[2rem] bg-soft-blue bg-dots border border-slate-200/60 shadow-soft-lg p-8 sm:p-12 lg:p-14 overflow-hidden">
+            <div className="glow-blob -top-16 -left-10 w-72 h-72" style={{ background: "rgba(43,196,230,0.20)" }} />
+            <div className="glow-blob -bottom-20 -right-10 w-72 h-72" style={{ background: "rgba(18,135,210,0.16)" }} />
+            <div className="relative">
+              <div className="hidden lg:block absolute top-7 left-[10%] right-[10%] h-0.5 bg-logo-gradient opacity-50" />
+              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-5 relative">
+                {processSteps.map((p, i) => (
+                  <div key={p.title} className="relative text-center">
+                    <div className="w-14 h-14 rounded-2xl bg-logo-gradient text-white flex items-center justify-center mb-4 mx-auto shadow-soft relative z-10 ring-4 ring-white/70">
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d={p.icon} />
+                      </svg>
+                    </div>
+                    <span className="text-teal-600 text-xs font-bold uppercase tracking-wider">Step {i + 1}</span>
+                    <h3 className="text-ink-950 font-display font-bold text-lg mt-1 mb-1.5">{p.title}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed">{p.desc}</p>
                   </div>
-                  <span className="text-teal-600 text-xs font-bold uppercase tracking-wider">Step {i + 1}</span>
-                  <h3 className="text-ink-950 font-display font-bold text-lg mt-1 mb-1.5">{p.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{p.desc}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -441,11 +445,11 @@ export default function Home() {
       <section className="py-20 sm:py-28 bg-soft-cream">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">The difference</span>
+            <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">The difference</span>
             <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
               Why researchers choose KJD
             </h2>
-            <p className="text-slate-500 text-lg">How we stack up against a typical research-chemical supplier.</p>
+            <p className="text-slate-600 text-lg">How we stack up against a typical research-chemical supplier.</p>
           </div>
           <div className="rounded-3xl border border-slate-200/80 overflow-hidden shadow-soft-lg bg-white">
             <div className="grid grid-cols-3 bg-white border-b border-slate-200/70">
@@ -477,27 +481,28 @@ export default function Home() {
       </section>
 
       {/* ===== Research applications ===== */}
-      <section className="py-20 sm:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-20 sm:py-28 bg-white overflow-hidden">
+        <div className="glow-blob top-10 right-0 w-80 h-80" style={{ background: "rgba(43,196,230,0.12)" }} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-2xl mb-14">
-            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">Applications</span>
+            <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">Applications</span>
             <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
               Studied across the life sciences
             </h2>
-            <p className="text-slate-500 text-lg">
+            <p className="text-slate-600 text-lg">
               Researchers use our compounds across a broad range of in-vitro and
               pre-clinical investigation — for laboratory research use only.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {applications.map((a) => (
-              <div key={a.title} className="flex items-start gap-4 p-6 rounded-2xl bg-soft-cream hover:bg-white border border-transparent hover:border-slate-200/70 hover:shadow-soft transition-all">
+              <div key={a.title} className="flex items-start gap-4 p-6 rounded-2xl bg-soft-cream border border-slate-200/60 hover:border-teal-300/60 hover:shadow-soft hover:-translate-y-0.5 transition-all">
                 <div className="w-11 h-11 rounded-xl bg-logo-gradient text-white flex items-center justify-center shrink-0">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d={a.icon} /></svg>
                 </div>
                 <div>
                   <h3 className="text-ink-950 font-display font-bold text-base mb-1">{a.title}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{a.desc}</p>
+                  <p className="text-slate-600 text-sm leading-relaxed">{a.desc}</p>
                 </div>
               </div>
             ))}
