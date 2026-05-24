@@ -12,6 +12,7 @@ const FREE_SHIPPING_THRESHOLD = 150;
 const HANDLING_MIN_DAYS = 1; // business days to dispatch (ships by)
 const HANDLING_MAX_DAYS = 2;
 const NMI_ENABLED = !!process.env.NEXT_PUBLIC_NMI_TOKENIZATION_KEY;
+const CRYPTO_ENABLED = !!process.env.NEXT_PUBLIC_CRYPTO_CHECKOUT;
 
 const SHIPPING = [
   { id: "standard", label: "Standard", eta: "3–5 business days", cost: 4.99, transitMin: 3, transitMax: 5 },
@@ -105,18 +106,20 @@ export default function CheckoutForm({
     setLoading(false);
   };
 
-  const placeOrder = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const guardCheckout = (): boolean => {
     if (items.length === 0) {
       setError("Your cart is empty.");
-      return;
+      return false;
     }
     if (!confirmed) {
       setError("Please confirm both statements in the 'Review & confirm' section before placing your order.");
-      return;
+      return false;
     }
-    setLoading(true);
-    setError(null);
+    return true;
+  };
+
+  // Creates the pending order + items. Returns the new order id, or null on failure (error already set).
+  const createPendingOrder = async (): Promise<string | null> => {
     const est = estimateFor(SHIPPING[ship], new Date());
     const supabase = createClient();
     const { data: order, error: orderErr } = await supabase
@@ -144,8 +147,7 @@ export default function CheckoutForm({
 
     if (orderErr || !order) {
       setError("Could not place your order. Please try again.");
-      setLoading(false);
-      return;
+      return null;
     }
 
     const payload = items.map((i) => ({
@@ -158,18 +160,59 @@ export default function CheckoutForm({
     const { error: itemsErr } = await supabase.from("order_items").insert(payload);
     if (itemsErr) {
       setError("Your order was created but items could not be saved. Please contact support.");
+      return null;
+    }
+    return order.id;
+  };
+
+  const placeOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!guardCheckout()) return;
+    setLoading(true);
+    setError(null);
+    const orderId = await createPendingOrder();
+    if (!orderId) {
       setLoading(false);
       return;
     }
 
     if (NMI_ENABLED) {
       // Card fields are mounted below; tokenize + charge. Result handled in callbacks.
-      nmiRef.current?.startPayment(order.id);
+      nmiRef.current?.startPayment(orderId);
       return;
     }
 
     clear();
-    router.push(`/checkout/success?order=${order.id}`);
+    router.push(`/checkout/success?order=${orderId}`);
+  };
+
+  const payWithCrypto = async () => {
+    if (!guardCheckout()) return;
+    setLoading(true);
+    setError(null);
+    const orderId = await createPendingOrder();
+    if (!orderId) {
+      setLoading(false);
+      return;
+    }
+    try {
+      const res = await fetch("/api/checkout/crypto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok && data.url) {
+        clear();
+        window.location.href = data.url; // Coinbase hosted checkout
+        return;
+      }
+      setError(data.error || "Could not start crypto checkout. Please try again.");
+      setLoading(false);
+    } catch {
+      setError("Could not reach the crypto payment provider. Please try again.");
+      setLoading(false);
+    }
   };
 
   if (hydrated && items.length === 0) {
@@ -383,6 +426,24 @@ export default function CheckoutForm({
             {loading && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
             {loading ? "Placing order…" : "Place Order"}
           </button>
+          {CRYPTO_ENABLED && (
+            <>
+              <div className="flex items-center gap-3 my-3">
+                <span className="h-px flex-1 bg-slate-200" />
+                <span className="text-slate-400 text-xs">or</span>
+                <span className="h-px flex-1 bg-slate-200" />
+              </div>
+              <button
+                type="button"
+                onClick={payWithCrypto}
+                disabled={loading || !confirmed}
+                className="w-full border border-slate-300 text-ink-950 py-3.5 rounded-full font-semibold hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+              >
+                <svg className="w-4 h-4 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 7v1m0 8v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                Pay with crypto
+              </button>
+            </>
+          )}
           <p className="text-slate-400 text-xs text-center mt-4 leading-relaxed">
             {NMI_ENABLED
               ? "Your payment is processed securely. Research use only."
