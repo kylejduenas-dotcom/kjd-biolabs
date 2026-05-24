@@ -26,7 +26,7 @@ const dims: Dim[] = [
     key: "Purity",
     method: "HPLC / Mass Spec",
     result: "≥99% — single dominant peak",
-    metric: "99.4%",
+    metric: "99.7%",
     desc: "We confirm each compound is free of impurities, fragments, and synthesis byproducts. One clean peak, not a crowd.",
     proof: "peak",
   },
