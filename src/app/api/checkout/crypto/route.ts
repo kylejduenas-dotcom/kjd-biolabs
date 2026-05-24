@@ -1,54 +1,24 @@
 import { NextResponse } from "next/server";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
-import crypto from "node:crypto";
+import { buildCoinbaseJwt } from "@/lib/coinbase";
 
 export const runtime = "nodejs";
 
 const COINBASE_HOST = "business.coinbase.com";
 const COINBASE_PATH = "/api/v1/checkouts";
 
-function b64url(input: Buffer | string): string {
-  return Buffer.from(input).toString("base64url");
-}
-
-// Build a Coinbase CDP-style Ed25519 JWT for a Business API call.
-// Mirrors KJD Capital's edge function (docs.cdp.coinbase.com authentication).
-function buildCoinbaseJwt(apiKeyId: string, apiSecretBase64: string, method: string, host: string, path: string): string {
-  const keyBytes = Buffer.from(apiSecretBase64, "base64");
-  if (keyBytes.length !== 64) {
-    throw new Error(`Coinbase secret key has unexpected length: ${keyBytes.length} bytes (expected 64 for Ed25519)`);
-  }
-  const seed = keyBytes.subarray(0, 32);
-  const publicBytes = keyBytes.subarray(32, 64);
-
-  const privateKey = crypto.createPrivateKey({
-    key: {
-      kty: "OKP",
-      crv: "Ed25519",
-      d: seed.toString("base64url"),
-      x: publicBytes.toString("base64url"),
-    },
-    format: "jwk",
-  });
-
-  const now = Math.floor(Date.now() / 1000);
-  const header = { alg: "EdDSA", typ: "JWT", kid: apiKeyId, nonce: crypto.randomBytes(16).toString("hex") };
-  const payload = { iss: "cdp", sub: apiKeyId, nbf: now, exp: now + 120, uri: `${method} ${host}${path}` };
-  const signingInput = `${b64url(JSON.stringify(header))}.${b64url(JSON.stringify(payload))}`;
-  const signature = crypto.sign(null, Buffer.from(signingInput), privateKey);
-  return `${signingInput}.${b64url(signature)}`;
-}
-
 // Creates a Coinbase hosted crypto checkout for the authenticated user's pending order.
-// Amount is derived server-side from the stored order. Env-gated: dormant until keys exist.
+// Needs ONLY the Coinbase keys to work — the order amount is read under the user's own
+// session (RLS), so no service-role key is required for checkout. The service role is
+// used opportunistically to record the checkout id for the auto-confirm webhook (a
+// later add); if it isn't set, crypto still works, the order just stays pending until
+// payment is reconciled. Env-gated: dormant until the Coinbase keys exist.
 export async function POST(req: Request) {
   const apiKeyId = process.env.COINBASE_API_KEY_ID;
   const apiSecret = process.env.COINBASE_PRIVATE_KEY;
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  if (!apiKeyId || !apiSecret || !supabaseUrl || !serviceKey) {
+  if (!apiKeyId || !apiSecret) {
     return NextResponse.json({ ok: false, error: "Crypto payments are not configured yet." }, { status: 503 });
   }
 
@@ -63,6 +33,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Missing order." }, { status: 400 });
   }
 
+  // Read the order under the user's session — RLS guarantees they can only read their own.
   const supabase = await createServerClient();
   const {
     data: { user },
@@ -71,18 +42,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Please sign in to pay." }, { status: 401 });
   }
 
-  const admin = createAdminClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
-  const { data: order, error: orderErr } = await admin
+  const { data: order, error: orderErr } = await supabase
     .from("orders")
-    .select("id, order_number, subtotal, shipping_cost, status, user_id")
+    .select("id, order_number, subtotal, shipping_cost, status")
     .eq("id", orderId)
     .single();
 
   if (orderErr || !order) {
     return NextResponse.json({ ok: false, error: "Order not found." }, { status: 404 });
-  }
-  if (order.user_id !== user.id) {
-    return NextResponse.json({ ok: false, error: "Not authorized for this order." }, { status: 403 });
   }
   if (order.status === "paid") {
     return NextResponse.json({ ok: false, error: "This order is already paid." }, { status: 409 });
@@ -94,7 +61,7 @@ export async function POST(req: Request) {
 
   let jwt: string;
   try {
-    jwt = buildCoinbaseJwt(apiKeyId, apiSecret, "POST", COINBASE_HOST, COINBASE_PATH);
+    jwt = buildCoinbaseJwt(apiKeyId, apiSecret, "POST", COINBASE_PATH);
   } catch {
     return NextResponse.json({ ok: false, error: "Crypto payment configuration error." }, { status: 500 });
   }
@@ -128,9 +95,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Crypto checkout unavailable. Please try again." }, { status: 502 });
   }
 
-  // Record the Coinbase checkout reference (payment stays pending until confirmed).
-  if (checkoutId) {
-    await admin.from("orders").update({ payment_ref: `coinbase:${checkoutId}` }).eq("id", order.id);
+  // Optionally record the checkout id for the auto-confirm webhook (needs the service role).
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (checkoutId && supabaseUrl && serviceKey) {
+    try {
+      const admin = createAdminClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
+      await admin.from("orders").update({ payment_ref: `coinbase:${checkoutId}` }).eq("id", order.id);
+    } catch {
+      // best-effort; not required for the customer to pay
+    }
   }
 
   return NextResponse.json({ ok: true, url });
