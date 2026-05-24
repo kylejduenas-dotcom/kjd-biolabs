@@ -115,3 +115,26 @@ h1, h2, h3, h4, h5 {
   border-color: #5a93d8;
   box-shadow: 0 0 0 3px rgba(47, 116, 199, 0.15);
 }
+
+/* NMI Collect.js inline hosted-field containers (Collect.js injects an iframe) */
+.nmi-field {
+  width: 100%;
+  height: 2.75rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0 0.85rem;
+  display: flex;
+  align-items: center;
+}
+.nmi-field iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.nmi-field.CollectJSValid {
+  border-color: #5a93d8;
+}
+.nmi-field.CollectJSInvalid {
+  border-color: #ef4444;
+}

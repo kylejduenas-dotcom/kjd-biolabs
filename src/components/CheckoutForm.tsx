@@ -1,15 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { createClient } from "@/lib/supabase/client";
 import { formatPrice, tintStyles } from "@/data/products";
+import NmiCardFields, { type NmiHandle } from "@/components/NmiCardFields";
 
 const FREE_SHIPPING_THRESHOLD = 150;
 const HANDLING_MIN_DAYS = 1; // business days to dispatch (ships by)
 const HANDLING_MAX_DAYS = 2;
+const NMI_ENABLED = !!process.env.NEXT_PUBLIC_NMI_TOKENIZATION_KEY;
 
 const SHIPPING = [
   { id: "standard", label: "Standard", eta: "3–5 business days", cost: 4.99, transitMin: 3, transitMax: 5 },
@@ -84,6 +86,7 @@ export default function CheckoutForm({
   const [today, setToday] = useState<Date | null>(null);
   useEffect(() => setToday(new Date()), []);
   const estimates = today ? SHIPPING.map((m) => estimateFor(m, today)) : null;
+  const nmiRef = useRef<NmiHandle>(null);
 
   const qualifiesFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
   // Standard ships free once the order clears the threshold; faster methods stay paid upsells.
@@ -92,6 +95,15 @@ export default function CheckoutForm({
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [k]: e.target.value });
+
+  const handleApproved = (orderId: string) => {
+    clear();
+    router.push(`/checkout/success?order=${orderId}`);
+  };
+  const handlePaymentError = (msg: string) => {
+    setError(msg || "Payment could not be completed. Please try again.");
+    setLoading(false);
+  };
 
   const placeOrder = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,6 +159,12 @@ export default function CheckoutForm({
     if (itemsErr) {
       setError("Your order was created but items could not be saved. Please contact support.");
       setLoading(false);
+      return;
+    }
+
+    if (NMI_ENABLED) {
+      // Card fields are mounted below; tokenize + charge. Result handled in callbacks.
+      nmiRef.current?.startPayment(order.id);
       return;
     }
 
@@ -294,6 +312,10 @@ export default function CheckoutForm({
             <Link href="/disclaimer" className="text-teal-600 hover:underline">research-use disclaimer &amp; terms</Link>.
           </p>
         </div>
+
+        {NMI_ENABLED && (
+          <NmiCardFields ref={nmiRef} onApproved={handleApproved} onError={handlePaymentError} />
+        )}
       </div>
 
       {/* Summary */}
@@ -362,7 +384,9 @@ export default function CheckoutForm({
             {loading ? "Placing order…" : "Place Order"}
           </button>
           <p className="text-slate-400 text-xs text-center mt-4 leading-relaxed">
-            We&apos;ll confirm your order and send secure payment instructions by email. Research use only.
+            {NMI_ENABLED
+              ? "Your payment is processed securely. Research use only."
+              : "We'll confirm your order and send secure payment instructions by email. Research use only."}
           </p>
         </div>
       </div>
