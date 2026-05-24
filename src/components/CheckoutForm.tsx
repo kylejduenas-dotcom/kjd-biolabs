@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
@@ -8,12 +8,53 @@ import { createClient } from "@/lib/supabase/client";
 import { formatPrice, tintStyles } from "@/data/products";
 
 const FREE_SHIPPING_THRESHOLD = 150;
+const HANDLING_MIN_DAYS = 1; // business days to dispatch (ships by)
+const HANDLING_MAX_DAYS = 2;
 
 const SHIPPING = [
-  { id: "standard", label: "Standard", eta: "3–5 business days", cost: 4.99 },
-  { id: "express", label: "Express", eta: "1–2 business days", cost: 19.99 },
-  { id: "overnight", label: "Overnight", eta: "Next business day", cost: 39.99 },
+  { id: "standard", label: "Standard", eta: "3–5 business days", cost: 4.99, transitMin: 3, transitMax: 5 },
+  { id: "express", label: "Express", eta: "1–2 business days", cost: 19.99, transitMin: 1, transitMax: 2 },
+  { id: "overnight", label: "Overnight", eta: "Next business day", cost: 39.99, transitMin: 1, transitMax: 1 },
 ];
+
+// US shipping holidays (carriers pause) — observed dates, 2026–2027.
+const SHIPPING_HOLIDAYS = new Set([
+  "2026-01-01", "2026-05-25", "2026-07-03", "2026-09-07", "2026-11-26", "2026-12-25",
+  "2027-01-01", "2027-05-31", "2027-07-05", "2027-09-06", "2027-11-25", "2027-12-24",
+]);
+
+function ymd(d: Date) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+// Advance a date by N business days (skips weekends + shipping holidays).
+function addBusinessDays(start: Date, days: number) {
+  const d = new Date(start);
+  let added = 0;
+  while (added < days) {
+    d.setDate(d.getDate() + 1);
+    const dow = d.getDay();
+    if (dow !== 0 && dow !== 6 && !SHIPPING_HOLIDAYS.has(ymd(d))) added++;
+  }
+  return d;
+}
+
+function fmtDate(d: Date) {
+  return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+
+function fmtRange(a: Date, b: Date) {
+  return a.toDateString() === b.toDateString() ? fmtDate(a) : `${fmtDate(a)} – ${fmtDate(b)}`;
+}
+
+// Ships-by window (handling) + method transit → delivery window.
+function estimateFor(method: (typeof SHIPPING)[number], today: Date) {
+  const shipFrom = addBusinessDays(today, HANDLING_MIN_DAYS);
+  const shipTo = addBusinessDays(today, HANDLING_MAX_DAYS);
+  const deliverFrom = addBusinessDays(shipFrom, method.transitMin);
+  const deliverTo = addBusinessDays(shipTo, method.transitMax);
+  return { shipsBy: fmtRange(shipFrom, shipTo), delivery: fmtRange(deliverFrom, deliverTo) };
+}
 
 export default function CheckoutForm({
   userId,
@@ -40,6 +81,9 @@ export default function CheckoutForm({
   const [error, setError] = useState<string | null>(null);
   const [agree, setAgree] = useState({ research: false, powder: false });
   const confirmed = agree.research && agree.powder;
+  const [today, setToday] = useState<Date | null>(null);
+  useEffect(() => setToday(new Date()), []);
+  const estimates = today ? SHIPPING.map((m) => estimateFor(m, today)) : null;
 
   const qualifiesFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
   // Standard ships free once the order clears the threshold; faster methods stay paid upsells.
@@ -192,6 +236,7 @@ export default function CheckoutForm({
                   <span>
                     <span className="block text-ink-950 font-semibold text-sm">{s.label}</span>
                     <span className="block text-slate-400 text-xs">{s.eta}</span>
+                    {estimates && <span className="block text-teal-700 text-xs mt-0.5">Arrives {estimates[i].delivery}</span>}
                   </span>
                 </span>
                 <span className="text-sm font-semibold">
@@ -286,6 +331,23 @@ export default function CheckoutForm({
               <span className="text-ink-950 font-display font-bold text-lg">{formatPrice(total)}</span>
             </div>
           </div>
+          {estimates && (
+            <div className="rounded-2xl border border-slate-200/70 bg-white p-4 mb-5">
+              <div className="flex items-start gap-2.5">
+                <svg className="w-4 h-4 text-teal-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                <div className="flex-1 text-xs leading-relaxed">
+                  <div className="flex justify-between gap-3">
+                    <span className="text-slate-500">Ships by</span>
+                    <span className="text-ink-950 font-medium text-right">{estimates[ship].shipsBy}</span>
+                  </div>
+                  <div className="flex justify-between gap-3 mt-1">
+                    <span className="text-slate-500">Estimated delivery</span>
+                    <span className="text-ink-950 font-semibold text-right">{estimates[ship].delivery}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {!confirmed && (
             <p className="text-slate-500 text-xs text-center mb-3 leading-relaxed">
               Confirm the statements in <span className="font-medium text-ink-950">Review &amp; confirm</span> to place your order.
