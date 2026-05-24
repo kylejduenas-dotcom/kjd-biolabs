@@ -21,6 +21,15 @@ export const metadata: Metadata = {
   title: "KJD BioLabs | Research-Grade Peptides | 99%+ Purity",
   description:
     "Premium research-grade peptides for qualified researchers and laboratories. Every batch third-party tested with Certificate of Analysis. 99%+ identity purity guaranteed.",
+  openGraph: {
+    title: "KJD BioLabs | Research-Grade Peptides",
+    description:
+      "Research-grade peptides, independently verified. 99%+ identity purity, third-party tested, Certificate of Analysis on every batch.",
+    url: "https://kjd-biolabs.vercel.app",
+    siteName: "KJD BioLabs",
+    images: [{ url: "/kjd-logo-stacked.png", width: 320, height: 320, alt: "KJD BioLabs" }],
+    type: "website",
+  },
 };
 
 export default function RootLayout({

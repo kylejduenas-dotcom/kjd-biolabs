@@ -61,6 +61,7 @@ export default function Footer() {
           <FooterCol title="Support" links={[
             { label: "Contact Us", href: "/contact" },
             { label: "FAQ", href: "/faq" },
+            { label: "Affiliate Program", href: "/affiliate" },
             { label: "Quality Assurance", href: "/about" },
           ]} />
           <FooterCol title="Legal" links={[

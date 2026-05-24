@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -40,18 +41,22 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-ink-950 flex items-center justify-center group-hover:bg-teal-600 transition-colors">
-              <span className="text-white font-display font-bold text-base">K</span>
-            </div>
-            <span className="text-ink-950 font-display font-bold text-xl tracking-tight">
-              KJD <span className="text-teal-600">BioLabs</span>
-            </span>
+          <Link href="/" className="flex items-center group" aria-label="KJD BioLabs home">
+            <Image
+              src="/kjd-logo-horizontal.png"
+              alt="KJD BioLabs"
+              width={150}
+              height={49}
+              priority
+              className="h-9 w-auto"
+              style={{ width: "auto", height: "2.25rem" }}
+            />
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
             <NavLink href="/products">Products</NavLink>
             <NavLink href="/about">Quality</NavLink>
+            <NavLink href="/affiliate">Affiliate</NavLink>
             <NavLink href="/contact">Contact</NavLink>
             {user ? (
               <Link
@@ -112,6 +117,7 @@ export default function Navbar() {
           <div className="px-4 py-4 space-y-1">
             <MobileLink href="/products" onClick={() => setMobileOpen(false)}>Products</MobileLink>
             <MobileLink href="/about" onClick={() => setMobileOpen(false)}>Quality</MobileLink>
+            <MobileLink href="/affiliate" onClick={() => setMobileOpen(false)}>Affiliate</MobileLink>
             <MobileLink href="/contact" onClick={() => setMobileOpen(false)}>Contact</MobileLink>
             <MobileLink href={user ? "/account" : "/login"} onClick={() => setMobileOpen(false)}>
               {user ? "Account" : "Sign in"}

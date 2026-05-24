@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 
 export default function AgeGate({ children }: { children: React.ReactNode }) {
@@ -31,18 +32,21 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-soft-cream flex items-center justify-center px-4 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(167,243,208,0.4), transparent 70%)" }} />
-        <div className="absolute -bottom-20 -right-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(196,181,253,0.35), transparent 70%)" }} />
+        <div className="absolute -top-20 -left-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(143,184,230,0.45), transparent 70%)" }} />
+        <div className="absolute -bottom-20 -right-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(90,147,216,0.32), transparent 70%)" }} />
       </div>
 
       <div className="relative max-w-md w-full animate-fade-in">
         <div className="text-center mb-7">
-          <div className="w-14 h-14 rounded-2xl bg-ink-950 flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-display font-bold text-2xl">K</span>
-          </div>
-          <h1 className="text-ink-950 text-2xl font-display font-bold tracking-tight">
-            KJD <span className="text-teal-600">BioLabs</span>
-          </h1>
+          <Image
+            src="/kjd-logo-stacked.png"
+            alt="KJD BioLabs"
+            width={120}
+            height={120}
+            priority
+            className="mx-auto"
+            style={{ width: "7rem", height: "auto" }}
+          />
         </div>
 
         <div className="bg-white rounded-3xl border border-slate-200/80 shadow-soft-lg p-8">

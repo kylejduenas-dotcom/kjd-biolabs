@@ -4,10 +4,17 @@
   --color-ink-950: #0a0e1a;
   --color-ink-900: #11162a;
   --color-ink-800: #1c2438;
-  --color-teal-400: #2dd4bf;
-  --color-teal-500: #14b8a6;
-  --color-teal-600: #0d9488;
-  --color-teal-700: #0f766e;
+  /* Brand accent — muted blue ramp matching the KJD BioLabs logo
+     (deep navy -> ocean blue). Kept deliberately un-bright.
+     Named "teal-*" so existing utility classes pick it up site-wide. */
+  --color-teal-50: #eff5fc;
+  --color-teal-100: #dce9f8;
+  --color-teal-200: #bdd6f0;
+  --color-teal-300: #8fb8e6;
+  --color-teal-400: #5a93d8;
+  --color-teal-500: #2f74c7;
+  --color-teal-600: #2360a8;
+  --color-teal-700: #1c4f8c;
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }
@@ -30,7 +37,7 @@ h1, h2, h3, h4, h5 {
 }
 
 ::selection {
-  background: #14b8a6;
+  background: #2f74c7;
   color: white;
 }
 
@@ -105,6 +112,6 @@ h1, h2, h3, h4, h5 {
 }
 .field-input:focus {
   outline: none;
-  border-color: #2dd4bf;
-  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+  border-color: #5a93d8;
+  box-shadow: 0 0 0 3px rgba(47, 116, 199, 0.15);
 }

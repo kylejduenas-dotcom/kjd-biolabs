@@ -41,7 +41,7 @@ export default function Home() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-white">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-1/2 h-full" style={{ background: "linear-gradient(135deg, #f5f3ff 0%, #ecfdf5 50%, #eff6ff 100%)" }} />
+          <div className="absolute top-0 right-0 w-1/2 h-full" style={{ background: "linear-gradient(135deg, #eef4fb 0%, #e3eefb 50%, #f3f8ff 100%)" }} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -192,11 +192,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Affiliate */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-[2rem] border border-slate-200/80 bg-soft-cream p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+              <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider">
+                Affiliate Program
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-ink-950 mt-2 mb-2">
+                Refer researchers. Earn commission.
+              </h2>
+              <p className="text-slate-500 max-w-lg">
+                Share KJD BioLabs with your audience and get paid on every
+                qualifying order you send our way.
+              </p>
+            </div>
+            <Link
+              href="/affiliate"
+              className="shrink-0 inline-flex items-center gap-2 bg-ink-950 text-white px-7 py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all"
+            >
+              Become a Partner
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 sm:py-28 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-[2rem] bg-ink-950 px-8 py-16 sm:px-16 text-center">
-            <div className="absolute inset-0 pointer-events-none opacity-60" style={{ background: "radial-gradient(circle at 30% 20%, rgba(45,212,191,0.18), transparent 50%), radial-gradient(circle at 80% 80%, rgba(167,139,250,0.15), transparent 50%)" }} />
+            <div className="absolute inset-0 pointer-events-none opacity-60" style={{ background: "radial-gradient(circle at 30% 20%, rgba(47,116,199,0.22), transparent 50%), radial-gradient(circle at 80% 80%, rgba(90,147,216,0.16), transparent 50%)" }} />
             <div className="relative">
               <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-4">
                 Ready to Start Your Research?
