@@ -105,6 +105,7 @@ export default function CheckoutForm({
     }
     setLoading(true);
     setError(null);
+    const est = estimateFor(SHIPPING[ship], new Date());
     const supabase = createClient();
     const { data: order, error: orderErr } = await supabase
       .from("orders")
@@ -122,6 +123,9 @@ export default function CheckoutForm({
         shipping_zip: form.zip,
         shipping_country: form.country,
         notes: form.notes,
+        terms_accepted_at: new Date().toISOString(),
+        ships_by: est.shipsBy,
+        delivery_estimate: est.delivery,
       })
       .select("id")
       .single();

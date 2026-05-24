@@ -9,12 +9,12 @@ export default async function CheckoutSuccessPage({
 }) {
   const { order: orderId } = await searchParams;
 
-  let order: { id: string; order_number: string | null; subtotal: number; shipping_cost: number | null; shipping_method: string | null; created_at: string } | null = null;
+  let order: { id: string; order_number: string | null; subtotal: number; shipping_cost: number | null; shipping_method: string | null; created_at: string; ships_by: string | null; delivery_estimate: string | null } | null = null;
   if (orderId) {
     const supabase = await createClient();
     const { data } = await supabase
       .from("orders")
-      .select("id, order_number, subtotal, shipping_cost, shipping_method, created_at")
+      .select("id, order_number, subtotal, shipping_cost, shipping_method, created_at, ships_by, delivery_estimate")
       .eq("id", orderId)
       .single();
     order = data;
@@ -48,8 +48,20 @@ export default async function CheckoutSuccessPage({
               <div className="flex justify-between py-1.5">
                 <span className="text-slate-500 text-sm">Shipping</span>
                 <span className="text-ink-950 text-sm font-medium">
-                  {order.shipping_method} · {formatPrice(Number(order.shipping_cost ?? 0))}
+                  {order.shipping_method} · {Number(order.shipping_cost ?? 0) === 0 ? "Free" : formatPrice(Number(order.shipping_cost))}
                 </span>
+              </div>
+            )}
+            {order.ships_by && (
+              <div className="flex justify-between py-1.5">
+                <span className="text-slate-500 text-sm">Ships by</span>
+                <span className="text-ink-950 text-sm font-medium">{order.ships_by}</span>
+              </div>
+            )}
+            {order.delivery_estimate && (
+              <div className="flex justify-between py-1.5">
+                <span className="text-slate-500 text-sm">Estimated delivery</span>
+                <span className="text-ink-950 text-sm font-semibold">{order.delivery_estimate}</span>
               </div>
             )}
             <div className="flex justify-between py-1.5">
