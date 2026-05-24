@@ -4,17 +4,17 @@
   --color-ink-950: #0a0e1a;
   --color-ink-900: #11162a;
   --color-ink-800: #1c2438;
-  /* Brand accent — KJD BioLabs OCEAN-AZURE ramp, sampled straight from the logo
-     (deep navy -> ocean azure -> aqua/cyan). A distinct, ownable blue — not the
-     generic royal blue. Named "teal-*" so existing utilities pick it up site-wide. */
-  --color-teal-50: #edf7fe;
-  --color-teal-100: #d3ecfc;
-  --color-teal-200: #aadcf7;
-  --color-teal-300: #70c4ef;
-  --color-teal-400: #33a3e1;
-  --color-teal-500: #1287d2;
-  --color-teal-600: #0f6cae;
-  --color-teal-700: #11537f;
+  /* Brand accent — KJD BioLabs BOLD OCEAN-CYAN ramp from the logo's bright aqua.
+     Deliberately cyan-forward (NOT royal blue) so it's unmistakably distinct from
+     AminoClub. Named "teal-*" so existing utilities pick it up site-wide. */
+  --color-teal-50: #e3faff;
+  --color-teal-100: #b6f1fd;
+  --color-teal-200: #7ce2f8;
+  --color-teal-300: #36cdee;
+  --color-teal-400: #0bb4e2;
+  --color-teal-500: #0499cc;
+  --color-teal-600: #0a7ba6;
+  --color-teal-700: #0d5f80;
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }
@@ -37,7 +37,7 @@ h1, h2, h3, h4, h5 {
 }
 
 ::selection {
-  background: #1287d2;
+  background: #0499cc;
   color: white;
 }
 
@@ -112,8 +112,8 @@ h1, h2, h3, h4, h5 {
 }
 .field-input:focus {
   outline: none;
-  border-color: #33a3e1;
-  box-shadow: 0 0 0 3px rgba(18, 135, 210, 0.18);
+  border-color: #0bb4e2;
+  box-shadow: 0 0 0 3px rgba(4, 153, 204, 0.2);
 }
 
 /* NMI Collect.js inline hosted-field containers (Collect.js injects an iframe) */
@@ -133,7 +133,7 @@ h1, h2, h3, h4, h5 {
   border: 0;
 }
 .nmi-field.CollectJSValid {
-  border-color: #33a3e1;
+  border-color: #0bb4e2;
 }
 .nmi-field.CollectJSInvalid {
   border-color: #ef4444;

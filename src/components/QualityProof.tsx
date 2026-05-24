@@ -61,8 +61,8 @@ function ProofChart({ type }: { type: ProofType }) {
     <svg viewBox="0 0 460 240" className="w-full h-auto" role="img" aria-label="Analysis proof">
       <defs>
         <linearGradient id="qp-area" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#1287d2" stopOpacity="0.45" />
-          <stop offset="100%" stopColor="#1287d2" stopOpacity="0.02" />
+          <stop offset="0%" stopColor="#0499cc" stopOpacity="0.45" />
+          <stop offset="100%" stopColor="#0499cc" stopOpacity="0.02" />
         </linearGradient>
       </defs>
       {[60, 100, 140, 180].map((y) => (
@@ -80,19 +80,19 @@ function ProofChart({ type }: { type: ProofType }) {
           <path
             d="M30 198 L120 196 L150 194 L168 70 L186 194 L210 196 L300 195 L330 192 L360 196 L440 197"
             fill="none"
-            stroke="#1287d2"
+            stroke="#0499cc"
             strokeWidth="2.5"
             strokeLinejoin="round"
           />
-          <circle cx="168" cy="70" r="3.5" fill="#0f6cae" />
+          <circle cx="168" cy="70" r="3.5" fill="#0a7ba6" />
         </>
       )}
       {type === "trend" && (
         <>
           <path d="M30 120 L130 118 L230 122 L330 119 L440 121 L440 200 L30 200 Z" fill="url(#qp-area)" />
-          <path d="M30 120 L130 118 L230 122 L330 119 L440 121" fill="none" stroke="#1287d2" strokeWidth="2.5" />
+          <path d="M30 120 L130 118 L230 122 L330 119 L440 121" fill="none" stroke="#0499cc" strokeWidth="2.5" />
           {[30, 130, 230, 330, 440].map((x, i) => (
-            <circle key={i} cx={x} cy={[120, 118, 122, 119, 121][i]} r="3.5" fill="#0f6cae" />
+            <circle key={i} cx={x} cy={[120, 118, 122, 119, 121][i]} r="3.5" fill="#0a7ba6" />
           ))}
         </>
       )}
@@ -101,7 +101,7 @@ function ProofChart({ type }: { type: ProofType }) {
           <line x1="30" y1="90" x2="440" y2="90" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="5 5" />
           <text x="436" y="84" textAnchor="end" fontSize="11" fill="#94a3b8">limit</text>
           <path d="M30 186 L120 184 L210 187 L300 185 L390 186 L440 185 L440 200 L30 200 Z" fill="url(#qp-area)" />
-          <path d="M30 186 L120 184 L210 187 L300 185 L390 186 L440 185" fill="none" stroke="#1287d2" strokeWidth="2.5" />
+          <path d="M30 186 L120 184 L210 187 L300 185 L390 186 L440 185" fill="none" stroke="#0499cc" strokeWidth="2.5" />
         </>
       )}
     </svg>
