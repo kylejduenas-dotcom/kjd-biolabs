@@ -6,6 +6,7 @@ import { products } from "@/data/products";
 import Vial from "@/components/Vial";
 import ProductCard from "@/components/ProductCard";
 import QualityProof from "@/components/QualityProof";
+import WaterCaustics from "@/components/WaterCaustics";
 
 const featured = products.filter((p) =>
   ["bpc-157", "ghk-cu", "tb-500", "tesamorelin", "cjc-1295-ipamorelin", "nad-plus"].includes(p.slug)
@@ -61,6 +62,7 @@ export default function Home() {
     <AgeGate>
       {/* Hero */}
       <section className="relative -mt-16 pt-16 overflow-hidden bg-water-soft">
+        <WaterCaustics id="hero" tint="blue" opacity={0.4} />
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-10 right-0 w-[640px] h-[640px] rounded-full blur-3xl animate-ripple" style={{ background: "radial-gradient(circle, rgba(56,189,238,0.22), transparent 70%)" }} />
         </div>
@@ -115,9 +117,10 @@ export default function Home() {
       </section>
 
       {/* Stats — the "water blue" band, bracketed by waves */}
-      <section className="relative text-white" style={{ background: "linear-gradient(180deg, #0c7fb8 0%, #0a6a9c 100%)" }}>
+      <section className="relative text-white overflow-hidden" style={{ background: "linear-gradient(180deg, #0c7fb8 0%, #0a6a9c 100%)" }}>
         <Wave color="#0c7fb8" position="top" />
         <Wave color="#ffffff" position="bottom" />
+        <WaterCaustics id="stats" tint="light" opacity={0.28} animate={false} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((s) => (
@@ -151,6 +154,7 @@ export default function Home() {
 
       {/* Interactive quality proof */}
       <section className="relative py-20 sm:py-28 bg-aqua-band overflow-hidden">
+        <WaterCaustics id="quality" tint="blue" opacity={0.16} animate={false} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-12">
             <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">See the proof</span>
@@ -212,6 +216,7 @@ export default function Home() {
       {/* CTA — water band */}
       <section className="relative text-white overflow-hidden" style={{ background: "linear-gradient(180deg, #0c7fb8 0%, #0a6a9c 100%)" }}>
         <Wave color="#0c7fb8" position="top" />
+        <WaterCaustics id="cta" tint="light" opacity={0.28} animate={false} />
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
           <h2 className="text-3xl sm:text-5xl font-display font-bold mb-4">
             Ready to Start Your Research?
