@@ -30,9 +30,10 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
   if (verified) return <>{children}</>;
 
   return (
-    <div className="min-h-screen -mt-16 pt-16 bg-water-soft flex items-center justify-center px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-soft-cream flex items-center justify-center px-4 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -bottom-24 -left-24 w-[30rem] h-[30rem] rounded-full blur-3xl animate-ripple" style={{ background: "radial-gradient(circle, rgba(56,189,238,0.22), transparent 70%)" }} />
+        <div className="absolute -top-20 -left-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(143,184,230,0.45), transparent 70%)" }} />
+        <div className="absolute -bottom-20 -right-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(90,147,216,0.32), transparent 70%)" }} />
       </div>
 
       <div className="relative max-w-md w-full animate-fade-in">
@@ -40,11 +41,11 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
           <Image
             src="/kjd-logo-stacked.png"
             alt="KJD BioLabs"
-            width={130}
-            height={130}
+            width={120}
+            height={120}
             priority
             className="mx-auto"
-            style={{ width: "7.5rem", height: "auto" }}
+            style={{ width: "7rem", height: "auto" }}
           />
         </div>
 
@@ -59,10 +60,16 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
           </p>
 
           <div className="space-y-3 mb-6">
-            <Check checked={checks.age} onChange={(v) => setChecks({ ...checks, age: v })}>
+            <Check
+              checked={checks.age}
+              onChange={(v) => setChecks({ ...checks, age: v })}
+            >
               I am at least <strong className="text-ink-950">21 years of age</strong>.
             </Check>
-            <Check checked={checks.researcher} onChange={(v) => setChecks({ ...checks, researcher: v })}>
+            <Check
+              checked={checks.researcher}
+              onChange={(v) => setChecks({ ...checks, researcher: v })}
+            >
               I confirm I am a{" "}
               <strong className="text-ink-950">qualified researcher</strong>{" "}
               purchasing for{" "}
@@ -74,7 +81,7 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
           <button
             onClick={handleEnter}
             disabled={!checks.age || !checks.researcher}
-            className="w-full py-3.5 rounded-full font-semibold text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-ink-950 text-white hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/25 inline-flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-full font-semibold text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-ink-950 text-white hover:bg-teal-600 hover:shadow-lg hover:shadow-ink-950/20 inline-flex items-center justify-center gap-2"
           >
             Enter KJD BioLabs
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -106,7 +113,9 @@ function Check({
   return (
     <label
       className={`flex items-start gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${
-        checked ? "border-teal-400/60 bg-teal-50" : "border-slate-200 hover:border-slate-300"
+        checked
+          ? "border-teal-500/50 bg-teal-50/50"
+          : "border-slate-200 hover:border-slate-300"
       }`}
     >
       <input
