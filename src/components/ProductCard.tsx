@@ -24,6 +24,10 @@ export default function ProductCard({ product }: { product: Product }) {
           <div className="group-hover:scale-105 group-hover:-translate-y-1 transition-transform duration-500">
             <Vial name={product.name} tint={product.tint} size="lg" />
           </div>
+          <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/80 backdrop-blur text-ink-900 shadow-soft">
+            <svg className="w-3 h-3 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+            99%+ · HPLC
+          </span>
         </div>
       </Link>
 

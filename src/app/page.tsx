@@ -127,7 +127,7 @@ function PeptideDiagram() {
 export default function Home() {
   return (
     <AgeGate>
-      {/* Hero */}
+      {/* ===== Hero ===== */}
       <section className="relative overflow-hidden bg-white">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-20 lg:min-h-[620px]">
@@ -199,12 +199,38 @@ export default function Home() {
                   <Vial name="BPC-157" tint="mint" size="lg" />
                 </div>
               </div>
+
+              {/* Floating verification badge — top right */}
+              <div className="absolute top-6 -right-2 z-30">
+                <div className="flex items-center gap-3 bg-white/95 backdrop-blur-md border border-slate-200/70 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
+                  <span className="w-9 h-9 rounded-xl bg-logo-gradient text-white flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                  </span>
+                  <div className="leading-tight">
+                    <p className="text-ink-950 font-display font-bold text-sm">99%+ Purity</p>
+                    <p className="text-slate-500 text-[11px] font-medium">Verified by HPLC</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating CoA badge — bottom left */}
+              <div className="absolute bottom-8 -left-2 z-30">
+                <div className="flex items-center gap-3 bg-white/95 backdrop-blur-md border border-slate-200/70 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
+                  <span className="w-9 h-9 rounded-xl bg-ink-950 text-teal-300 flex items-center justify-center shrink-0">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                  </span>
+                  <div className="leading-tight">
+                    <p className="text-ink-950 font-display font-bold text-sm">Certificate of Analysis</p>
+                    <p className="text-slate-500 text-[11px] font-medium">Included with every batch</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats */}
+      {/* ===== Stats band ===== */}
       <section className="bg-logo-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
@@ -220,8 +246,52 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The Science — molecular */}
-      <section className="py-20 sm:py-28 bg-soft-cream overflow-hidden">
+      {/* ===== Featured products (moved up — product-forward) ===== */}
+      <section className="py-20 sm:py-28 bg-soft-lavender">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-end justify-between mb-12">
+            <div>
+              <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">The Catalog</span>
+              <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-2">
+                Featured Compounds
+              </h2>
+              <p className="text-slate-500 text-lg">
+                Research-grade, lab-tested, and ready to ship — every vial with a Certificate of Analysis.
+              </p>
+            </div>
+            <Link
+              href="/products"
+              className="hidden sm:inline-flex items-center gap-2 bg-ink-950 text-white px-6 py-3 rounded-full font-semibold text-sm hover:bg-teal-600 transition-all shrink-0"
+            >
+              View all 28+
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featured.map((product) => (
+              <ProductCard key={product.slug} product={product} />
+            ))}
+          </div>
+
+          <div className="sm:hidden mt-8">
+            <Link
+              href="/products"
+              className="inline-flex w-full items-center justify-center gap-2 bg-ink-950 text-white px-6 py-3.5 rounded-full font-semibold text-sm"
+            >
+              View all 28+ compounds
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== The Science — molecular ===== */}
+      <section className="py-20 sm:py-28 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">The Science</span>
@@ -246,49 +316,86 @@ export default function Home() {
               ))}
             </ul>
           </div>
-          <div className="rounded-3xl bg-white border border-slate-200/80 shadow-soft p-6 sm:p-8">
+          <div className="relative rounded-3xl bg-soft-cream border border-slate-200/80 shadow-soft p-6 sm:p-8">
+            {/* decorative floating vial */}
+            <div className="hidden sm:block absolute -right-6 -top-10 rotate-[10deg] animate-float-slow z-10">
+              <Vial name="Epitalon" tint="violet" size="sm" />
+            </div>
             <PeptideDiagram />
             <p className="text-center text-xs text-slate-400 mt-2">Illustrative peptide sequence (H&#8322;N &rarr; COOH backbone with residue side chains)</p>
           </div>
         </div>
       </section>
 
-      {/* Quality pillars */}
-      <section className="py-20 sm:py-28 bg-white">
+      {/* ===== Quality (commitment bento + interactive proof, grouped) ===== */}
+      <section className="py-20 sm:py-28 bg-soft-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14">
-            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mb-4">
-              Our Quality Commitment
+            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">Quality</span>
+            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
+              Quality you can verify, not just trust
             </h2>
             <p className="text-slate-500 text-lg">
-              Verifiable quality at every step — from synthesis to shipment,
-              each batch clears our internal standards before it reaches your
-              bench.
+              Every batch clears a five-point protocol — and we hand you the proof, from the
+              Certificate of Analysis down to the chromatogram.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {pillars.map((p) => (
+          {/* Bento */}
+          <div className="grid lg:grid-cols-3 gap-5">
+            {/* Feature tile — gradient, spans 2 cols & 2 rows */}
+            <div className="lg:col-span-2 lg:row-span-2 relative overflow-hidden rounded-3xl bg-logo-gradient p-8 sm:p-10 flex flex-col justify-between min-h-[20rem]">
+              <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full border border-white/15" />
+              <div className="absolute -right-8 -top-8 w-64 h-64 rounded-full border border-white/10" />
+              <div className="relative">
+                <span className="text-white/70 font-semibold text-xs uppercase tracking-wider">The standard</span>
+                <div className="flex items-end gap-3 mt-3 mb-1">
+                  <span className="text-white font-display font-extrabold text-6xl sm:text-7xl leading-none">99%+</span>
+                  <span className="text-white/80 font-medium pb-2">identity purity</span>
+                </div>
+                <h3 className="text-white font-display font-bold text-2xl mb-2">Verified before it ships</h3>
+                <p className="text-white/80 text-sm leading-relaxed max-w-md">
+                  Every batch is confirmed by reverse-phase HPLC and mass spectrometry — matched to the
+                  exact molecular weight — before a single vial is released.
+                </p>
+              </div>
+              <div className="relative flex flex-wrap gap-2 mt-6">
+                {["HPLC", "Mass spectrometry", "5-point QC"].map((t) => (
+                  <span key={t} className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Supporting tiles */}
+            {[pillars[1], pillars[2]].map((p) => (
               <div
                 key={p.title}
-                className="group p-8 rounded-3xl bg-soft-cream border border-slate-200/70 hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300"
+                className="group p-7 rounded-3xl bg-white border border-slate-200/70 hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 flex flex-col"
               >
                 <div className="w-12 h-12 rounded-2xl bg-ink-950 text-teal-400 flex items-center justify-center mb-5 group-hover:bg-teal-600 group-hover:text-white transition-colors">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={p.icon} />
                   </svg>
                 </div>
-                <h3 className="text-ink-950 font-display font-bold text-xl mb-2">
+                <h3 className="text-ink-950 font-display font-bold text-lg mb-2">
                   {p.title}
                 </h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
+
+          {/* Interactive proof */}
+          <div className="mt-16">
+            <QualityProof />
+          </div>
         </div>
       </section>
 
-      {/* Our Process — pipeline diagram */}
+      {/* ===== Our Process — pipeline diagram ===== */}
       <section className="py-20 sm:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14">
@@ -303,7 +410,6 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            {/* connecting line (desktop) */}
             <div className="hidden lg:block absolute top-7 left-[10%] right-[10%] h-0.5 bg-logo-gradient opacity-40" />
             <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-5 relative">
               {processSteps.map((p, i) => (
@@ -323,86 +429,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Interactive quality proof */}
+      {/* ===== Why KJD — comparison ===== */}
       <section className="py-20 sm:py-28 bg-soft-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-12">
-            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">
-              See the proof
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
-              Quality you can actually check
-            </h2>
-            <p className="text-slate-500 text-lg">
-              Click through each test — potency, purity, stability, safety, and
-              consistency — to see how we verify every batch. Real analysis, not
-              just claims.
-            </p>
-          </div>
-          <QualityProof />
-        </div>
-      </section>
-
-      {/* Research applications */}
-      <section className="py-20 sm:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-14">
-            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">Applications</span>
-            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
-              Studied across the life sciences
-            </h2>
-            <p className="text-slate-500 text-lg">
-              Researchers use our compounds across a broad range of in-vitro and
-              pre-clinical investigation — for laboratory research use only.
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {applications.map((a) => (
-              <div key={a.title} className="p-6 rounded-3xl bg-soft-cream border border-slate-200/70 hover:border-teal-300 hover:shadow-soft transition-all">
-                <div className="w-11 h-11 rounded-xl bg-logo-gradient text-white flex items-center justify-center mb-4">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d={a.icon} /></svg>
-                </div>
-                <h3 className="text-ink-950 font-display font-bold text-lg mb-1.5">{a.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{a.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured products */}
-      <section className="py-20 sm:py-28 bg-soft-lavender">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mb-2">
-                Featured Compounds
-              </h2>
-              <p className="text-slate-500 text-lg">
-                Lab-tested and ready for your research
-              </p>
-            </div>
-            <Link
-              href="/products"
-              className="hidden sm:inline-flex items-center gap-2 text-ink-950 font-semibold text-sm hover:text-teal-600 transition-colors"
-            >
-              View all
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featured.map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why KJD — comparison */}
-      <section className="py-20 sm:py-28 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">The difference</span>
@@ -411,8 +439,8 @@ export default function Home() {
             </h2>
             <p className="text-slate-500 text-lg">How we stack up against a typical research-chemical supplier.</p>
           </div>
-          <div className="rounded-3xl border border-slate-200/80 overflow-hidden shadow-soft-lg">
-            <div className="grid grid-cols-3 bg-soft-cream border-b border-slate-200/70">
+          <div className="rounded-3xl border border-slate-200/80 overflow-hidden shadow-soft-lg bg-white">
+            <div className="grid grid-cols-3 bg-white border-b border-slate-200/70">
               <div className="p-4 sm:p-5" />
               <div className="p-4 sm:p-5 text-center">
                 <span className="block font-display font-bold text-ink-950 text-sm sm:text-base">KJD BioLabs</span>
@@ -440,15 +468,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Affiliate */}
-      <section className="py-16 sm:py-20 bg-white">
+      {/* ===== Research applications ===== */}
+      <section className="py-20 sm:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mb-14">
+            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">Applications</span>
+            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
+              Studied across the life sciences
+            </h2>
+            <p className="text-slate-500 text-lg">
+              Researchers use our compounds across a broad range of in-vitro and
+              pre-clinical investigation — for laboratory research use only.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {applications.map((a) => (
+              <div key={a.title} className="flex items-start gap-4 p-6 rounded-2xl bg-soft-cream hover:bg-white border border-transparent hover:border-slate-200/70 hover:shadow-soft transition-all">
+                <div className="w-11 h-11 rounded-xl bg-logo-gradient text-white flex items-center justify-center shrink-0">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d={a.icon} /></svg>
+                </div>
+                <div>
+                  <h3 className="text-ink-950 font-display font-bold text-base mb-1">{a.title}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">{a.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== Affiliate (slim band) ===== */}
+      <section className="pb-4 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[2rem] border border-slate-200/80 bg-soft-cream p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="rounded-[2rem] border border-slate-200/80 bg-soft-cream p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
               <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider">
                 Affiliate Program
               </span>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold text-ink-950 mt-2 mb-2">
+              <h2 className="text-2xl sm:text-3xl font-display font-bold text-ink-950 mt-2 mb-2">
                 Refer researchers. Earn commission.
               </h2>
               <p className="text-slate-500 max-w-lg">
@@ -469,9 +526,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 sm:py-28 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ===== CTA (with flanking vials) ===== */}
+      <section className="relative py-20 sm:py-28 bg-white overflow-hidden">
+        {/* decorative vials */}
+        <div className="hidden lg:block absolute left-6 xl:left-16 top-1/2 -translate-y-1/2 -rotate-[12deg] animate-float-slow">
+          <Vial name="CJC-1295" tint="peach" size="md" />
+        </div>
+        <div className="hidden lg:block absolute right-6 xl:right-16 top-1/2 -translate-y-1/2 rotate-[12deg] animate-float">
+          <Vial name="NAD+" tint="aqua" size="md" />
+        </div>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-[2rem] bg-logo-gradient px-8 py-16 sm:px-16 text-center">
             <div className="relative">
               <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-4">
