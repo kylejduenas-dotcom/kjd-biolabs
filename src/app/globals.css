@@ -4,17 +4,17 @@
   --color-ink-950: #0a0e1a;
   --color-ink-900: #11162a;
   --color-ink-800: #1c2438;
-  /* Brand accent — muted blue ramp matching the KJD BioLabs logo
-     (deep navy -> ocean blue). Kept deliberately un-bright.
+  /* Brand accent — OCEAN WATER blue from the KJD BioLabs logo
+     (deep navy -> bright ocean cyan). Distinctive, water-themed, no green.
      Named "teal-*" so existing utility classes pick it up site-wide. */
-  --color-teal-50: #eff5fc;
-  --color-teal-100: #dce9f8;
-  --color-teal-200: #bdd6f0;
-  --color-teal-300: #8fb8e6;
-  --color-teal-400: #5a93d8;
-  --color-teal-500: #2f74c7;
-  --color-teal-600: #2360a8;
-  --color-teal-700: #1c4f8c;
+  --color-teal-50: #ecfbff;
+  --color-teal-100: #d2f3fd;
+  --color-teal-200: #a8e6fb;
+  --color-teal-300: #72d3f4;
+  --color-teal-400: #38bdee;
+  --color-teal-500: #119fd9;
+  --color-teal-600: #0a7fb8;
+  --color-teal-700: #0a6597;
   /* Dark-premium palette (Peptora-style) for the new look */
   --color-mint-300: #9ee9da;
   --color-mint-400: #6fe0cd;
@@ -45,7 +45,7 @@ h1, h2, h3, h4, h5 {
 }
 
 ::selection {
-  background: #2f74c7;
+  background: #119fd9;
   color: white;
 }
 
@@ -120,9 +120,31 @@ h1, h2, h3, h4, h5 {
 }
 .field-input:focus {
   outline: none;
-  border-color: #5a93d8;
-  box-shadow: 0 0 0 3px rgba(47, 116, 199, 0.15);
+  border-color: #38bdee;
+  box-shadow: 0 0 0 3px rgba(17, 159, 217, 0.18);
 }
+
+/* ---- Water / ocean theme helpers ---- */
+.text-water {
+  background: linear-gradient(105deg, #0c3d6b 0%, #119fd9 50%, #2bc4ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.bg-water-soft {
+  background:
+    radial-gradient(1100px 520px at 85% -10%, rgba(56, 189, 238, 0.22) 0%, transparent 60%),
+    radial-gradient(900px 480px at -5% 8%, rgba(17, 159, 217, 0.14) 0%, transparent 55%),
+    #ffffff;
+}
+.bg-aqua-band {
+  background: linear-gradient(180deg, #ffffff 0%, #ecfbff 45%, #d8f4fd 100%);
+}
+@keyframes ripple {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-12px) scale(1.04); opacity: 0.75; }
+}
+.animate-ripple { animation: ripple 9s ease-in-out infinite; }
 
 /* ---- Dark-premium (Peptora-style) helpers ---- */
 .bg-deep-hero {
