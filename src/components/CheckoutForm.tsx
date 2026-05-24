@@ -38,6 +38,8 @@ export default function CheckoutForm({
   const [ship, setShip] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [agree, setAgree] = useState({ research: false, powder: false });
+  const confirmed = agree.research && agree.powder;
 
   const qualifiesFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
   // Standard ships free once the order clears the threshold; faster methods stay paid upsells.
@@ -51,6 +53,10 @@ export default function CheckoutForm({
     e.preventDefault();
     if (items.length === 0) {
       setError("Your cart is empty.");
+      return;
+    }
+    if (!confirmed) {
+      setError("Please confirm both statements in the 'Review & confirm' section before placing your order.");
       return;
     }
     setLoading(true);
@@ -202,6 +208,43 @@ export default function CheckoutForm({
             ))}
           </div>
         </div>
+
+        {/* Review & confirm */}
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-7">
+          <h2 className="font-display font-bold text-lg text-ink-950 mb-1">Review &amp; confirm</h2>
+          <p className="text-slate-500 text-sm mb-5">Please confirm the following before placing your order.</p>
+          <div className="space-y-3">
+            <label className={`flex items-start gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${agree.research ? "border-teal-500/50 bg-teal-50/50" : "border-slate-200 hover:border-slate-300"}`}>
+              <input
+                type="checkbox"
+                checked={agree.research}
+                onChange={(e) => setAgree({ ...agree, research: e.target.checked })}
+                className="mt-0.5 w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500/25 shrink-0"
+              />
+              <span className="text-slate-600 text-sm leading-relaxed">
+                I certify that I am at least <strong className="text-ink-950">21 years old</strong> and am acquiring these materials strictly for{" "}
+                <strong className="text-ink-950">laboratory research</strong>. They are <strong className="text-ink-950">not for human or animal consumption</strong>{" "}
+                and not for clinical, therapeutic, or diagnostic use. I take full responsibility for lawful, safe handling and release KJD BioLabs from any liability arising from misuse.
+              </span>
+            </label>
+            <label className={`flex items-start gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${agree.powder ? "border-teal-500/50 bg-teal-50/50" : "border-slate-200 hover:border-slate-300"}`}>
+              <input
+                type="checkbox"
+                checked={agree.powder}
+                onChange={(e) => setAgree({ ...agree, powder: e.target.checked })}
+                className="mt-0.5 w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500/25 shrink-0"
+              />
+              <span className="text-slate-600 text-sm leading-relaxed">
+                I understand each product ships as a <strong className="text-ink-950">lyophilized (freeze-dried) powder</strong> to preserve stability and sterility in transit, and that{" "}
+                <strong className="text-ink-950">KJD BioLabs does not provide or endorse any dosing, usage, or administration guidance</strong> for any product sold.
+              </span>
+            </label>
+          </div>
+          <p className="text-slate-400 text-xs mt-4 leading-relaxed">
+            By placing this order you confirm you have read and accept our{" "}
+            <Link href="/disclaimer" className="text-teal-600 hover:underline">research-use disclaimer &amp; terms</Link>.
+          </p>
+        </div>
       </div>
 
       {/* Summary */}
@@ -243,7 +286,12 @@ export default function CheckoutForm({
               <span className="text-ink-950 font-display font-bold text-lg">{formatPrice(total)}</span>
             </div>
           </div>
-          <button type="submit" disabled={loading} className="w-full bg-ink-950 text-white py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2">
+          {!confirmed && (
+            <p className="text-slate-500 text-xs text-center mb-3 leading-relaxed">
+              Confirm the statements in <span className="font-medium text-ink-950">Review &amp; confirm</span> to place your order.
+            </p>
+          )}
+          <button type="submit" disabled={loading || !confirmed} className="w-full bg-ink-950 text-white py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2">
             {loading && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
             {loading ? "Placing order…" : "Place Order"}
           </button>
