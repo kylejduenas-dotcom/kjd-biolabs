@@ -59,6 +59,9 @@ function estimateFor(method: (typeof SHIPPING)[number], today: Date) {
   return { shipsBy: fmtRange(shipFrom, shipTo), delivery: fmtRange(deliverFrom, deliverTo) };
 }
 
+const CONTINUE_BTN =
+  "w-full bg-ink-950 text-white py-3 rounded-full font-semibold hover:bg-teal-600 transition-all";
+
 export default function CheckoutForm({
   userId,
   email,
@@ -89,10 +92,18 @@ export default function CheckoutForm({
   const estimates = today ? SHIPPING.map((m) => estimateFor(m, today)) : null;
   const nmiRef = useRef<NmiHandle>(null);
 
+  const [step, setStep] = useState(1);
+  const defaultPayMethod: "card" | "crypto" | "manual" = NMI_ENABLED ? "card" : CRYPTO_ENABLED ? "crypto" : "manual";
+  const [payMethod, setPayMethod] = useState<"card" | "crypto" | "manual">(defaultPayMethod);
+  const bothMethods = NMI_ENABLED && CRYPTO_ENABLED;
+
   const qualifiesFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
-  // Standard ships free once the order clears the threshold; faster methods stay paid upsells.
   const shippingCost = ship === 0 && qualifiesFreeShipping ? 0 : SHIPPING[ship].cost;
   const total = subtotal + shippingCost;
+
+  const payMethodLabel =
+    payMethod === "card" ? "Credit / debit card" : payMethod === "crypto" ? "Crypto (Coinbase)" : "Payment instructions by email";
+  const finalLabel = payMethod === "crypto" ? "Pay with crypto" : "Place order";
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [k]: e.target.value });
@@ -104,18 +115,6 @@ export default function CheckoutForm({
   const handlePaymentError = (msg: string) => {
     setError(msg || "Payment could not be completed. Please try again.");
     setLoading(false);
-  };
-
-  const guardCheckout = (): boolean => {
-    if (items.length === 0) {
-      setError("Your cart is empty.");
-      return false;
-    }
-    if (!confirmed) {
-      setError("Please confirm both statements in the 'Review & confirm' section before placing your order.");
-      return false;
-    }
-    return true;
   };
 
   // Creates the pending order + items. Returns the new order id, or null on failure (error already set).
@@ -165,9 +164,25 @@ export default function CheckoutForm({
     return order.id;
   };
 
-  const placeOrder = async (e: React.FormEvent) => {
+  const continueFromShipping = () => {
+    if (!form.name || !form.address || !form.city || !form.state || !form.zip) {
+      setError("Please fill in your name and full shipping address.");
+      return;
+    }
+    setError(null);
+    setStep(2);
+  };
+
+  const submitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!guardCheckout()) return;
+    if (items.length === 0) {
+      setError("Your cart is empty.");
+      return;
+    }
+    if (!confirmed) {
+      setError("Please confirm both statements above to place your order.");
+      return;
+    }
     setLoading(true);
     setError(null);
     const orderId = await createPendingOrder();
@@ -176,43 +191,35 @@ export default function CheckoutForm({
       return;
     }
 
-    if (NMI_ENABLED) {
-      // Card fields are mounted below; tokenize + charge. Result handled in callbacks.
-      nmiRef.current?.startPayment(orderId);
+    if (payMethod === "crypto") {
+      try {
+        const res = await fetch("/api/checkout/crypto", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId }),
+        });
+        const data = await res.json();
+        if (res.ok && data.ok && data.url) {
+          clear();
+          window.location.href = data.url; // Coinbase hosted checkout
+          return;
+        }
+        setError(data.error || "Could not start crypto checkout. Please try again.");
+        setLoading(false);
+      } catch {
+        setError("Could not reach the crypto payment provider. Please try again.");
+        setLoading(false);
+      }
+      return;
+    }
+
+    if (payMethod === "card" && NMI_ENABLED) {
+      nmiRef.current?.startPayment(orderId); // result handled in callbacks
       return;
     }
 
     clear();
     router.push(`/checkout/success?order=${orderId}`);
-  };
-
-  const payWithCrypto = async () => {
-    if (!guardCheckout()) return;
-    setLoading(true);
-    setError(null);
-    const orderId = await createPendingOrder();
-    if (!orderId) {
-      setLoading(false);
-      return;
-    }
-    try {
-      const res = await fetch("/api/checkout/crypto", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId }),
-      });
-      const data = await res.json();
-      if (res.ok && data.ok && data.url) {
-        clear();
-        window.location.href = data.url; // Coinbase hosted checkout
-        return;
-      }
-      setError(data.error || "Could not start crypto checkout. Please try again.");
-      setLoading(false);
-    } catch {
-      setError("Could not reach the crypto payment provider. Please try again.");
-      setLoading(false);
-    }
   };
 
   if (hydrated && items.length === 0) {
@@ -227,138 +234,195 @@ export default function CheckoutForm({
   }
 
   return (
-    <form onSubmit={placeOrder} className="grid lg:grid-cols-3 gap-8">
-      {/* Shipping */}
-      <div className="lg:col-span-2 space-y-6">
+    <form onSubmit={submitOrder} onKeyDown={(e) => { if (e.key === "Enter" && step < 4) e.preventDefault(); }} className="grid lg:grid-cols-3 gap-8">
+      <div className="lg:col-span-2 space-y-5">
         {error && (
           <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-red-700 text-sm">{error}</div>
         )}
-        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-7">
-          <h2 className="font-display font-bold text-lg text-ink-950 mb-5">Shipping details</h2>
-          <div className="space-y-4">
-            <div>
-              <Label>Full name</Label>
-              <input required value={form.name} onChange={set("name")} className="field-input" placeholder="Dr. Jane Doe" />
-            </div>
-            <div>
-              <Label>Street address</Label>
-              <input required value={form.address} onChange={set("address")} className="field-input" placeholder="123 Research Park Dr, Suite 400" />
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <Label>City</Label>
-                <input required value={form.city} onChange={set("city")} className="field-input" placeholder="Boston" />
-              </div>
-              <div>
-                <Label>State / Province</Label>
-                <input required value={form.state} onChange={set("state")} className="field-input" placeholder="MA" />
-              </div>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <Label>ZIP / Postal code</Label>
-                <input required value={form.zip} onChange={set("zip")} className="field-input" placeholder="02115" />
-              </div>
-              <div>
-                <Label>Country</Label>
-                <input required value={form.country} onChange={set("country")} className="field-input" />
-              </div>
-            </div>
-            <div>
-              <Label>Order notes (optional)</Label>
-              <textarea value={form.notes} onChange={set("notes")} rows={3} className="field-input resize-none" placeholder="Anything we should know about this order" />
-            </div>
-          </div>
-        </div>
 
+        {/* Step 1 — Shipping details */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-7">
-          <h2 className="font-display font-bold text-lg text-ink-950 mb-1">Shipping speed</h2>
-          <p className="text-slate-500 text-sm mb-4">Choose how fast you need it.</p>
-          {qualifiesFreeShipping ? (
-            <div className="flex items-center gap-2 rounded-xl bg-teal-50 border border-teal-200/70 px-4 py-2.5 mb-4 text-teal-800 text-sm">
-              <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-              <span>Your order qualifies for <strong>free standard shipping</strong>.</span>
-            </div>
-          ) : (
-            <div className="rounded-xl bg-soft-cream border border-slate-200/70 px-4 py-2.5 mb-4 text-slate-600 text-sm">
-              Add <strong className="text-ink-950">{formatPrice(FREE_SHIPPING_THRESHOLD - subtotal)}</strong> more to unlock <strong className="text-ink-950">free standard shipping</strong>.
+          <StepHeader n={1} title="Shipping details" active={step === 1} done={step > 1} onEdit={() => setStep(1)} />
+          {step === 1 && (
+            <div className="mt-5 space-y-4">
+              <div>
+                <Label>Full name</Label>
+                <input value={form.name} onChange={set("name")} className="field-input" placeholder="Dr. Jane Doe" />
+              </div>
+              <div>
+                <Label>Street address</Label>
+                <input value={form.address} onChange={set("address")} className="field-input" placeholder="123 Research Park Dr, Suite 400" />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <Label>City</Label>
+                  <input value={form.city} onChange={set("city")} className="field-input" placeholder="Boston" />
+                </div>
+                <div>
+                  <Label>State / Province</Label>
+                  <input value={form.state} onChange={set("state")} className="field-input" placeholder="MA" />
+                </div>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <Label>ZIP / Postal code</Label>
+                  <input value={form.zip} onChange={set("zip")} className="field-input" placeholder="02115" />
+                </div>
+                <div>
+                  <Label>Country</Label>
+                  <input value={form.country} onChange={set("country")} className="field-input" />
+                </div>
+              </div>
+              <div>
+                <Label>Order notes (optional)</Label>
+                <textarea value={form.notes} onChange={set("notes")} rows={2} className="field-input resize-none" placeholder="Anything we should know about this order" />
+              </div>
+              <button type="button" onClick={continueFromShipping} className={CONTINUE_BTN}>Continue to delivery</button>
             </div>
           )}
-          <div className="space-y-3">
-            {SHIPPING.map((s, i) => (
-              <button
-                type="button"
-                key={s.id}
-                onClick={() => setShip(i)}
-                className={`w-full flex items-center justify-between gap-3 p-4 rounded-2xl border text-left transition-all ${
-                  i === ship ? "border-teal-500 bg-teal-50/60 ring-1 ring-teal-500/30" : "border-slate-200 hover:border-slate-300"
-                }`}
-              >
-                <span className="flex items-center gap-3">
-                  <span className={`w-4 h-4 rounded-full border flex items-center justify-center ${i === ship ? "border-teal-600" : "border-slate-300"}`}>
-                    {i === ship && <span className="w-2 h-2 rounded-full bg-teal-600" />}
-                  </span>
-                  <span>
-                    <span className="block text-ink-950 font-semibold text-sm">{s.label}</span>
-                    <span className="block text-slate-400 text-xs">{s.eta}</span>
-                    {estimates && <span className="block text-teal-700 text-xs mt-0.5">Arrives {estimates[i].delivery}</span>}
-                  </span>
-                </span>
-                <span className="text-sm font-semibold">
-                  {i === 0 && qualifiesFreeShipping ? (
-                    <span className="inline-flex items-center gap-1.5">
-                      <span className="text-slate-400 line-through font-normal">{formatPrice(s.cost)}</span>
-                      <span className="text-teal-600">FREE</span>
-                    </span>
-                  ) : (
-                    <span className="text-ink-950">{formatPrice(s.cost)}</span>
-                  )}
-                </span>
-              </button>
-            ))}
-          </div>
+          {step > 1 && (
+            <p className="mt-2 text-sm text-slate-500">{form.name} · {form.address}, {form.city}, {form.state} {form.zip}</p>
+          )}
         </div>
 
-        {/* Review & confirm */}
+        {/* Step 2 — Delivery speed */}
         <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-7">
-          <h2 className="font-display font-bold text-lg text-ink-950 mb-1">Review &amp; confirm</h2>
-          <p className="text-slate-500 text-sm mb-5">Please confirm the following before placing your order.</p>
-          <div className="space-y-3">
-            <label className={`flex items-start gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${agree.research ? "border-teal-500/50 bg-teal-50/50" : "border-slate-200 hover:border-slate-300"}`}>
-              <input
-                type="checkbox"
-                checked={agree.research}
-                onChange={(e) => setAgree({ ...agree, research: e.target.checked })}
-                className="mt-0.5 w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500/25 shrink-0"
-              />
-              <span className="text-slate-600 text-sm leading-relaxed">
-                I certify that I am at least <strong className="text-ink-950">21 years old</strong> and am acquiring these materials strictly for{" "}
-                <strong className="text-ink-950">laboratory research</strong>. They are <strong className="text-ink-950">not for human or animal consumption</strong>{" "}
-                and not for clinical, therapeutic, or diagnostic use. I take full responsibility for lawful, safe handling and release KJD BioLabs from any liability arising from misuse.
-              </span>
-            </label>
-            <label className={`flex items-start gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${agree.powder ? "border-teal-500/50 bg-teal-50/50" : "border-slate-200 hover:border-slate-300"}`}>
-              <input
-                type="checkbox"
-                checked={agree.powder}
-                onChange={(e) => setAgree({ ...agree, powder: e.target.checked })}
-                className="mt-0.5 w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500/25 shrink-0"
-              />
-              <span className="text-slate-600 text-sm leading-relaxed">
-                I understand each product ships as a <strong className="text-ink-950">lyophilized (freeze-dried) powder</strong> to preserve stability and sterility in transit, and that{" "}
-                <strong className="text-ink-950">KJD BioLabs does not provide or endorse any dosing, usage, or administration guidance</strong> for any product sold.
-              </span>
-            </label>
-          </div>
-          <p className="text-slate-400 text-xs mt-4 leading-relaxed">
-            By placing this order you confirm you have read and accept our{" "}
-            <Link href="/disclaimer" className="text-teal-600 hover:underline">research-use disclaimer &amp; terms</Link>.
-          </p>
+          <StepHeader n={2} title="Delivery speed" active={step === 2} done={step > 2} onEdit={() => setStep(2)} />
+          {step === 2 && (
+            <div className="mt-5">
+              {qualifiesFreeShipping ? (
+                <div className="flex items-center gap-2 rounded-xl bg-teal-50 border border-teal-200/70 px-4 py-2.5 mb-4 text-teal-800 text-sm">
+                  <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  <span>Your order qualifies for <strong>free standard shipping</strong>.</span>
+                </div>
+              ) : (
+                <div className="rounded-xl bg-soft-cream border border-slate-200/70 px-4 py-2.5 mb-4 text-slate-600 text-sm">
+                  Add <strong className="text-ink-950">{formatPrice(FREE_SHIPPING_THRESHOLD - subtotal)}</strong> more to unlock <strong className="text-ink-950">free standard shipping</strong>.
+                </div>
+              )}
+              <div className="space-y-3">
+                {SHIPPING.map((s, i) => (
+                  <button
+                    type="button"
+                    key={s.id}
+                    onClick={() => setShip(i)}
+                    className={`w-full flex items-center justify-between gap-3 p-4 rounded-2xl border text-left transition-all ${
+                      i === ship ? "border-teal-500 bg-teal-50/60 ring-1 ring-teal-500/30" : "border-slate-200 hover:border-slate-300"
+                    }`}
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className={`w-4 h-4 rounded-full border flex items-center justify-center ${i === ship ? "border-teal-600" : "border-slate-300"}`}>
+                        {i === ship && <span className="w-2 h-2 rounded-full bg-teal-600" />}
+                      </span>
+                      <span>
+                        <span className="block text-ink-950 font-semibold text-sm">{s.label}</span>
+                        <span className="block text-slate-400 text-xs">{s.eta}</span>
+                        {estimates && <span className="block text-teal-700 text-xs mt-0.5">Arrives {estimates[i].delivery}</span>}
+                      </span>
+                    </span>
+                    <span className="text-sm font-semibold">
+                      {i === 0 && qualifiesFreeShipping ? (
+                        <span className="inline-flex items-center gap-1.5">
+                          <span className="text-slate-400 line-through font-normal">{formatPrice(s.cost)}</span>
+                          <span className="text-teal-600">FREE</span>
+                        </span>
+                      ) : (
+                        <span className="text-ink-950">{formatPrice(s.cost)}</span>
+                      )}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              <button type="button" onClick={() => setStep(3)} className={`${CONTINUE_BTN} mt-5`}>Continue to payment</button>
+            </div>
+          )}
+          {step > 2 && (
+            <p className="mt-2 text-sm text-slate-500">
+              {SHIPPING[ship].label} · {shippingCost === 0 ? "Free" : formatPrice(shippingCost)}
+              {estimates ? ` · arrives ${estimates[ship].delivery}` : ""}
+            </p>
+          )}
         </div>
 
-        {NMI_ENABLED && (
-          <NmiCardFields ref={nmiRef} onApproved={handleApproved} onError={handlePaymentError} />
-        )}
+        {/* Step 3 — Payment */}
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-7">
+          <StepHeader n={3} title="Payment" active={step === 3} done={step > 3} onEdit={() => setStep(3)} />
+          {step === 3 && (
+            <div className="mt-5 space-y-4">
+              {bothMethods && (
+                <div className="grid grid-cols-2 gap-3">
+                  <PayTile selected={payMethod === "card"} onClick={() => setPayMethod("card")} label="Card" sub="Visa · MC · Amex" />
+                  <PayTile selected={payMethod === "crypto"} onClick={() => setPayMethod("crypto")} label="Crypto" sub="USDC · BTC · ETH" />
+                </div>
+              )}
+              {payMethod === "crypto" && CRYPTO_ENABLED && (
+                <p className="text-slate-500 text-sm leading-relaxed">You&apos;ll be securely redirected to Coinbase to complete payment in crypto. Your order is confirmed once the payment settles on-chain.</p>
+              )}
+              {payMethod === "manual" && (
+                <p className="text-slate-500 text-sm leading-relaxed">After you place your order, we&apos;ll email you secure payment instructions to complete your purchase.</p>
+              )}
+              <button type="button" onClick={() => setStep(4)} className={CONTINUE_BTN}>Continue to review</button>
+            </div>
+          )}
+          {step > 3 && <p className="mt-2 text-sm text-slate-500">{payMethodLabel}</p>}
+
+          {/* Card fields stay mounted across steps 3→4 so tokenization works on submit. */}
+          {NMI_ENABLED && payMethod === "card" && (
+            <div className={step === 3 ? "mt-4 pt-4 border-t border-slate-100" : "hidden"}>
+              <p className="text-slate-500 text-xs mb-3 inline-flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0-1.105.895-2 2-2s2 .895 2 2m-8 0V7a4 4 0 118 0m-9 4h10a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6a2 2 0 012-2z" /></svg>
+                Secured by NMI · 256-bit SSL
+              </p>
+              <NmiCardFields ref={nmiRef} onApproved={handleApproved} onError={handlePaymentError} />
+            </div>
+          )}
+        </div>
+
+        {/* Step 4 — Review & confirm */}
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-7">
+          <StepHeader n={4} title="Review &amp; confirm" active={step === 4} done={false} onEdit={() => {}} />
+          {step === 4 && (
+            <div className="mt-5">
+              <div className="space-y-3">
+                <label className={`flex items-start gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${agree.research ? "border-teal-500/50 bg-teal-50/50" : "border-slate-200 hover:border-slate-300"}`}>
+                  <input
+                    type="checkbox"
+                    checked={agree.research}
+                    onChange={(e) => setAgree({ ...agree, research: e.target.checked })}
+                    className="mt-0.5 w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500/25 shrink-0"
+                  />
+                  <span className="text-slate-600 text-sm leading-relaxed">
+                    I certify that I am at least <strong className="text-ink-950">21 years old</strong> and am acquiring these materials strictly for{" "}
+                    <strong className="text-ink-950">laboratory research</strong>. They are <strong className="text-ink-950">not for human or animal consumption</strong>{" "}
+                    and not for clinical, therapeutic, or diagnostic use. I take full responsibility for lawful, safe handling and release KJD BioLabs from any liability arising from misuse.
+                  </span>
+                </label>
+                <label className={`flex items-start gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all ${agree.powder ? "border-teal-500/50 bg-teal-50/50" : "border-slate-200 hover:border-slate-300"}`}>
+                  <input
+                    type="checkbox"
+                    checked={agree.powder}
+                    onChange={(e) => setAgree({ ...agree, powder: e.target.checked })}
+                    className="mt-0.5 w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500/25 shrink-0"
+                  />
+                  <span className="text-slate-600 text-sm leading-relaxed">
+                    I understand each product ships as a <strong className="text-ink-950">lyophilized (freeze-dried) powder</strong> to preserve stability and sterility in transit, and that{" "}
+                    <strong className="text-ink-950">KJD BioLabs does not provide or endorse any dosing, usage, or administration guidance</strong> for any product sold.
+                  </span>
+                </label>
+              </div>
+              <p className="text-slate-400 text-xs mt-4 leading-relaxed">
+                By placing this order you confirm you have read and accept our{" "}
+                <Link href="/terms" className="text-teal-600 hover:underline">Terms</Link>,{" "}
+                <Link href="/refund" className="text-teal-600 hover:underline">Refund Policy</Link>, and{" "}
+                <Link href="/disclaimer" className="text-teal-600 hover:underline">research-use disclaimer</Link>.
+              </p>
+              <button type="submit" disabled={loading || !confirmed} className="mt-5 w-full bg-ink-950 text-white py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2">
+                {loading && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
+                {loading ? "Processing…" : finalLabel}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Summary */}
@@ -401,7 +465,7 @@ export default function CheckoutForm({
             </div>
           </div>
           {estimates && (
-            <div className="rounded-2xl border border-slate-200/70 bg-white p-4 mb-5">
+            <div className="rounded-2xl border border-slate-200/70 bg-white p-4">
               <div className="flex items-start gap-2.5">
                 <svg className="w-4 h-4 text-teal-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                 <div className="flex-1 text-xs leading-relaxed">
@@ -417,38 +481,7 @@ export default function CheckoutForm({
               </div>
             </div>
           )}
-          {!confirmed && (
-            <p className="text-slate-500 text-xs text-center mb-3 leading-relaxed">
-              Confirm the statements in <span className="font-medium text-ink-950">Review &amp; confirm</span> to place your order.
-            </p>
-          )}
-          <button type="submit" disabled={loading || !confirmed} className="w-full bg-ink-950 text-white py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2">
-            {loading && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
-            {loading ? "Placing order…" : "Place Order"}
-          </button>
-          {CRYPTO_ENABLED && (
-            <>
-              <div className="flex items-center gap-3 my-3">
-                <span className="h-px flex-1 bg-slate-200" />
-                <span className="text-slate-400 text-xs">or</span>
-                <span className="h-px flex-1 bg-slate-200" />
-              </div>
-              <button
-                type="button"
-                onClick={payWithCrypto}
-                disabled={loading || !confirmed}
-                className="w-full border border-slate-300 text-ink-950 py-3.5 rounded-full font-semibold hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
-              >
-                <svg className="w-4 h-4 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 7v1m0 8v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                Pay with crypto
-              </button>
-            </>
-          )}
-          <p className="text-slate-400 text-xs text-center mt-4 leading-relaxed">
-            {NMI_ENABLED
-              ? "Your payment is processed securely. Research use only."
-              : "We'll confirm your order and send secure payment instructions by email. Research use only."}
-          </p>
+          <p className="text-slate-400 text-xs text-center mt-4 leading-relaxed">Research use only.</p>
         </div>
       </div>
     </form>
@@ -457,4 +490,37 @@ export default function CheckoutForm({
 
 function Label({ children }: { children: React.ReactNode }) {
   return <label className="block text-ink-950 text-sm font-medium mb-1.5">{children}</label>;
+}
+
+function StepHeader({ n, title, active, done, onEdit }: { n: number; title: string; active: boolean; done: boolean; onEdit: () => void }) {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${active || done ? "bg-ink-950 text-white" : "bg-slate-100 text-slate-400"}`}>
+          {done ? (
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+          ) : (
+            n
+          )}
+        </span>
+        <h2 className={`font-display font-bold text-lg ${active || done ? "text-ink-950" : "text-slate-400"}`}>{title}</h2>
+      </div>
+      {done && (
+        <button type="button" onClick={onEdit} className="text-teal-600 text-sm font-medium hover:underline">Edit</button>
+      )}
+    </div>
+  );
+}
+
+function PayTile({ selected, onClick, label, sub }: { selected: boolean; onClick: () => void; label: string; sub: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`p-4 rounded-2xl border text-left transition-all ${selected ? "border-teal-500 bg-teal-50/60 ring-1 ring-teal-500/30" : "border-slate-200 hover:border-slate-300"}`}
+    >
+      <span className="block text-ink-950 font-semibold text-sm">{label}</span>
+      <span className="block text-slate-400 text-xs mt-0.5">{sub}</span>
+    </button>
+  );
 }

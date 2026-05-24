@@ -121,34 +121,24 @@ const NmiCardFields = forwardRef<NmiHandle, NmiCardFieldsProps>(function NmiCard
   if (!TOKENIZATION_KEY) return null;
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-7">
-      <h2 className="font-display font-bold text-lg text-ink-950 mb-1">Payment</h2>
-      <p className="text-slate-500 text-sm mb-5 inline-flex items-center gap-1.5">
-        <svg className="w-3.5 h-3.5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0-1.105.895-2 2-2s2 .895 2 2m-8 0V7a4 4 0 118 0m-9 4h10a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6a2 2 0 012-2z" />
-        </svg>
-        Secure checkout · card details handled by NMI
-      </p>
-      <div className="space-y-4">
+    <div className="space-y-4">
+      <div>
+        <label className="block text-ink-950 text-sm font-medium mb-1.5">Card number</label>
+        <div id="nmi-ccnumber" className="nmi-field" />
+      </div>
+      <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-ink-950 text-sm font-medium mb-1.5">Card number</label>
-          <div id="nmi-ccnumber" className="nmi-field" />
+          <label className="block text-ink-950 text-sm font-medium mb-1.5">Expiry</label>
+          <div id="nmi-ccexp" className="nmi-field" />
         </div>
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-ink-950 text-sm font-medium mb-1.5">Expiry</label>
-            <div id="nmi-ccexp" className="nmi-field" />
-          </div>
-          <div>
-            <label className="block text-ink-950 text-sm font-medium mb-1.5">CVV</label>
-            <div id="nmi-cvv" className="nmi-field" />
-          </div>
+        <div>
+          <label className="block text-ink-950 text-sm font-medium mb-1.5">CVV</label>
+          <div id="nmi-cvv" className="nmi-field" />
         </div>
       </div>
-      {!ready && <p className="text-slate-400 text-xs mt-3">Loading secure payment fields…</p>}
+      {!ready && <p className="text-slate-400 text-xs">Loading secure payment fields…</p>}
       {/* Apple Pay / Google Pay: enabled during NMI merchant onboarding (requires
-          Apple Pay domain verification + wallet settings in the NMI portal). The
-          charge route already accepts wallet tokens, so this is a small add then. */}
+          Apple Pay domain verification + wallet settings in the NMI portal). */}
     </div>
   );
 });
