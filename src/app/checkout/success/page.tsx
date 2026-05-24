@@ -9,12 +9,12 @@ export default async function CheckoutSuccessPage({
 }) {
   const { order: orderId } = await searchParams;
 
-  let order: { id: string; order_number: string | null; subtotal: number; created_at: string } | null = null;
+  let order: { id: string; order_number: string | null; subtotal: number; shipping_cost: number | null; shipping_method: string | null; created_at: string } | null = null;
   if (orderId) {
     const supabase = await createClient();
     const { data } = await supabase
       .from("orders")
-      .select("id, order_number, subtotal, created_at")
+      .select("id, order_number, subtotal, shipping_cost, shipping_method, created_at")
       .eq("id", orderId)
       .single();
     order = data;
@@ -44,10 +44,18 @@ export default async function CheckoutSuccessPage({
                 {order.order_number ?? order.id.slice(0, 8).toUpperCase()}
               </span>
             </div>
+            {order.shipping_method && (
+              <div className="flex justify-between py-1.5">
+                <span className="text-slate-500 text-sm">Shipping</span>
+                <span className="text-ink-950 text-sm font-medium">
+                  {order.shipping_method} · {formatPrice(Number(order.shipping_cost ?? 0))}
+                </span>
+              </div>
+            )}
             <div className="flex justify-between py-1.5">
               <span className="text-slate-500 text-sm">Total</span>
               <span className="text-ink-950 text-sm font-semibold">
-                {formatPrice(Number(order.subtotal))}
+                {formatPrice(Number(order.subtotal) + Number(order.shipping_cost ?? 0))}
               </span>
             </div>
           </div>

@@ -7,6 +7,12 @@ import { useCart } from "@/context/CartContext";
 import { createClient } from "@/lib/supabase/client";
 import { formatPrice, tintStyles } from "@/data/products";
 
+const SHIPPING = [
+  { id: "standard", label: "Standard", eta: "3–5 business days", cost: 9.99 },
+  { id: "express", label: "Express", eta: "1–2 business days", cost: 24.99 },
+  { id: "overnight", label: "Overnight", eta: "Next business day", cost: 44.99 },
+];
+
 export default function CheckoutForm({
   userId,
   email,
@@ -27,8 +33,12 @@ export default function CheckoutForm({
     country: "United States",
     notes: "",
   });
+  const [ship, setShip] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const shippingCost = SHIPPING[ship].cost;
+  const total = subtotal + shippingCost;
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [k]: e.target.value });
@@ -48,6 +58,8 @@ export default function CheckoutForm({
         user_id: userId,
         email,
         subtotal,
+        shipping_method: SHIPPING[ship].label,
+        shipping_cost: shippingCost,
         status: "pending",
         shipping_name: form.name,
         shipping_address: form.address,
@@ -139,6 +151,34 @@ export default function CheckoutForm({
             </div>
           </div>
         </div>
+
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-7">
+          <h2 className="font-display font-bold text-lg text-ink-950 mb-1">Shipping speed</h2>
+          <p className="text-slate-500 text-sm mb-5">Choose how fast you need it.</p>
+          <div className="space-y-3">
+            {SHIPPING.map((s, i) => (
+              <button
+                type="button"
+                key={s.id}
+                onClick={() => setShip(i)}
+                className={`w-full flex items-center justify-between gap-3 p-4 rounded-2xl border text-left transition-all ${
+                  i === ship ? "border-teal-500 bg-teal-50/60 ring-1 ring-teal-500/30" : "border-slate-200 hover:border-slate-300"
+                }`}
+              >
+                <span className="flex items-center gap-3">
+                  <span className={`w-4 h-4 rounded-full border flex items-center justify-center ${i === ship ? "border-teal-600" : "border-slate-300"}`}>
+                    {i === ship && <span className="w-2 h-2 rounded-full bg-teal-600" />}
+                  </span>
+                  <span>
+                    <span className="block text-ink-950 font-semibold text-sm">{s.label}</span>
+                    <span className="block text-slate-400 text-xs">{s.eta}</span>
+                  </span>
+                </span>
+                <span className="text-ink-950 font-semibold text-sm">{formatPrice(s.cost)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Summary */}
@@ -160,9 +200,19 @@ export default function CheckoutForm({
               </div>
             ))}
           </div>
-          <div className="border-t border-slate-200 pt-4 flex justify-between mb-5">
-            <span className="text-ink-950 font-semibold">Total</span>
-            <span className="text-ink-950 font-display font-bold text-lg">{formatPrice(subtotal)}</span>
+          <div className="border-t border-slate-200 pt-4 space-y-2 mb-5">
+            <div className="flex justify-between text-sm">
+              <span className="text-slate-500">Subtotal</span>
+              <span className="text-ink-950 font-medium">{formatPrice(subtotal)}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-slate-500">Shipping ({SHIPPING[ship].label})</span>
+              <span className="text-ink-950 font-medium">{formatPrice(shippingCost)}</span>
+            </div>
+            <div className="flex justify-between pt-2 border-t border-slate-100">
+              <span className="text-ink-950 font-semibold">Total</span>
+              <span className="text-ink-950 font-display font-bold text-lg">{formatPrice(total)}</span>
+            </div>
           </div>
           <button type="submit" disabled={loading} className="w-full bg-ink-950 text-white py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2">
             {loading && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />}

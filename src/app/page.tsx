@@ -5,6 +5,7 @@ import Link from "next/link";
 import { products } from "@/data/products";
 import Vial from "@/components/Vial";
 import ProductCard from "@/components/ProductCard";
+import QualityProof from "@/components/QualityProof";
 
 const featured = products.filter((p) =>
   ["bpc-157", "ghk-cu", "tb-500", "tesamorelin", "cjc-1295-ipamorelin", "nad-plus"].includes(p.slug)
@@ -40,10 +41,6 @@ export default function Home() {
     <AgeGate>
       {/* Hero */}
       <section className="relative overflow-hidden bg-white">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-1/2 h-full" style={{ background: "linear-gradient(135deg, #eef4fb 0%, #e3eefb 50%, #f3f8ff 100%)" }} />
-        </div>
-
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-20 lg:min-h-[620px]">
             {/* Copy */}
@@ -158,6 +155,26 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Interactive quality proof */}
+      <section className="py-20 sm:py-28 bg-soft-cream">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mb-12">
+            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">
+              See the proof
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
+              Quality you can actually check
+            </h2>
+            <p className="text-slate-500 text-lg">
+              Click through each test — potency, purity, stability, safety, and
+              consistency — to see how we verify every batch. Real analysis, not
+              just claims.
+            </p>
+          </div>
+          <QualityProof />
         </div>
       </section>
 

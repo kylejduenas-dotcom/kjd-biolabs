@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -36,14 +37,14 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-teal-600 flex items-center justify-center">
-                <span className="text-white font-display font-bold text-base">K</span>
-              </div>
-              <span className="text-white font-display font-bold text-xl tracking-tight">
-                KJD <span className="text-teal-400">BioLabs</span>
-              </span>
-            </div>
+            <Image
+              src="/kjd-logo-horizontal.png"
+              alt="KJD BioLabs"
+              width={170}
+              height={55}
+              className="mb-5"
+              style={{ width: "auto", height: "2.5rem", filter: "brightness(0) invert(1)" }}
+            />
             <p className="text-sm leading-relaxed max-w-xs">
               Premium research-grade peptides for qualified researchers and
               laboratories. Every batch third-party tested with Certificate of

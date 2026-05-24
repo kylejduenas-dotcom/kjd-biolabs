@@ -15,14 +15,14 @@ export default function ProductCard({ product }: { product: Product }) {
     <div className="group h-full bg-white rounded-3xl border border-slate-200/80 overflow-hidden hover:border-slate-300 hover:shadow-soft-lg transition-all duration-300 hover:-translate-y-1 flex flex-col">
       <Link href={`/products/${product.slug}`} className="block">
         <div
-          className="h-52 flex items-center justify-center relative overflow-hidden"
+          className="h-80 flex items-center justify-center relative overflow-hidden"
           style={{ background: style.bg }}
         >
           <span className="absolute top-4 left-4 text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full bg-white/70 backdrop-blur text-ink-900">
             {product.category}
           </span>
           <div className="group-hover:scale-105 group-hover:-translate-y-1 transition-transform duration-500">
-            <Vial name={product.name} tint={product.tint} size="md" />
+            <Vial name={product.name} tint={product.tint} size="lg" />
           </div>
         </div>
       </Link>
