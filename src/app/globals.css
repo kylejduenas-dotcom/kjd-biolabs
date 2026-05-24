@@ -76,6 +76,18 @@ h1, h2, h3, h4, h5 {
 .bg-soft-lavender { background: #f5f3ff; }
 .bg-soft-cream { background: #fafaf9; }
 
+/* KJD logo gradient — deep navy -> azure -> bright aqua (the logo's sweep) */
+.bg-logo-gradient {
+  background: linear-gradient(120deg, #0c3a6b 0%, #1287d2 48%, #2bc4e6 100%);
+}
+.text-logo-gradient {
+  background: linear-gradient(120deg, #0c3a6b 0%, #1287d2 45%, #21b6e0 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 .pill {
   border-radius: 9999px;
 }

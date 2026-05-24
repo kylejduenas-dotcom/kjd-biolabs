@@ -55,7 +55,7 @@ export default function Home() {
               <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-ink-950 leading-[1.02] mb-6 text-balance">
                 Research-Grade Peptides,
                 <br className="hidden sm:block" />{" "}
-                <span className="text-teal-600">Independently Verified.</span>
+                <span className="text-logo-gradient">Independently Verified.</span>
               </h1>
 
               <p className="text-lg text-slate-500 leading-relaxed mb-8 max-w-lg">
@@ -108,15 +108,15 @@ export default function Home() {
       </section>
 
       {/* Stats */}
-      <section className="bg-teal-50 border-y border-teal-100">
+      <section className="bg-logo-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((s) => (
               <div key={s.label} className="text-center">
-                <p className="text-4xl sm:text-5xl font-display font-extrabold text-ink-950 mb-1">
+                <p className="text-4xl sm:text-5xl font-display font-extrabold text-white mb-1">
                   {s.value}
                 </p>
-                <p className="text-slate-500 text-sm">{s.label}</p>
+                <p className="text-white/70 text-sm">{s.label}</p>
               </div>
             ))}
           </div>
@@ -241,24 +241,23 @@ export default function Home() {
       {/* CTA */}
       <section className="py-20 sm:py-28 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-[2rem] bg-teal-50 border border-teal-100 px-8 py-16 sm:px-16 text-center">
-            <div className="absolute inset-0 pointer-events-none opacity-70" style={{ background: "radial-gradient(circle at 30% 20%, rgba(18,135,210,0.12), transparent 50%), radial-gradient(circle at 80% 80%, rgba(51,163,225,0.10), transparent 50%)" }} />
+          <div className="relative overflow-hidden rounded-[2rem] bg-logo-gradient px-8 py-16 sm:px-16 text-center">
             <div className="relative">
-              <h2 className="text-3xl sm:text-5xl font-display font-bold text-ink-950 mb-4">
+              <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-4">
                 Ready to Start Your Research?
               </h2>
-              <p className="text-slate-600 text-lg mb-8 max-w-xl mx-auto">
+              <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
                 Browse our catalog of 28+ research-grade peptides. Every compound
                 backed by third-party testing and full documentation.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link href="/products" className="inline-flex items-center gap-2 bg-ink-950 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-600 transition-all">
+                <Link href="/products" className="inline-flex items-center gap-2 bg-white text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-teal-50 transition-all">
                   Browse Catalog
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </Link>
-                <Link href="/contact" className="inline-flex items-center gap-2 border border-slate-300 text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-white transition-all">
+                <Link href="/contact" className="inline-flex items-center gap-2 border border-white/30 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all">
                   Contact Us
                 </Link>
               </div>
