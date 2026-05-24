@@ -36,6 +36,34 @@ const pillars = [
   },
 ];
 
+const processSteps = [
+  {
+    icon: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z",
+    title: "Synthesis",
+    desc: "Solid-phase synthesis builds each peptide sequence one amino acid at a time.",
+  },
+  {
+    icon: "M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z",
+    title: "Purification",
+    desc: "Reverse-phase HPLC purifies every batch to 99%+ identity purity.",
+  },
+  {
+    icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
+    title: "Analysis",
+    desc: "HPLC and mass spectrometry confirm identity, purity, and molecular weight.",
+  },
+  {
+    icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
+    title: "Certification",
+    desc: "An independent, accredited U.S. lab issues a Certificate of Analysis per batch.",
+  },
+  {
+    icon: "M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M9 17a2 2 0 11-4 0 2 2 0 014 0zm10 0a2 2 0 11-4 0 2 2 0 014 0z",
+    title: "Cold-pack shipping",
+    desc: "Lyophilized, sealed, and dispatched same-day with protected, insured shipping.",
+  },
+];
+
 export default function Home() {
   return (
     <AgeGate>
@@ -154,6 +182,41 @@ export default function Home() {
                 <p className="text-slate-500 text-sm leading-relaxed">{p.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Process — pipeline diagram */}
+      <section className="py-20 sm:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mb-14">
+            <span className="text-teal-700 font-semibold text-sm uppercase tracking-wider">Our Process</span>
+            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
+              From synthesis to your bench
+            </h2>
+            <p className="text-slate-500 text-lg">
+              Every vial moves through a controlled five-stage pipeline before it reaches you —
+              synthesized, purified, analyzed, independently certified, and cold-packed.
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* connecting line (desktop) */}
+            <div className="hidden lg:block absolute top-7 left-[10%] right-[10%] h-0.5 bg-logo-gradient opacity-40" />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-5 relative">
+              {processSteps.map((p, i) => (
+                <div key={p.title} className="relative text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-logo-gradient text-white flex items-center justify-center mb-4 mx-auto shadow-soft relative z-10">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d={p.icon} />
+                    </svg>
+                  </div>
+                  <span className="text-teal-600 text-xs font-bold uppercase tracking-wider">Step {i + 1}</span>
+                  <h3 className="text-ink-950 font-display font-bold text-lg mt-1 mb-1.5">{p.title}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">{p.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
