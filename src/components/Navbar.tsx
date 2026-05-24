@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { useCart } from "@/context/CartContext";
@@ -13,8 +12,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const { count, setOpen: setCartOpen } = useCart();
-  const pathname = usePathname();
-  const onDark = pathname === "/"; // homepage hero is deep-ocean
+  const onDark = false; // homepage hero is now light/white-water
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);

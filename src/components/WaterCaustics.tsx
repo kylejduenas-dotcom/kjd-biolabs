@@ -32,7 +32,7 @@ export default function WaterCaustics({
           <filter id={`caustics-${id}`} x="-20%" y="-20%" width="140%" height="140%">
             <feTurbulence
               type="turbulence"
-              baseFrequency="0.006 0.01"
+              baseFrequency="0.009 0.013"
               numOctaves="2"
               seed="14"
               stitchTiles="stitch"
@@ -42,15 +42,15 @@ export default function WaterCaustics({
                 <animate
                   attributeName="baseFrequency"
                   dur="22s"
-                  values="0.006 0.01; 0.009 0.007; 0.006 0.01"
+                  values="0.009 0.013; 0.013 0.009; 0.009 0.013"
                   repeatCount="indefinite"
                 />
               )}
             </feTurbulence>
-            <feGaussianBlur in="noise" stdDeviation="0.7" result="soft" />
+            <feGaussianBlur in="noise" stdDeviation="0.5" result="soft" />
             <feColorMatrix in="soft" type="matrix" values={matrix} result="tinted" />
             <feComponentTransfer in="tinted">
-              <feFuncA type="gamma" amplitude="1.7" exponent="5" offset="-0.04" />
+              <feFuncA type="gamma" amplitude="1.35" exponent="2.4" offset="-0.12" />
             </feComponentTransfer>
           </filter>
         </defs>

@@ -61,35 +61,36 @@ export default function Home() {
   return (
     <AgeGate>
       {/* Hero */}
-      <section className="relative -mt-16 pt-16 overflow-hidden text-white" style={{ background: "linear-gradient(165deg, #0a3a54 0%, #082a3e 58%, #06222f 100%)" }}>
-        <WaterCaustics id="hero" tint="light" opacity={0.5} />
+      <section className="relative -mt-16 pt-16 overflow-hidden" style={{ background: "linear-gradient(160deg, #cfe9f7 0%, #b9def2 48%, #a6d4ee 100%)" }}>
+        <WaterCaustics id="hero" tint="light" opacity={0.92} />
+        <WaterCaustics id="hero2" tint="blue" opacity={0.25} animate={false} />
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-10 right-0 w-[640px] h-[640px] rounded-full blur-3xl animate-ripple" style={{ background: "radial-gradient(circle, rgba(120,220,255,0.16), transparent 70%)" }} />
+          <div className="absolute top-0 right-0 w-[640px] h-[640px] rounded-full blur-3xl animate-ripple" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.55), transparent 70%)" }} />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center py-20 lg:py-24 lg:min-h-[620px]">
             <div className="animate-fade-in">
-              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-7">
-                <div className="w-1.5 h-1.5 rounded-full bg-teal-300" />
-                <span className="text-teal-200 text-xs font-semibold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 bg-white/70 border border-teal-200/70 rounded-full px-4 py-1.5 mb-7 backdrop-blur">
+                <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                <span className="text-teal-700 text-xs font-semibold uppercase tracking-wider">
                   Research-Grade Peptides
                 </span>
               </div>
-              <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-white leading-[1.02] mb-6 text-balance">
+              <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-ink-950 leading-[1.02] mb-6 text-balance">
                 Research Peptides,
-                <br className="hidden sm:block" /> Independently Verified.
+                <br className="hidden sm:block" /> <span className="text-teal-600">Independently Verified.</span>
               </h1>
-              <p className="text-lg text-white/70 leading-relaxed mb-8 max-w-lg">
+              <p className="text-lg text-slate-600 leading-relaxed mb-8 max-w-lg">
                 Every compound ships with a full Certificate of Analysis and is
                 third-party tested in accredited U.S. labs — 99%+ identity
                 purity, batch after batch.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link href="/products" className="inline-flex items-center justify-center gap-2 bg-white text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-teal-50 hover:shadow-lg hover:shadow-black/25 transition-all">
+                <Link href="/products" className="inline-flex items-center justify-center gap-2 bg-ink-950 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-600 hover:shadow-lg hover:shadow-teal-500/25 transition-all">
                   Browse Catalog
                   <Arrow />
                 </Link>
-                <Link href="/about" className="inline-flex items-center justify-center gap-2 border border-white/30 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all">
+                <Link href="/about" className="inline-flex items-center justify-center gap-2 border border-slate-300 text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-white transition-all">
                   Our Quality Process
                 </Link>
               </div>
@@ -99,7 +100,7 @@ export default function Home() {
             <div className="relative h-[460px] hidden lg:flex items-center justify-center">
               <div className="absolute w-80 h-80 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(17,159,217,0.16), transparent 70%)" }} />
               <div className="relative w-[440px] h-[330px]">
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-1 w-72 h-9 rounded-[50%] bg-black/35 blur-lg" />
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-1 w-72 h-9 rounded-[50%] bg-ink-950/10 blur-lg" />
                 <div className="absolute left-3 top-12 -rotate-[14deg] animate-float-slow z-10">
                   <Vial name="TB-500" tint="sky" size="md" />
                 </div>
