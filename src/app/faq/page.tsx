@@ -80,16 +80,15 @@ export default function FAQPage() {
 
       <section className="pb-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl bg-ink-950 p-8 sm:p-10 text-center relative overflow-hidden">
-            <div className="absolute inset-0 opacity-60" style={{ background: "radial-gradient(circle at 70% 30%, rgba(18,135,210,0.22), transparent 50%)" }} />
+          <div className="rounded-3xl bg-logo-gradient p-8 sm:p-10 text-center relative overflow-hidden">
             <div className="relative">
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-3">
                 Still have questions?
               </h2>
-              <p className="text-slate-400 mb-6">
+              <p className="text-white/80 mb-6">
                 Our team responds within 24 business hours.
               </p>
-              <Link href="/contact" className="inline-flex items-center gap-2 bg-teal-500 text-ink-950 px-7 py-3.5 rounded-full font-semibold hover:bg-teal-400 transition-all">
+              <Link href="/contact" className="inline-flex items-center gap-2 bg-white text-ink-950 px-7 py-3.5 rounded-full font-semibold hover:bg-teal-50 transition-all">
                 Contact Us
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </Link>

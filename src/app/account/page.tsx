@@ -96,18 +96,17 @@ export default async function AccountPage() {
               </Link>
             </div>
 
-            <div className="rounded-3xl bg-ink-950 p-7 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-60" style={{ background: "radial-gradient(circle at 80% 20%, rgba(18,135,210,0.22), transparent 50%)" }} />
+            <div className="rounded-3xl bg-logo-gradient p-7 relative overflow-hidden">
               <div className="relative">
                 <h2 className="text-white font-display font-bold text-lg mb-2">
                   Browse the catalog
                 </h2>
-                <p className="text-slate-400 text-sm mb-5">
+                <p className="text-white/80 text-sm mb-5">
                   Explore our full range of research-grade peptides.
                 </p>
                 <Link
                   href="/products"
-                  className="inline-flex items-center gap-2 bg-teal-500 text-ink-950 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-teal-400 transition-all"
+                  className="inline-flex items-center gap-2 bg-white text-ink-950 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-teal-50 transition-all"
                 >
                   View Products
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
