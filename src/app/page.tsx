@@ -181,9 +181,17 @@ export default function Home() {
             </div>
 
             {/* Vial composition */}
-            <div className="relative h-[540px] hidden lg:flex items-center justify-center">
-              <div className="absolute w-96 h-96 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(56,189,238,0.12), transparent 70%)" }} />
-              <div className="relative w-[440px] h-[330px] scale-[1.28]">
+            <div className="relative h-[560px] hidden lg:flex items-center justify-center">
+              {/* designed gradient panel behind the product */}
+              <div
+                className="absolute inset-0 rounded-[2.5rem] overflow-hidden ring-1 ring-slate-200/60"
+                style={{ background: "linear-gradient(150deg, #eaf8ff 0%, #eef3ff 48%, #f3f0ff 100%)" }}
+              >
+                <div className="absolute -top-12 -left-10 w-80 h-80 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.30), transparent 70%)" }} />
+                <div className="absolute -bottom-16 -right-10 w-80 h-80 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.22), transparent 70%)" }} />
+                <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(12,58,107,0.08) 1px, transparent 0)", backgroundSize: "26px 26px" }} />
+              </div>
+              <div className="relative w-[440px] h-[330px] scale-[1.34]">
                 {/* ground shadow */}
                 <div className="absolute left-1/2 -translate-x-1/2 bottom-1 w-72 h-9 rounded-[50%] bg-ink-950/10 blur-lg" />
                 {/* back-left */}
