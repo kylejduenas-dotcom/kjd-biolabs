@@ -61,11 +61,10 @@ export default function Home() {
   return (
     <AgeGate>
       {/* Hero */}
-      <section className="relative -mt-16 pt-16 overflow-hidden" style={{ background: "linear-gradient(160deg, #cfe9f7 0%, #b9def2 48%, #a6d4ee 100%)" }}>
-        <WaterCaustics id="hero" tint="light" opacity={0.92} />
-        <WaterCaustics id="hero2" tint="blue" opacity={0.25} animate={false} />
+      <section className="relative -mt-16 pt-16 overflow-hidden bg-white">
+        <WaterCaustics id="hero" tint="blue" opacity={0.28} className="[mask-image:radial-gradient(120%_100%_at_80%_0%,black,transparent_75%)]" />
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[640px] h-[640px] rounded-full blur-3xl animate-ripple" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.55), transparent 70%)" }} />
+          <div className="absolute top-0 right-0 w-[560px] h-[560px] rounded-full blur-3xl animate-ripple" style={{ background: "radial-gradient(circle, rgba(56,189,238,0.12), transparent 70%)" }} />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center py-20 lg:py-24 lg:min-h-[620px]">
