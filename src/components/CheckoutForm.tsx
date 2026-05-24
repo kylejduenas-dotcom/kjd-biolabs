@@ -95,7 +95,6 @@ export default function CheckoutForm({
   const [step, setStep] = useState(1);
   const defaultPayMethod: "card" | "crypto" | "manual" = NMI_ENABLED ? "card" : CRYPTO_ENABLED ? "crypto" : "manual";
   const [payMethod, setPayMethod] = useState<"card" | "crypto" | "manual">(defaultPayMethod);
-  const bothMethods = NMI_ENABLED && CRYPTO_ENABLED;
 
   const qualifiesFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
   const shippingCost = ship === 0 && qualifiesFreeShipping ? 0 : SHIPPING[ship].cost;
@@ -349,33 +348,52 @@ export default function CheckoutForm({
           <StepHeader n={3} title="Payment" active={step === 3} done={step > 3} onEdit={() => setStep(3)} />
           {step === 3 && (
             <div className="mt-5 space-y-4">
-              {bothMethods && (
-                <div className="grid grid-cols-2 gap-3">
-                  <PayTile selected={payMethod === "card"} onClick={() => setPayMethod("card")} label="Card" sub="Visa · MC · Amex" />
-                  <PayTile selected={payMethod === "crypto"} onClick={() => setPayMethod("crypto")} label="Crypto" sub="USDC · BTC · ETH" />
-                </div>
+              <p className="text-slate-500 text-sm">Choose how you&apos;d like to pay:</p>
+              <div className="grid grid-cols-2 gap-3">
+                <PayTile
+                  selected={payMethod === "card"}
+                  disabled={!NMI_ENABLED}
+                  soon={!NMI_ENABLED}
+                  onClick={() => setPayMethod("card")}
+                  label="Credit / debit card"
+                  sub="Visa · Mastercard · Amex"
+                />
+                <PayTile
+                  selected={payMethod === "crypto"}
+                  disabled={!CRYPTO_ENABLED}
+                  soon={!CRYPTO_ENABLED}
+                  onClick={() => setPayMethod("crypto")}
+                  label="Crypto"
+                  sub="USDC · BTC · ETH"
+                />
+              </div>
+              {payMethod === "card" && NMI_ENABLED && (
+                <p className="text-slate-500 text-xs inline-flex items-center gap-1.5">
+                  <svg className="w-3.5 h-3.5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0-1.105.895-2 2-2s2 .895 2 2m-8 0V7a4 4 0 118 0m-9 4h10a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6a2 2 0 012-2z" /></svg>
+                  Enter your card details below — secured by NMI.
+                </p>
               )}
               {payMethod === "crypto" && CRYPTO_ENABLED && (
-                <p className="text-slate-500 text-sm leading-relaxed">You&apos;ll be securely redirected to Coinbase to complete payment in crypto. Your order is confirmed once the payment settles on-chain.</p>
+                <p className="text-slate-500 text-sm leading-relaxed">You&apos;ll be securely redirected to Coinbase to pay in crypto. Your order is confirmed once the payment settles on-chain.</p>
               )}
               {payMethod === "manual" && (
-                <p className="text-slate-500 text-sm leading-relaxed">After you place your order, we&apos;ll email you secure payment instructions to complete your purchase.</p>
+                <p className="text-slate-500 text-sm leading-relaxed">Online payment is being set up. Place your order and we&apos;ll email you secure payment instructions.</p>
               )}
-              <button type="button" onClick={() => setStep(4)} className={CONTINUE_BTN}>Continue to review</button>
             </div>
           )}
-          {step > 3 && <p className="mt-2 text-sm text-slate-500">{payMethodLabel}</p>}
 
           {/* Card fields stay mounted across steps 3→4 so tokenization works on submit. */}
           {NMI_ENABLED && payMethod === "card" && (
-            <div className={step === 3 ? "mt-4 pt-4 border-t border-slate-100" : "hidden"}>
-              <p className="text-slate-500 text-xs mb-3 inline-flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0-1.105.895-2 2-2s2 .895 2 2m-8 0V7a4 4 0 118 0m-9 4h10a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6a2 2 0 012-2z" /></svg>
-                Secured by NMI · 256-bit SSL
-              </p>
+            <div className={step === 3 ? "mt-4" : "hidden"}>
               <NmiCardFields ref={nmiRef} onApproved={handleApproved} onError={handlePaymentError} />
             </div>
           )}
+
+          {step === 3 && (
+            <button type="button" onClick={() => setStep(4)} className={`${CONTINUE_BTN} mt-4`}>Continue to review</button>
+          )}
+
+          {step > 3 && <p className="mt-2 text-sm text-slate-500">{payMethodLabel}</p>}
         </div>
 
         {/* Step 4 — Review & confirm */}
@@ -512,13 +530,21 @@ function StepHeader({ n, title, active, done, onEdit }: { n: number; title: stri
   );
 }
 
-function PayTile({ selected, onClick, label, sub }: { selected: boolean; onClick: () => void; label: string; sub: string }) {
+function PayTile({ selected, onClick, label, sub, disabled, soon }: { selected: boolean; onClick: () => void; label: string; sub: string; disabled?: boolean; soon?: boolean }) {
   return (
     <button
       type="button"
+      disabled={disabled}
       onClick={onClick}
-      className={`p-4 rounded-2xl border text-left transition-all ${selected ? "border-teal-500 bg-teal-50/60 ring-1 ring-teal-500/30" : "border-slate-200 hover:border-slate-300"}`}
+      className={`relative p-4 rounded-2xl border text-left transition-all ${
+        disabled
+          ? "border-slate-200 bg-slate-50 opacity-60 cursor-not-allowed"
+          : selected
+            ? "border-teal-500 bg-teal-50/60 ring-1 ring-teal-500/30"
+            : "border-slate-200 hover:border-slate-300"
+      }`}
     >
+      {soon && <span className="absolute top-2.5 right-3 text-[10px] font-semibold uppercase tracking-wide text-slate-400">Soon</span>}
       <span className="block text-ink-950 font-semibold text-sm">{label}</span>
       <span className="block text-slate-400 text-xs mt-0.5">{sub}</span>
     </button>
