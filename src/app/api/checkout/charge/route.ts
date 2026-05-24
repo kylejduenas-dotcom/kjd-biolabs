@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
+import { fulfillPaidOrder } from "@/lib/fulfillment";
 
 export const runtime = "nodejs";
 
@@ -103,6 +104,11 @@ export async function POST(req: Request) {
       .from("orders")
       .update({ status: "paid", payment_ref: transactionId, paid_at: new Date().toISOString() })
       .eq("id", order.id);
+    try {
+      await fulfillPaidOrder(order.id, admin); // confirmation email + shipping label (env-gated, best-effort)
+    } catch {
+      // Payment already succeeded; fulfillment is best-effort.
+    }
     return NextResponse.json({ ok: true, transactionId });
   }
 
