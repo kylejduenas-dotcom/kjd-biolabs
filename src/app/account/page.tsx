@@ -11,6 +11,7 @@ interface OrderItem {
 }
 interface OrderRow {
   id: string;
+  order_number: string | null;
   status: string;
   subtotal: number;
   created_at: string;
@@ -33,7 +34,7 @@ export default async function AccountPage() {
 
   const { data: ordersData } = await supabase
     .from("orders")
-    .select("id, status, subtotal, created_at, order_items(product_name, quantity, unit_price)")
+    .select("id, order_number, status, subtotal, created_at, order_items(product_name, quantity, unit_price)")
     .order("created_at", { ascending: false });
   const orders = (ordersData ?? []) as OrderRow[];
 
@@ -141,7 +142,7 @@ export default async function AccountPage() {
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                       <div className="flex items-center gap-3">
                         <span className="text-ink-950 font-mono font-medium text-sm">
-                          #{o.id.slice(0, 8).toUpperCase()}
+                          {o.order_number ?? "#" + o.id.slice(0, 8).toUpperCase()}
                         </span>
                         <span className="text-slate-400 text-xs">
                           {new Date(o.created_at).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}

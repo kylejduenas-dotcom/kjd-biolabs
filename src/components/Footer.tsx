@@ -49,6 +49,9 @@ export default function Footer() {
               laboratories. Every batch third-party tested with Certificate of
               Analysis.
             </p>
+            <p className="text-xs text-slate-500 mt-4">
+              Part of the <span className="text-slate-300">KJD Capital LLC</span> family of brands.
+            </p>
           </div>
 
           <FooterCol title="Shop" links={[
@@ -72,7 +75,7 @@ export default function Footer() {
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500">
-            &copy; {new Date().getFullYear()} KJD BioLabs. All rights reserved.
+            &copy; {new Date().getFullYear()} KJD BioLabs — a KJD Capital LLC company. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-xs text-slate-500">
             <Badge label="SSL Secured" />

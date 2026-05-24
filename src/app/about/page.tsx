@@ -35,13 +35,13 @@ export default function AboutPage() {
       <section className="bg-soft-cream border-b border-slate-200/70 py-20 sm:py-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-ink-950 mb-6 leading-[0.95]">
-            Quality You Can Verify,{" "}
-            <span className="text-teal-600">Not Just Trust.</span>
+            Proof in{" "}
+            <span className="text-teal-600">Every Vial.</span>
           </h1>
           <p className="text-lg text-slate-500 max-w-2xl leading-relaxed">
-            Every batch is independently tested by accredited U.S. laboratories.
-            We don&apos;t ask you to take our word for it — we give you the
-            proof.
+            We don&apos;t ask for blind trust. Every batch is independently
+            tested by accredited U.S. labs, and the full results are yours to
+            review.
           </p>
         </div>
       </section>
@@ -113,21 +113,20 @@ export default function AboutPage() {
           </h2>
           <div className="text-slate-600 leading-relaxed space-y-4 text-lg">
             <p>
-              KJD BioLabs is a U.S.-based provider of research-grade peptides for
-              qualified researchers and accredited laboratories. We specialize in
-              high-purity lyophilized compounds with full analytical
-              documentation.
+              KJD BioLabs supplies high-purity lyophilized peptides to qualified
+              researchers and accredited labs across the United States. Our focus
+              is narrow on purpose: do research-grade compounds, and do them
+              right.
             </p>
             <p>
-              Every product in our catalog undergoes rigorous third-party
-              identity and content testing with full documentation. Our quality
-              procedures ensure that researchers receive compounds with verified
-              identity purity of 99% or greater.
+              Before any product reaches you, it passes independent identity and
+              content testing — and the analytical results travel with it. No
+              guesswork about what's in the vial.
             </p>
             <p>
-              We maintain documented quality procedures combined with competitive
-              research-grade pricing — keeping high identity purity research
-              supply accessible to laboratories of all sizes.
+              Rigorous documentation and fair, research-friendly pricing aren't a
+              trade-off here. We built KJD BioLabs so labs of any size can get
+              consistent, verified material without paying a premium for it.
             </p>
           </div>
         </div>

@@ -50,9 +50,9 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
             Researcher Verification
           </h2>
           <p className="text-slate-500 text-sm mb-6 leading-relaxed">
-            KJD BioLabs supplies research peptides exclusively to qualified
-            researchers and laboratories for in vitro and laboratory use. Please
-            confirm before continuing.
+            Access to KJD BioLabs is limited to qualified researchers purchasing
+            for laboratory and in vitro use only. Please confirm the following
+            before you continue.
           </p>
 
           <div className="space-y-3 mb-6">

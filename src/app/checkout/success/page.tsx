@@ -9,12 +9,12 @@ export default async function CheckoutSuccessPage({
 }) {
   const { order: orderId } = await searchParams;
 
-  let order: { id: string; subtotal: number; created_at: string } | null = null;
+  let order: { id: string; order_number: string | null; subtotal: number; created_at: string } | null = null;
   if (orderId) {
     const supabase = await createClient();
     const { data } = await supabase
       .from("orders")
-      .select("id, subtotal, created_at")
+      .select("id, order_number, subtotal, created_at")
       .eq("id", orderId)
       .single();
     order = data;
@@ -41,7 +41,7 @@ export default async function CheckoutSuccessPage({
             <div className="flex justify-between py-1.5">
               <span className="text-slate-500 text-sm">Order number</span>
               <span className="text-ink-950 text-sm font-mono font-medium">
-                {order.id.slice(0, 8).toUpperCase()}
+                {order.order_number ?? order.id.slice(0, 8).toUpperCase()}
               </span>
             </div>
             <div className="flex justify-between py-1.5">

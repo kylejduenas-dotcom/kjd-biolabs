@@ -27,7 +27,7 @@ export default function ProductsPage() {
             All Products
           </h1>
           <p className="text-slate-500 text-lg">
-            Premium research peptides with 99%+ identity purity
+            Lab-verified research compounds — 99%+ identity purity, every batch
           </p>
         </div>
       </section>

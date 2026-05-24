@@ -20,18 +20,18 @@ const stats = [
 const pillars = [
   {
     icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-    title: "99%+ Purity Guaranteed",
-    desc: "Every batch verified via HPLC and mass spectrometry analysis.",
+    title: "Verified 99%+ Purity",
+    desc: "Each batch is confirmed by HPLC and mass-spectrometry analysis before it's released.",
   },
   {
     icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
-    title: "CoA with Every Batch",
-    desc: "Third-party tested in accredited U.S. laboratories with full documentation.",
+    title: "Documentation on Every Batch",
+    desc: "Independent accredited-lab testing — with the full Certificate of Analysis available to you.",
   },
   {
     icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4",
-    title: "Shipment Protection",
-    desc: "Every order protected against damage, loss, or theft in transit.",
+    title: "Protected, Insured Shipping",
+    desc: "If an order is lost, stolen, or damaged in transit, we replace it at no cost to you.",
   },
 ];
 
@@ -56,15 +56,15 @@ export default function Home() {
               </div>
 
               <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-ink-950 leading-[1.02] mb-6 text-balance">
-                Research Peptides
-                <br className="hidden sm:block" /> You Can{" "}
-                <span className="text-teal-600">Verify.</span>
+                Research-Grade Peptides,
+                <br className="hidden sm:block" />{" "}
+                <span className="text-teal-600">Independently Verified.</span>
               </h1>
 
               <p className="text-lg text-slate-500 leading-relaxed mb-8 max-w-lg">
-                Research-grade peptides with a Certificate of Analysis on every
-                batch. 99%+ identity purity, third-party tested in accredited
-                U.S. laboratories.
+                Every compound ships with a full Certificate of Analysis and is
+                third-party tested in accredited U.S. labs — 99%+ identity
+                purity, batch after batch.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
@@ -131,11 +131,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14">
             <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mb-4">
-              The KJD BioLabs Guarantee
+              Our Quality Commitment
             </h2>
             <p className="text-slate-500 text-lg">
-              Documented quality for research and laboratory use. Every batch
-              meets our rigorous internal purity standards.
+              Verifiable quality at every step — from synthesis to shipment,
+              each batch clears our internal standards before it reaches your
+              bench.
             </p>
           </div>
 
@@ -166,10 +167,10 @@ export default function Home() {
           <div className="flex items-end justify-between mb-12">
             <div>
               <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mb-2">
-                Featured Products
+                Featured Compounds
               </h2>
               <p className="text-slate-500 text-lg">
-                Research peptides, third-party identity tested
+                Lab-tested and ready for your research
               </p>
             </div>
             <Link
