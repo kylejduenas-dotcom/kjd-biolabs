@@ -67,9 +67,10 @@ export default function Footer() {
           ]} />
           <FooterCol title="Legal" links={[
             { label: "Disclaimer", href: "/disclaimer" },
+            { label: "Terms of Sale", href: "/terms" },
+            { label: "Refund & Returns", href: "/refund" },
+            { label: "Privacy Policy", href: "/privacy" },
             { label: "Research Use Only", href: "/disclaimer#research-use" },
-            { label: "Privacy Policy", href: "/disclaimer#privacy" },
-            { label: "Terms of Service", href: "/disclaimer#terms" },
           ]} />
         </div>
       </div>
