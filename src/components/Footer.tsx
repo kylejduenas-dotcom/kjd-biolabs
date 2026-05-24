@@ -3,20 +3,20 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-ink-950 text-slate-400 mt-auto">
+    <footer className="bg-soft-cream text-slate-600 mt-auto border-t border-slate-200/70">
       {/* FDA Disclaimer banner */}
-      <div className="border-b border-white/5">
+      <div className="border-b border-slate-200/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-6">
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6">
             <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 text-amber-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
               <div>
-                <p className="text-amber-400 font-semibold text-xs uppercase tracking-wider mb-1.5">
+                <p className="text-amber-700 font-semibold text-xs uppercase tracking-wider mb-1.5">
                   FDA Disclaimer
                 </p>
-                <p className="text-slate-400 text-xs leading-relaxed">
+                <p className="text-slate-600 text-xs leading-relaxed">
                   These products are intended for laboratory research use only.
                   They are not intended for human or veterinary use, for food or
                   cosmetic purposes, or for use in diagnostic procedures.
@@ -24,7 +24,7 @@ export default function Footer() {
                   evaluated by the U.S. Food and Drug Administration. These
                   products are not intended to diagnose, treat, cure, or prevent
                   any disease.{" "}
-                  <Link href="/disclaimer" className="text-teal-400 hover:text-teal-300 underline">
+                  <Link href="/disclaimer" className="text-teal-600 hover:text-teal-700 underline">
                     Read the full disclaimer &rarr;
                   </Link>
                 </p>
@@ -43,7 +43,7 @@ export default function Footer() {
               width={170}
               height={55}
               className="mb-5"
-              style={{ width: "auto", height: "2.5rem", filter: "brightness(0) invert(1)" }}
+              style={{ width: "auto", height: "2.5rem" }}
             />
             <p className="text-sm leading-relaxed max-w-xs">
               Premium research-grade peptides for qualified researchers and
@@ -51,7 +51,7 @@ export default function Footer() {
               Analysis.
             </p>
             <p className="text-xs text-slate-500 mt-4">
-              Part of the <span className="text-slate-300">KJD Capital LLC</span> family of brands.
+              Part of the <span className="text-ink-950 font-medium">KJD Capital LLC</span> family of brands.
             </p>
           </div>
 
@@ -75,7 +75,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/5">
+      <div className="border-t border-slate-200/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500">
             &copy; {new Date().getFullYear()} KJD BioLabs — a KJD Capital LLC company. All rights reserved.
@@ -94,13 +94,13 @@ export default function Footer() {
 function FooterCol({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
     <div>
-      <h3 className="text-white font-semibold text-xs mb-4 uppercase tracking-wider">
+      <h3 className="text-ink-950 font-semibold text-xs mb-4 uppercase tracking-wider">
         {title}
       </h3>
       <ul className="space-y-2.5">
         {links.map((l) => (
           <li key={l.label}>
-            <Link href={l.href} className="text-sm hover:text-teal-400 transition-colors">
+            <Link href={l.href} className="text-sm hover:text-teal-600 transition-colors">
               {l.label}
             </Link>
           </li>

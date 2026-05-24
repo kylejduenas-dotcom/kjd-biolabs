@@ -121,15 +121,15 @@ export default function QualityProof() {
             onClick={() => setActive(i)}
             className={`text-left p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
               i === active
-                ? "bg-ink-950 border-ink-950 text-white shadow-soft"
+                ? "bg-teal-50 border-teal-500 text-ink-950 ring-1 ring-teal-500/30 shadow-soft"
                 : "bg-white border-slate-200 text-ink-950 hover:border-teal-300"
             }`}
           >
             <span>
               <span className="font-display font-bold block">{dim.key}</span>
-              <span className={`text-xs ${i === active ? "text-slate-300" : "text-slate-400"}`}>{dim.method}</span>
+              <span className={`text-xs ${i === active ? "text-teal-700" : "text-slate-400"}`}>{dim.method}</span>
             </span>
-            <svg className={`w-4 h-4 shrink-0 ${i === active ? "text-teal-400" : "text-slate-300"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className={`w-4 h-4 shrink-0 ${i === active ? "text-teal-600" : "text-slate-300"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
             </svg>
           </button>
