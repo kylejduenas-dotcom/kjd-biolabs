@@ -97,7 +97,7 @@ export default async function AccountPage() {
             </div>
 
             <div className="rounded-3xl bg-ink-950 p-7 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-60" style={{ background: "radial-gradient(circle at 80% 20%, rgba(47,116,199,0.22), transparent 50%)" }} />
+              <div className="absolute inset-0 opacity-60" style={{ background: "radial-gradient(circle at 80% 20%, rgba(18,135,210,0.22), transparent 50%)" }} />
               <div className="relative">
                 <h2 className="text-white font-display font-bold text-lg mb-2">
                   Browse the catalog

@@ -81,7 +81,7 @@ export default function FAQPage() {
       <section className="pb-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl bg-ink-950 p-8 sm:p-10 text-center relative overflow-hidden">
-            <div className="absolute inset-0 opacity-60" style={{ background: "radial-gradient(circle at 70% 30%, rgba(47,116,199,0.22), transparent 50%)" }} />
+            <div className="absolute inset-0 opacity-60" style={{ background: "radial-gradient(circle at 70% 30%, rgba(18,135,210,0.22), transparent 50%)" }} />
             <div className="relative">
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-3">
                 Still have questions?

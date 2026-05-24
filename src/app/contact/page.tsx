@@ -177,8 +177,8 @@ export default function ContactPage() {
         .form-input::placeholder { color: #94a3b8; }
         .form-input:focus {
           outline: none;
-          border-color: #5a93d8;
-          box-shadow: 0 0 0 2px rgba(47,116,199,0.15);
+          border-color: #33a3e1;
+          box-shadow: 0 0 0 2px rgba(18,135,210,0.18);
         }
       `}</style>
     </div>

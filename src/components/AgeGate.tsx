@@ -32,8 +32,8 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-soft-cream flex items-center justify-center px-4 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 -left-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(143,184,230,0.45), transparent 70%)" }} />
-        <div className="absolute -bottom-20 -right-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(90,147,216,0.32), transparent 70%)" }} />
+        <div className="absolute -top-20 -left-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(112,196,239,0.45), transparent 70%)" }} />
+        <div className="absolute -bottom-20 -right-20 w-[28rem] h-[28rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(51,163,225,0.32), transparent 70%)" }} />
       </div>
 
       <div className="relative max-w-md w-full animate-fade-in">

@@ -242,7 +242,7 @@ export default function Home() {
       <section className="py-20 sm:py-28 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden rounded-[2rem] bg-ink-950 px-8 py-16 sm:px-16 text-center">
-            <div className="absolute inset-0 pointer-events-none opacity-60" style={{ background: "radial-gradient(circle at 30% 20%, rgba(47,116,199,0.22), transparent 50%), radial-gradient(circle at 80% 80%, rgba(90,147,216,0.16), transparent 50%)" }} />
+            <div className="absolute inset-0 pointer-events-none opacity-60" style={{ background: "radial-gradient(circle at 30% 20%, rgba(18,135,210,0.22), transparent 50%), radial-gradient(circle at 80% 80%, rgba(51,163,225,0.16), transparent 50%)" }} />
             <div className="relative">
               <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-4">
                 Ready to Start Your Research?
