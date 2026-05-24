@@ -7,10 +7,12 @@ import { useCart } from "@/context/CartContext";
 import { createClient } from "@/lib/supabase/client";
 import { formatPrice, tintStyles } from "@/data/products";
 
+const FREE_SHIPPING_THRESHOLD = 150;
+
 const SHIPPING = [
-  { id: "standard", label: "Standard", eta: "3–5 business days", cost: 9.99 },
-  { id: "express", label: "Express", eta: "1–2 business days", cost: 24.99 },
-  { id: "overnight", label: "Overnight", eta: "Next business day", cost: 44.99 },
+  { id: "standard", label: "Standard", eta: "3–5 business days", cost: 4.99 },
+  { id: "express", label: "Express", eta: "1–2 business days", cost: 19.99 },
+  { id: "overnight", label: "Overnight", eta: "Next business day", cost: 39.99 },
 ];
 
 export default function CheckoutForm({
@@ -37,7 +39,9 @@ export default function CheckoutForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const shippingCost = SHIPPING[ship].cost;
+  const qualifiesFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
+  // Standard ships free once the order clears the threshold; faster methods stay paid upsells.
+  const shippingCost = ship === 0 && qualifiesFreeShipping ? 0 : SHIPPING[ship].cost;
   const total = subtotal + shippingCost;
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -154,7 +158,17 @@ export default function CheckoutForm({
 
         <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-7">
           <h2 className="font-display font-bold text-lg text-ink-950 mb-1">Shipping speed</h2>
-          <p className="text-slate-500 text-sm mb-5">Choose how fast you need it.</p>
+          <p className="text-slate-500 text-sm mb-4">Choose how fast you need it.</p>
+          {qualifiesFreeShipping ? (
+            <div className="flex items-center gap-2 rounded-xl bg-teal-50 border border-teal-200/70 px-4 py-2.5 mb-4 text-teal-800 text-sm">
+              <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              <span>Your order qualifies for <strong>free standard shipping</strong>.</span>
+            </div>
+          ) : (
+            <div className="rounded-xl bg-soft-cream border border-slate-200/70 px-4 py-2.5 mb-4 text-slate-600 text-sm">
+              Add <strong className="text-ink-950">{formatPrice(FREE_SHIPPING_THRESHOLD - subtotal)}</strong> more to unlock <strong className="text-ink-950">free standard shipping</strong>.
+            </div>
+          )}
           <div className="space-y-3">
             {SHIPPING.map((s, i) => (
               <button
@@ -174,7 +188,16 @@ export default function CheckoutForm({
                     <span className="block text-slate-400 text-xs">{s.eta}</span>
                   </span>
                 </span>
-                <span className="text-ink-950 font-semibold text-sm">{formatPrice(s.cost)}</span>
+                <span className="text-sm font-semibold">
+                  {i === 0 && qualifiesFreeShipping ? (
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="text-slate-400 line-through font-normal">{formatPrice(s.cost)}</span>
+                      <span className="text-teal-600">FREE</span>
+                    </span>
+                  ) : (
+                    <span className="text-ink-950">{formatPrice(s.cost)}</span>
+                  )}
+                </span>
               </button>
             ))}
           </div>
@@ -207,7 +230,13 @@ export default function CheckoutForm({
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-slate-500">Shipping ({SHIPPING[ship].label})</span>
-              <span className="text-ink-950 font-medium">{formatPrice(shippingCost)}</span>
+              <span className="font-medium">
+                {shippingCost === 0 ? <span className="text-teal-600 font-semibold">Free</span> : <span className="text-ink-950">{formatPrice(shippingCost)}</span>}
+              </span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-slate-500">Shipment protection</span>
+              <span className="text-teal-600 font-semibold">Free</span>
             </div>
             <div className="flex justify-between pt-2 border-t border-slate-100">
               <span className="text-ink-950 font-semibold">Total</span>
