@@ -35,72 +35,66 @@ const pillars = [
   },
 ];
 
+const Arrow = () => (
+  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+  </svg>
+);
+
 export default function Home() {
   return (
     <AgeGate>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-white">
+      <section className="relative -mt-16 pt-16 overflow-hidden bg-deep-hero text-white">
+        <div className="absolute inset-0 starfield opacity-50 pointer-events-none" />
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-1/2 h-full" style={{ background: "linear-gradient(135deg, #eef4fb 0%, #e3eefb 50%, #f3f8ff 100%)" }} />
+          <div className="absolute top-1/4 right-0 w-[640px] h-[640px] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(111,224,205,0.14), transparent 70%)" }} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-20 lg:min-h-[620px]">
-            {/* Copy */}
+          <div className="grid lg:grid-cols-2 gap-8 items-center py-20 lg:py-24 lg:min-h-[640px]">
             <div className="animate-fade-in">
-              <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200/60 rounded-full px-4 py-1.5 mb-7">
-                <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-                <span className="text-teal-700 text-xs font-semibold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-7">
+                <div className="w-1.5 h-1.5 rounded-full bg-mint-400" />
+                <span className="text-mint-300 text-xs font-semibold uppercase tracking-wider">
                   Research-Grade Peptides
                 </span>
               </div>
 
-              <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-ink-950 leading-[1.02] mb-6 text-balance">
-                Research-Grade Peptides,
+              <h1 className="text-5xl lg:text-6xl font-display font-extrabold leading-[1.02] mb-6 text-balance">
+                Research Peptides,
                 <br className="hidden sm:block" />{" "}
-                <span className="text-teal-600">Independently Verified.</span>
+                <span className="text-mint-gradient">Independently Verified.</span>
               </h1>
 
-              <p className="text-lg text-slate-500 leading-relaxed mb-8 max-w-lg">
+              <p className="text-lg text-slate-300/80 leading-relaxed mb-8 max-w-lg">
                 Every compound ships with a full Certificate of Analysis and is
                 third-party tested in accredited U.S. labs — 99%+ identity
                 purity, batch after batch.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/products"
-                  className="inline-flex items-center justify-center gap-2 bg-ink-950 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-600 hover:shadow-lg hover:shadow-ink-950/20 transition-all"
-                >
+                <Link href="/products" className="inline-flex items-center justify-center gap-2 bg-mint-400 text-deep-900 px-8 py-4 rounded-full font-semibold hover:bg-mint-300 hover:shadow-lg hover:shadow-mint-400/30 transition-all">
                   Browse Catalog
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  <Arrow />
                 </Link>
-                <Link
-                  href="/about"
-                  className="inline-flex items-center justify-center gap-2 border border-slate-300 text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-slate-50 transition-all"
-                >
+                <Link href="/about" className="inline-flex items-center justify-center gap-2 border border-white/15 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/5 transition-all">
                   Our Quality Process
                 </Link>
               </div>
             </div>
 
-            {/* Vial composition */}
+            {/* Vial cluster */}
             <div className="relative h-[460px] hidden lg:flex items-center justify-center">
-              <div className="absolute w-80 h-80 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.9), transparent 70%)" }} />
+              <div className="absolute w-80 h-80 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(111,224,205,0.18), transparent 70%)" }} />
               <div className="relative w-[440px] h-[330px]">
-                {/* ground shadow */}
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-1 w-72 h-9 rounded-[50%] bg-ink-950/10 blur-lg" />
-                {/* back-left */}
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-1 w-72 h-9 rounded-[50%] bg-black/40 blur-lg" />
                 <div className="absolute left-3 top-12 -rotate-[14deg] animate-float-slow z-10">
                   <Vial name="TB-500" tint="sky" size="md" />
                 </div>
-                {/* back-right */}
                 <div className="absolute right-2 top-8 rotate-[14deg] animate-float-slow z-10" style={{ animationDelay: "0.5s" }}>
                   <Vial name="GHK-Cu" tint="rose" size="md" />
                 </div>
-                {/* front-center */}
                 <div className="absolute left-1/2 -translate-x-1/2 top-0 animate-float z-20">
                   <Vial name="BPC-157" tint="mint" size="lg" />
                 </div>
@@ -111,7 +105,7 @@ export default function Home() {
       </section>
 
       {/* Stats */}
-      <section className="bg-ink-950">
+      <section className="bg-deep border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((s) => (
@@ -127,13 +121,14 @@ export default function Home() {
       </section>
 
       {/* Quality pillars */}
-      <section className="py-20 sm:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 sm:py-28 bg-deep relative overflow-hidden">
+        <div className="absolute inset-0 starfield opacity-15 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14">
-            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mb-4">
+            <h2 className="text-4xl sm:text-5xl font-display font-bold text-white mb-4">
               Our Quality Commitment
             </h2>
-            <p className="text-slate-500 text-lg">
+            <p className="text-slate-400 text-lg">
               Verifiable quality at every step — from synthesis to shipment,
               each batch clears our internal standards before it reaches your
               bench.
@@ -142,19 +137,14 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {pillars.map((p) => (
-              <div
-                key={p.title}
-                className="group p-8 rounded-3xl bg-soft-cream border border-slate-200/70 hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-ink-950 text-teal-400 flex items-center justify-center mb-5 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+              <div key={p.title} className="group p-8 rounded-3xl glass-card hover:border-mint-400/30 hover:-translate-y-1 transition-all duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-mint-400/10 text-mint-400 flex items-center justify-center mb-5 group-hover:bg-mint-400/20 transition-colors">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={p.icon} />
                   </svg>
                 </div>
-                <h3 className="text-ink-950 font-display font-bold text-xl mb-2">
-                  {p.title}
-                </h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{p.desc}</p>
+                <h3 className="text-white font-display font-bold text-xl mb-2">{p.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
@@ -162,25 +152,19 @@ export default function Home() {
       </section>
 
       {/* Featured products */}
-      <section className="py-20 sm:py-28 bg-soft-lavender">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 sm:py-28 bg-deep-hero relative overflow-hidden">
+        <div className="absolute inset-0 starfield opacity-20 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mb-2">
+              <h2 className="text-4xl sm:text-5xl font-display font-bold text-white mb-2">
                 Featured Compounds
               </h2>
-              <p className="text-slate-500 text-lg">
-                Lab-tested and ready for your research
-              </p>
+              <p className="text-slate-400 text-lg">Lab-tested and ready for your research</p>
             </div>
-            <Link
-              href="/products"
-              className="hidden sm:inline-flex items-center gap-2 text-ink-950 font-semibold text-sm hover:text-teal-600 transition-colors"
-            >
+            <Link href="/products" className="hidden sm:inline-flex items-center gap-2 text-mint-400 font-semibold text-sm hover:text-mint-300 transition-colors">
               View all
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <Arrow />
             </Link>
           </div>
 
@@ -193,55 +177,49 @@ export default function Home() {
       </section>
 
       {/* Affiliate */}
-      <section className="py-16 sm:py-20 bg-white">
+      <section className="py-16 sm:py-20 bg-deep">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[2rem] border border-slate-200/80 bg-soft-cream p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="rounded-[2rem] glass-card p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
-              <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider">
+              <span className="text-mint-400 font-semibold text-sm uppercase tracking-wider">
                 Affiliate Program
               </span>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold text-ink-950 mt-2 mb-2">
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mt-2 mb-2">
                 Refer researchers. Earn commission.
               </h2>
-              <p className="text-slate-500 max-w-lg">
+              <p className="text-slate-400 max-w-lg">
                 Share KJD BioLabs with your audience and get paid on every
                 qualifying order you send our way.
               </p>
             </div>
-            <Link
-              href="/affiliate"
-              className="shrink-0 inline-flex items-center gap-2 bg-ink-950 text-white px-7 py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all"
-            >
+            <Link href="/affiliate" className="shrink-0 inline-flex items-center gap-2 bg-mint-400 text-deep-900 px-7 py-3.5 rounded-full font-semibold hover:bg-mint-300 transition-all">
               Become a Partner
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <Arrow />
             </Link>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 sm:py-28 bg-white">
+      <section className="py-20 sm:py-28 bg-deep">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-[2rem] bg-ink-950 px-8 py-16 sm:px-16 text-center">
-            <div className="absolute inset-0 pointer-events-none opacity-60" style={{ background: "radial-gradient(circle at 30% 20%, rgba(47,116,199,0.22), transparent 50%), radial-gradient(circle at 80% 80%, rgba(90,147,216,0.16), transparent 50%)" }} />
+          <div className="relative overflow-hidden rounded-[2rem] bg-deep-hero border border-white/10 px-8 py-16 sm:px-16 text-center">
+            <div className="absolute inset-0 starfield opacity-25 pointer-events-none" />
+            <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 50% 0%, rgba(111,224,205,0.16), transparent 55%)" }} />
             <div className="relative">
               <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-4">
                 Ready to Start Your Research?
               </h2>
-              <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">
-                Browse our catalog of 28+ research-grade peptides. Every compound
-                backed by third-party testing and full documentation.
+              <p className="text-slate-300/80 text-lg mb-8 max-w-xl mx-auto">
+                Browse our catalog of 28+ research-grade peptides — every
+                compound backed by third-party testing and full documentation.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link href="/products" className="inline-flex items-center gap-2 bg-white text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-teal-400 transition-all">
+                <Link href="/products" className="inline-flex items-center gap-2 bg-mint-400 text-deep-900 px-8 py-4 rounded-full font-semibold hover:bg-mint-300 transition-all">
                   Browse Catalog
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  <Arrow />
                 </Link>
-                <Link href="/contact" className="inline-flex items-center gap-2 border border-white/20 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all">
+                <Link href="/contact" className="inline-flex items-center gap-2 border border-white/15 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/5 transition-all">
                   Contact Us
                 </Link>
               </div>

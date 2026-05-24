@@ -15,6 +15,14 @@
   --color-teal-500: #2f74c7;
   --color-teal-600: #2360a8;
   --color-teal-700: #1c4f8c;
+  /* Dark-premium palette (Peptora-style) for the new look */
+  --color-mint-300: #9ee9da;
+  --color-mint-400: #6fe0cd;
+  --color-mint-500: #38ccb4;
+  --color-deep-950: #061a22;
+  --color-deep-900: #08222c;
+  --color-deep-800: #0d2f3c;
+  --color-deep-700: #123f4e;
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }
@@ -114,4 +122,33 @@ h1, h2, h3, h4, h5 {
   outline: none;
   border-color: #5a93d8;
   box-shadow: 0 0 0 3px rgba(47, 116, 199, 0.15);
+}
+
+/* ---- Dark-premium (Peptora-style) helpers ---- */
+.bg-deep-hero {
+  background:
+    radial-gradient(1100px 600px at 72% -8%, #16566a 0%, transparent 58%),
+    radial-gradient(900px 520px at 8% 112%, #0e3a48 0%, transparent 58%),
+    linear-gradient(160deg, #0b2c38 0%, #081f29 55%, #061a22 100%);
+}
+.bg-deep {
+  background: linear-gradient(180deg, #081f29 0%, #061a22 100%);
+}
+.starfield {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.55) 1px, transparent 1.4px),
+    radial-gradient(circle, rgba(111, 224, 205, 0.45) 1px, transparent 1.4px);
+  background-size: 95px 95px, 150px 140px;
+  background-position: 0 0, 55px 70px;
+}
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+.text-mint-gradient {
+  background: linear-gradient(120deg, #9ee9da, #6fe0cd 55%, #38ccb4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
