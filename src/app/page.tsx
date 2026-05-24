@@ -84,9 +84,9 @@ export default function Home() {
             </div>
 
             {/* Vial composition */}
-            <div className="relative h-[460px] hidden lg:flex items-center justify-center">
-              <div className="absolute w-80 h-80 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(255,255,255,0.9), transparent 70%)" }} />
-              <div className="relative w-[440px] h-[330px]">
+            <div className="relative h-[540px] hidden lg:flex items-center justify-center">
+              <div className="absolute w-96 h-96 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(56,189,238,0.12), transparent 70%)" }} />
+              <div className="relative w-[440px] h-[330px] scale-[1.28]">
                 {/* ground shadow */}
                 <div className="absolute left-1/2 -translate-x-1/2 bottom-1 w-72 h-9 rounded-[50%] bg-ink-950/10 blur-lg" />
                 {/* back-left */}
