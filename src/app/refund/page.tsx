@@ -18,6 +18,27 @@ export default function RefundPage() {
       <section className="py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-10">
+            {/* Guarantee callout */}
+            <div className="rounded-3xl bg-logo-gradient p-7 sm:p-9 relative overflow-hidden">
+              <div className="absolute -right-12 -top-12 w-56 h-56 rounded-full border border-white/15" />
+              <div className="relative flex items-start gap-4">
+                <span className="w-12 h-12 rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur-sm flex items-center justify-center shrink-0 text-white">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </span>
+                <div>
+                  <h2 className="text-white font-display font-bold text-2xl mb-1.5">30-Day Money-Back Guarantee</h2>
+                  <p className="text-white/85 text-sm leading-relaxed">
+                    Order with confidence. If you&rsquo;re not satisfied, return any unopened product in its original
+                    sealed condition within 30 days of delivery for a full refund. Every batch is also backed by our
+                    quality guarantee — if a product doesn&rsquo;t match its Certificate of Analysis, we&rsquo;ll
+                    replace it or refund you.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <Section title="Overview">
               <p>
                 We want you to be confident ordering from KJD BioLabs. Because our products are research reagents

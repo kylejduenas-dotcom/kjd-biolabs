@@ -171,7 +171,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 mt-8">
-                {["99%+ identity purity", "Third-party tested", "Same-day dispatch", "Free shipment protection"].map((t) => (
+                {["99%+ identity purity", "Third-party tested", "30-day money-back guarantee", "Free shipment protection"].map((t) => (
                   <span key={t} className="inline-flex items-center gap-1.5 text-slate-500 text-sm font-medium">
                     <svg className="w-4 h-4 text-teal-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
                     {t}

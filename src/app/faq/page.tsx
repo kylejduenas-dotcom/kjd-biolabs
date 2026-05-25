@@ -30,8 +30,8 @@ const faqs = [
     a: "We ship throughout the United States. International shipping availability varies by destination and compound — please contact us before ordering from outside the U.S.",
   },
   {
-    q: "What is your return policy?",
-    a: "Due to the nature of research materials, opened or reconstituted products cannot be returned. Unopened products in their original sealed condition may be eligible for return within 30 days of delivery — contact support for authorization.",
+    q: "Do you offer a money-back guarantee?",
+    a: "Yes — we back every order with a 30-day money-back guarantee. Unopened products in their original sealed condition can be returned within 30 days of delivery for a full refund; just contact support for a return authorization. For safety and research integrity, opened or reconstituted products can't be returned, but every order is also covered by free shipment protection and our quality guarantee — if a product doesn't match its Certificate of Analysis, we'll replace it or refund you.",
   },
 ];
 
