@@ -196,17 +196,17 @@ export default function Home() {
                 <div className="absolute bottom-8 right-10 w-64 h-64 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.16), transparent 70%)" }} />
               </div>
 
-              <div className="relative w-[500px] h-[490px]">
-                {/* back-left — leaning, lower, behind */}
-                <div className="absolute left-[28px] top-[150px] rotate-[12deg] animate-float-slow z-10" style={{ filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
+              <div className="relative w-[500px] h-[500px]">
+                {/* left — tilts back (counter-clockwise), mid height */}
+                <div className="absolute left-[14px] top-[150px] rotate-[-9deg] animate-float-slow z-10" style={{ filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
                   <HeroBottle name="TB-500" tint="sky" size="md" />
                 </div>
-                {/* back-right — leaning, lower, behind */}
-                <div className="absolute left-[300px] top-[168px] rotate-[12deg] animate-float-slow z-10" style={{ animationDelay: "0.6s", filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
+                {/* right — kicks out hard (clockwise), sits lowest */}
+                <div className="absolute left-[312px] top-[198px] rotate-[24deg] animate-float-slow z-10" style={{ animationDelay: "0.6s", filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
                   <HeroBottle name="GHK-Cu" tint="rose" size="md" />
                 </div>
-                {/* front-center — leaning, highest, largest, front */}
-                <div className="absolute left-1/2 -translate-x-1/2 top-[20px] rotate-[12deg] animate-float z-20" style={{ filter: "drop-shadow(0 40px 34px rgba(12,58,107,0.30))" }}>
+                {/* center — slight clockwise tilt, highest + front */}
+                <div className="absolute left-1/2 -translate-x-1/2 top-[14px] rotate-[6deg] animate-float z-20" style={{ filter: "drop-shadow(0 40px 34px rgba(12,58,107,0.30))" }}>
                   <HeroBottle name="BPC-157" tint="mint" size="lg" />
                 </div>
               </div>
@@ -547,8 +547,8 @@ export default function Home() {
         <div className="hidden lg:block absolute right-6 xl:right-16 top-1/2 -translate-y-1/2 rotate-[12deg] animate-float">
           <Vial name="NAD+" tint="aqua" size="md" />
         </div>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-[2rem] bg-logo-gradient px-8 py-16 sm:px-16 text-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-[2rem] bg-logo-gradient px-8 py-20 sm:px-16 lg:py-24 text-center">
             <div className="relative">
               <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-4">
                 Ready to Start Your Research?
