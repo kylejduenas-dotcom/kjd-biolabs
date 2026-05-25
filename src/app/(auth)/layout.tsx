@@ -1,8 +1,20 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
+  // Login uses a full-bleed split layout (brand panel + form).
+  if (pathname === "/login") {
+    return <div className="min-h-[calc(100vh-4rem)]">{children}</div>;
+  }
+
+  // Signup / forgot / reset keep the centered card layout.
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-soft-cream flex items-center justify-center px-4 py-12 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
