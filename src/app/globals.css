@@ -84,6 +84,16 @@ h1, h2, h3, h4, h5 {
   color: transparent;
   animation: gradient-pan 7s linear infinite;
 }
+/* Bright aqua sheen for dark backgrounds (e.g., the dark hero accent word) */
+.text-aqua-anim {
+  background-image: linear-gradient(90deg, #67e8f9, #a5f3fc, #e6fdff, #7ce2f8, #36cdee);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradient-pan 7s linear infinite;
+}
 
 /* Staggered entrance */
 @keyframes fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
@@ -92,7 +102,7 @@ h1, h2, h3, h4, h5 {
 /* Respect reduced-motion: stop all motion to cut compositor load */
 @media (prefers-reduced-motion: reduce) {
   .animate-float, .animate-float-slow, .animate-marquee,
-  .aurora-a, .aurora-b, .text-gradient-anim, .fade-up {
+  .aurora-a, .aurora-b, .text-gradient-anim, .text-aqua-anim, .fade-up {
     animation: none !important;
   }
   .fade-up { opacity: 1; }

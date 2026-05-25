@@ -124,31 +124,32 @@ function PeptideDiagram() {
 export default function Home() {
   return (
     <>
-      {/* ===== Hero ===== */}
-      <section className="relative overflow-hidden bg-white">
-        {/* Animated aurora background */}
+      {/* ===== Hero (dark, premium) ===== */}
+      <section className="relative overflow-hidden" style={{ background: "radial-gradient(125% 95% at 78% 8%, #16224d 0%, #0b1228 44%, #070a18 100%)" }}>
+        {/* Glowing aurora behind the products */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <div className="aurora aurora-a" style={{ top: "-16%", left: "-8%", width: "44rem", height: "44rem", background: "radial-gradient(circle, rgba(43,196,230,0.20), transparent 65%)" }} />
-          <div className="aurora aurora-b" style={{ bottom: "-26%", right: "-6%", width: "40rem", height: "40rem", background: "radial-gradient(circle, rgba(18,135,210,0.16), transparent 65%)" }} />
+          <div className="aurora aurora-a" style={{ top: "-14%", right: "0%", width: "46rem", height: "46rem", background: "radial-gradient(circle, rgba(43,196,230,0.30), transparent 64%)" }} />
+          <div className="aurora aurora-b" style={{ bottom: "-30%", right: "-8%", width: "42rem", height: "42rem", background: "radial-gradient(circle, rgba(18,135,210,0.24), transparent 66%)" }} />
+          <div className="aurora aurora-a" style={{ top: "24%", left: "-14%", width: "32rem", height: "32rem", background: "radial-gradient(circle, rgba(12,58,107,0.45), transparent 70%)" }} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-20 lg:min-h-[620px]">
+          <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-24 lg:min-h-[640px]">
             {/* Copy */}
             <div>
-              <div className="fade-up inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-teal-200/70 rounded-full px-4 py-1.5 mb-7 shadow-sm">
-                <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-                <span className="text-teal-700 text-xs font-semibold uppercase tracking-wider">
+              <div className="fade-up inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full px-4 py-1.5 mb-7">
+                <div className="w-1.5 h-1.5 rounded-full bg-teal-300" />
+                <span className="text-teal-200 text-xs font-semibold uppercase tracking-wider">
                   Research-Grade Peptides
                 </span>
               </div>
 
-              <h1 className="fade-up stagger-1 text-5xl lg:text-[4.5rem] font-display font-extrabold text-ink-950 leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
+              <h1 className="fade-up stagger-1 text-5xl lg:text-[4.6rem] font-display font-extrabold text-white leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
                 Research begins with{" "}
-                <span className="text-gradient-anim">certainty.</span>
+                <span className="text-aqua-anim">certainty.</span>
               </h1>
 
-              <p className="fade-up stagger-2 text-lg text-slate-600 leading-relaxed mb-8 max-w-lg">
+              <p className="fade-up stagger-2 text-lg text-slate-300 leading-relaxed mb-8 max-w-lg">
                 Every KJD BioLabs compound is third-party tested to 99%+ identity
                 purity in accredited U.S. labs — with a Certificate of Analysis
                 available for every batch.
@@ -157,7 +158,7 @@ export default function Home() {
               <div className="fade-up stagger-3 flex flex-col sm:flex-row gap-3">
                 <Link
                   href="/products"
-                  className="inline-flex items-center justify-center gap-2 bg-ink-950 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-600 hover:shadow-lg hover:shadow-ink-950/20 transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-teal-50 hover:shadow-lg hover:shadow-cyan-400/20 transition-all"
                 >
                   Browse Catalog
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -166,7 +167,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/about"
-                  className="inline-flex items-center justify-center gap-2 border border-slate-300 text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-slate-50 transition-all"
+                  className="inline-flex items-center justify-center gap-2 border border-white/25 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all"
                 >
                   Our Quality Process
                 </Link>
@@ -174,26 +175,25 @@ export default function Home() {
 
               <div className="fade-up stagger-4 flex flex-wrap items-center gap-x-6 gap-y-2.5 mt-8">
                 {["99%+ identity purity", "Third-party tested", "30-day money-back guarantee", "Free shipment protection"].map((t) => (
-                  <span key={t} className="inline-flex items-center gap-1.5 text-slate-500 text-sm font-medium">
-                    <svg className="w-4 h-4 text-teal-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                  <span key={t} className="inline-flex items-center gap-1.5 text-slate-300 text-sm font-medium">
+                    <svg className="w-4 h-4 text-teal-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
                     {t}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* Vial composition — floating on soft glow (no box) */}
+            {/* Vial composition — glowing products on dark */}
             <div className="relative h-[560px] hidden lg:flex items-center justify-center">
-              {/* soft ambient glow behind the floating vials */}
+              {/* strong glow behind the products */}
               <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.32), transparent 66%)" }} />
-                <div className="absolute bottom-4 right-2 w-72 h-72 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.26), transparent 70%)" }} />
-                <div className="absolute top-6 left-3 w-60 h-60 rounded-full blur-2xl" style={{ background: "radial-gradient(circle, rgba(54,205,238,0.24), transparent 70%)" }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32rem] h-[32rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.34), transparent 64%)" }} />
+                <div className="absolute bottom-2 right-4 w-72 h-72 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.30), transparent 70%)" }} />
               </div>
 
-              <div className="relative w-[440px] h-[330px] scale-[1.34]">
-                {/* ground shadow */}
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-1 w-72 h-9 rounded-[50%] bg-ink-950/10 blur-lg" />
+              <div className="relative w-[440px] h-[330px] scale-[1.36]">
+                {/* glossy floor reflection */}
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-80 h-12 rounded-[50%] blur-md" style={{ background: "radial-gradient(ellipse, rgba(43,196,230,0.38), transparent 70%)" }} />
                 {/* back-left */}
                 <div className="absolute left-3 top-12 -rotate-[14deg] animate-float-slow z-10">
                   <Vial name="TB-500" tint="sky" size="md" />
@@ -208,28 +208,28 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Floating verification badge — top right */}
+              {/* Floating verification badge — top right (dark glass) */}
               <div className="absolute top-5 right-5 z-30">
-                <div className="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-white/80 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
+                <div className="flex items-center gap-3 bg-ink-950/40 backdrop-blur-md border border-white/15 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
                   <span className="w-9 h-9 rounded-xl bg-logo-gradient text-white flex items-center justify-center shrink-0">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
                   </span>
                   <div className="leading-tight">
-                    <p className="text-ink-950 font-display font-bold text-sm">99%+ Purity</p>
-                    <p className="text-slate-500 text-[11px] font-medium">Verified by HPLC</p>
+                    <p className="text-white font-display font-bold text-sm">99%+ Purity</p>
+                    <p className="text-slate-300 text-[11px] font-medium">Verified by HPLC</p>
                   </div>
                 </div>
               </div>
 
-              {/* Floating CoA badge — bottom left */}
+              {/* Floating CoA badge — bottom left (dark glass) */}
               <div className="absolute bottom-5 left-5 z-30">
-                <div className="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-white/80 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
-                  <span className="w-9 h-9 rounded-xl bg-ink-950 text-teal-300 flex items-center justify-center shrink-0">
+                <div className="flex items-center gap-3 bg-ink-950/40 backdrop-blur-md border border-white/15 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
+                  <span className="w-9 h-9 rounded-xl bg-white text-ink-950 flex items-center justify-center shrink-0">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                   </span>
                   <div className="leading-tight">
-                    <p className="text-ink-950 font-display font-bold text-sm">Certificate of Analysis</p>
-                    <p className="text-slate-500 text-[11px] font-medium">Available for every batch</p>
+                    <p className="text-white font-display font-bold text-sm">Certificate of Analysis</p>
+                    <p className="text-slate-300 text-[11px] font-medium">Available for every batch</p>
                   </div>
                 </div>
               </div>
