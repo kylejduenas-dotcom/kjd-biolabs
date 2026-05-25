@@ -537,7 +537,7 @@ export const productPrices: Record<string, number> = {
   "bpc-157-tb-500-wolverine": 105.99,
   glow: 110.99,
   klow: 125.99,
-  "bacteriostatic-water": 13.99,
+  "bacteriostatic-water": 10,
 };
 
 export function priceFor(slug: string): number {
