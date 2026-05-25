@@ -124,8 +124,8 @@ function PeptideDiagram() {
 export default function Home() {
   return (
     <>
-      {/* ===== Hero (dark, premium) ===== */}
-      <section className="relative overflow-hidden" style={{ background: "radial-gradient(125% 95% at 78% 8%, #16224d 0%, #0b1228 44%, #070a18 100%)" }}>
+      {/* ===== Hero (dark, premium) — pulled up behind the fixed navbar so the dark bg sits under it ===== */}
+      <section className="relative overflow-hidden -mt-16" style={{ background: "radial-gradient(125% 95% at 78% 8%, #16224d 0%, #0b1228 44%, #070a18 100%)" }}>
         {/* Glowing aurora behind the products */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
           <div className="aurora aurora-a" style={{ top: "-14%", right: "0%", width: "46rem", height: "46rem", background: "radial-gradient(circle, rgba(43,196,230,0.30), transparent 64%)" }} />
@@ -134,7 +134,7 @@ export default function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-24 lg:min-h-[640px]">
+          <div className="grid lg:grid-cols-2 gap-8 items-center pt-24 pb-16 lg:pt-28 lg:pb-24 lg:min-h-[640px]">
             {/* Copy */}
             <div>
               <div className="fade-up inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full px-4 py-1.5 mb-7">
