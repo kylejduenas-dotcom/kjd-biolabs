@@ -471,15 +471,15 @@ export const tintStyles: Record<
     cap: "#e2e8f0",
   },
   violet: {
-    bg: "linear-gradient(135deg, #f5f3ff 0%, #ede9fe 60%, #ddd6fe 100%)",
-    vialBody: "#c4b5fd",
-    vialLiquid: "#a78bfa",
+    bg: "linear-gradient(135deg, #ecfeff 0%, #cffafe 60%, #a5f3fc 100%)",
+    vialBody: "#67e8f9",
+    vialLiquid: "#22d3ee",
     cap: "#e2e8f0",
   },
   lavender: {
-    bg: "linear-gradient(135deg, #eef2ff 0%, #e0e7ff 60%, #c7d2fe 100%)",
-    vialBody: "#a5b4fc",
-    vialLiquid: "#818cf8",
+    bg: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 60%, #bfdbfe 100%)",
+    vialBody: "#93c5fd",
+    vialLiquid: "#60a5fa",
     cap: "#e2e8f0",
   },
   sand: {

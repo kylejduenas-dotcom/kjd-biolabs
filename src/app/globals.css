@@ -105,15 +105,10 @@ h1, h2, h3, h4, h5 {
 
 /* Soft pastel section backgrounds — cool-tinted for a richer, less washed-out feel */
 .bg-soft-mint { background: linear-gradient(180deg, #ffffff 0%, #ecfbf6 100%); }
-.bg-soft-lavender { background: linear-gradient(180deg, #eef3ff 0%, #f3effe 100%); }
+.bg-soft-lavender { background: linear-gradient(180deg, #eafaff 0%, #f0f8fe 100%); }
 .bg-soft-cream { background: linear-gradient(180deg, #f1f6fc 0%, #eef3fa 100%); }
 .bg-soft-blue { background: linear-gradient(180deg, #e9f3ff 0%, #f2f6fd 100%); }
 
-/* Subtle dot-grid texture so flat sections gain depth */
-.bg-dots {
-  background-image: radial-gradient(circle at 1px 1px, rgba(12, 58, 107, 0.07) 1px, transparent 0);
-  background-size: 26px 26px;
-}
 /* Soft brand glow blobs for section depth */
 .glow-blob {
   position: absolute;

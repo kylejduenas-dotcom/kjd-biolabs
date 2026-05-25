@@ -130,7 +130,6 @@ export default function Home() {
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
           <div className="aurora aurora-a" style={{ top: "-16%", left: "-8%", width: "44rem", height: "44rem", background: "radial-gradient(circle, rgba(43,196,230,0.20), transparent 65%)" }} />
           <div className="aurora aurora-b" style={{ bottom: "-26%", right: "-6%", width: "40rem", height: "40rem", background: "radial-gradient(circle, rgba(18,135,210,0.16), transparent 65%)" }} />
-          <div className="absolute inset-0 bg-dots opacity-[0.35]" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -189,11 +188,10 @@ export default function Home() {
               <div className="absolute inset-2 rounded-[2.5rem] overflow-hidden">
                 <div className="absolute -top-10 -left-6 w-72 h-72 rounded-full" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.55), transparent 70%)" }} />
                 <div className="absolute -bottom-12 -right-8 w-80 h-80 rounded-full" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.45), transparent 70%)" }} />
-                <div className="absolute top-1/3 right-1/4 w-60 h-60 rounded-full" style={{ background: "radial-gradient(circle, rgba(125,92,240,0.26), transparent 70%)" }} />
+                <div className="absolute top-1/3 right-1/4 w-60 h-60 rounded-full" style={{ background: "radial-gradient(circle, rgba(54,205,238,0.34), transparent 70%)" }} />
               </div>
               {/* frosted glass surface */}
               <div className="absolute inset-0 rounded-[2.5rem] bg-white/30 backdrop-blur-2xl border border-white/60" style={{ boxShadow: "0 24px 70px rgba(12,58,107,0.18), inset 0 1px 0 rgba(255,255,255,0.65)" }} />
-              <div className="absolute inset-0 rounded-[2.5rem] pointer-events-none opacity-[0.4]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(12,58,107,0.06) 1px, transparent 0)", backgroundSize: "26px 26px" }} />
 
               <div className="relative w-[440px] h-[330px] scale-[1.34]">
                 {/* ground shadow */}
@@ -245,7 +243,6 @@ export default function Home() {
       {/* ===== Stats band ===== */}
       <section className="relative bg-logo-gradient overflow-hidden">
         <div className="glow-blob -top-24 left-1/4 w-96 h-96" style={{ background: "rgba(255,255,255,0.12)" }} />
-        <div className="absolute inset-0 bg-dots opacity-[0.15]" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 lg:divide-x lg:divide-white/20">
             {stats.map((s) => (
@@ -341,7 +338,7 @@ export default function Home() {
           <div className="relative rounded-3xl bg-soft-cream border border-slate-200/80 shadow-soft p-6 sm:p-8">
             {/* decorative floating vial */}
             <div className="hidden sm:block absolute -right-6 -top-10 rotate-[10deg] animate-float-slow z-10">
-              <Vial name="Epitalon" tint="violet" size="sm" />
+              <Vial name="Epitalon" tint="sky" size="sm" />
             </div>
             <PeptideDiagram />
             <p className="text-center text-xs text-slate-400 mt-2">Illustrative peptide sequence (H&#8322;N &rarr; COOH backbone with residue side chains)</p>
@@ -432,7 +429,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="relative rounded-[2rem] bg-soft-blue bg-dots border border-slate-200/60 shadow-soft-lg p-8 sm:p-12 lg:p-14 overflow-hidden">
+          <div className="relative rounded-[2rem] bg-soft-blue border border-slate-200/60 shadow-soft-lg p-8 sm:p-12 lg:p-14 overflow-hidden">
             <div className="glow-blob -top-16 -left-10 w-72 h-72" style={{ background: "rgba(43,196,230,0.20)" }} />
             <div className="glow-blob -bottom-20 -right-10 w-72 h-72" style={{ background: "rgba(18,135,210,0.16)" }} />
             <div className="relative">

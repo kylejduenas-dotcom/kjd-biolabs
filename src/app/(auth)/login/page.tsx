@@ -62,7 +62,6 @@ function LoginForm() {
     <div className="grid lg:grid-cols-2 min-h-[calc(100vh-4rem)]">
       {/* Brand panel */}
       <div className="hidden lg:flex relative bg-logo-gradient items-center justify-center overflow-hidden p-12">
-        <div className="absolute inset-0 bg-dots opacity-[0.15]" />
         <div className="glow-blob -top-16 -left-10 w-96 h-96" style={{ background: "rgba(255,255,255,0.14)" }} />
         <div className="glow-blob -bottom-20 -right-10 w-96 h-96" style={{ background: "rgba(12,58,107,0.25)" }} />
         <div className="relative text-center">
