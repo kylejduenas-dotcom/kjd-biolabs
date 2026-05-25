@@ -33,7 +33,7 @@ export default function ProductsPage() {
       </section>
 
       {/* Filters */}
-      <section className="border-b border-slate-200/70 py-5 sticky top-16 z-40 bg-white/85 backdrop-blur-xl">
+      <section className="border-b border-slate-200/70 py-5 sticky top-16 z-40 bg-white/95">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4">
             <div className="relative max-w-md">

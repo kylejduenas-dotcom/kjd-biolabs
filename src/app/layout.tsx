@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/CartDrawer";
+import AgeGate from "@/components/AgeGate";
 
 const display = Bricolage_Grotesque({
   variable: "--font-display",
@@ -44,10 +45,12 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-white">
         <CartProvider>
-          <Navbar />
-          <main className="flex-1 pt-16">{children}</main>
-          <Footer />
-          <CartDrawer />
+          <AgeGate>
+            <Navbar />
+            <main className="flex-1 pt-16">{children}</main>
+            <Footer />
+            <CartDrawer />
+          </AgeGate>
         </CartProvider>
       </body>
     </html>

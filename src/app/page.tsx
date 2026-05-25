@@ -1,6 +1,3 @@
-"use client";
-
-import AgeGate from "@/components/AgeGate";
 import Link from "next/link";
 import { products } from "@/data/products";
 import Vial from "@/components/Vial";
@@ -126,7 +123,7 @@ function PeptideDiagram() {
 
 export default function Home() {
   return (
-    <AgeGate>
+    <>
       {/* ===== Hero ===== */}
       <section className="relative overflow-hidden bg-white">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -187,8 +184,8 @@ export default function Home() {
                 className="absolute inset-0 rounded-[2.5rem] overflow-hidden ring-1 ring-slate-200/60"
                 style={{ background: "linear-gradient(150deg, #eaf8ff 0%, #eef3ff 48%, #f3f0ff 100%)" }}
               >
-                <div className="absolute -top-12 -left-10 w-80 h-80 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.30), transparent 70%)" }} />
-                <div className="absolute -bottom-16 -right-10 w-80 h-80 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.22), transparent 70%)" }} />
+                <div className="absolute -top-12 -left-10 w-80 h-80 rounded-full blur-xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.30), transparent 70%)" }} />
+                <div className="absolute -bottom-16 -right-10 w-80 h-80 rounded-full blur-xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.22), transparent 70%)" }} />
                 <div className="absolute inset-0 opacity-[0.5]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(12,58,107,0.08) 1px, transparent 0)", backgroundSize: "26px 26px" }} />
               </div>
               <div className="relative w-[440px] h-[330px] scale-[1.34]">
@@ -210,7 +207,7 @@ export default function Home() {
 
               {/* Floating verification badge — top right */}
               <div className="absolute top-6 -right-2 z-30">
-                <div className="flex items-center gap-3 bg-white/95 backdrop-blur-md border border-slate-200/70 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
+                <div className="flex items-center gap-3 bg-white/95 border border-slate-200/70 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
                   <span className="w-9 h-9 rounded-xl bg-logo-gradient text-white flex items-center justify-center shrink-0">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
                   </span>
@@ -223,7 +220,7 @@ export default function Home() {
 
               {/* Floating CoA badge — bottom left */}
               <div className="absolute bottom-8 -left-2 z-30">
-                <div className="flex items-center gap-3 bg-white/95 backdrop-blur-md border border-slate-200/70 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
+                <div className="flex items-center gap-3 bg-white/95 border border-slate-200/70 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
                   <span className="w-9 h-9 rounded-xl bg-ink-950 text-teal-300 flex items-center justify-center shrink-0">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                   </span>
@@ -593,6 +590,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </AgeGate>
+    </>
   );
 }

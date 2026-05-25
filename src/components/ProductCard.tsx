@@ -18,13 +18,13 @@ export default function ProductCard({ product }: { product: Product }) {
           className="h-80 flex items-center justify-center relative overflow-hidden"
           style={{ background: style.bg }}
         >
-          <span className="absolute top-4 left-4 text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full bg-white/70 backdrop-blur text-ink-900">
+          <span className="absolute top-4 left-4 text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full bg-white/90 text-ink-900 shadow-sm">
             {product.category}
           </span>
           <div className="group-hover:scale-105 group-hover:-translate-y-1 transition-transform duration-500">
             <Vial name={product.name} tint={product.tint} size="lg" />
           </div>
-          <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/80 backdrop-blur text-ink-900 shadow-soft">
+          <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/90 text-ink-900 shadow-soft">
             <svg className="w-3 h-3 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
             99%+ · HPLC
           </span>

@@ -66,6 +66,15 @@ h1, h2, h3, h4, h5 {
 .animate-float-slow { animation: float-slow 7s ease-in-out infinite; }
 .animate-marquee { animation: marquee 30s linear infinite; }
 
+/* Respect reduced-motion: stop all infinite animations to cut compositor load */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-slow,
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
 .stagger-1 { animation-delay: 0.08s; }
 .stagger-2 { animation-delay: 0.16s; }
 .stagger-3 { animation-delay: 0.24s; }
@@ -86,7 +95,7 @@ h1, h2, h3, h4, h5 {
 .glow-blob {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(64px);
+  filter: blur(40px);
   pointer-events: none;
 }
 
