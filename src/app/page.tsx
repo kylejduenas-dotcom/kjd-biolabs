@@ -124,41 +124,40 @@ function PeptideDiagram() {
 export default function Home() {
   return (
     <>
-      {/* ===== Hero (dark, premium) — pulled up behind the fixed navbar so the dark bg sits under it ===== */}
-      <section className="relative overflow-hidden -mt-16" style={{ background: "radial-gradient(125% 95% at 78% 8%, #16224d 0%, #0b1228 44%, #070a18 100%)" }}>
-        {/* Glowing aurora behind the products */}
+      {/* ===== Hero (light, product-forward — Peptora-style layout) ===== */}
+      <section className="relative overflow-hidden bg-white">
+        {/* subtle aurora */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <div className="aurora aurora-a" style={{ top: "-14%", right: "0%", width: "46rem", height: "46rem", background: "radial-gradient(circle, rgba(43,196,230,0.30), transparent 64%)" }} />
-          <div className="aurora aurora-b" style={{ bottom: "-30%", right: "-8%", width: "42rem", height: "42rem", background: "radial-gradient(circle, rgba(18,135,210,0.24), transparent 66%)" }} />
-          <div className="aurora aurora-a" style={{ top: "24%", left: "-14%", width: "32rem", height: "32rem", background: "radial-gradient(circle, rgba(12,58,107,0.45), transparent 70%)" }} />
+          <div className="aurora aurora-a" style={{ top: "-18%", right: "-4%", width: "44rem", height: "44rem", background: "radial-gradient(circle, rgba(43,196,230,0.18), transparent 65%)" }} />
+          <div className="aurora aurora-b" style={{ bottom: "-28%", right: "10%", width: "38rem", height: "38rem", background: "radial-gradient(circle, rgba(18,135,210,0.12), transparent 66%)" }} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center pt-24 pb-16 lg:pt-28 lg:pb-24 lg:min-h-[640px]">
+          <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-20 lg:min-h-[620px]">
             {/* Copy */}
             <div>
-              <div className="fade-up inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full px-4 py-1.5 mb-7">
-                <div className="w-1.5 h-1.5 rounded-full bg-teal-300" />
-                <span className="text-teal-200 text-xs font-semibold uppercase tracking-wider">
+              <div className="fade-up inline-flex items-center gap-2 bg-teal-50 border border-teal-200/70 rounded-full px-4 py-1.5 mb-7">
+                <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                <span className="text-teal-700 text-xs font-semibold uppercase tracking-wider">
                   Research-Grade Peptides
                 </span>
               </div>
 
-              <h1 className="fade-up stagger-1 text-5xl lg:text-[4.6rem] font-display font-extrabold text-white leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
+              <h1 className="fade-up stagger-1 text-5xl lg:text-[4.6rem] font-display font-extrabold text-ink-950 leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
                 Research begins with{" "}
-                <span className="text-aqua-anim">certainty.</span>
+                <span className="text-gradient-anim">certainty.</span>
               </h1>
 
-              <p className="fade-up stagger-2 text-lg text-slate-300 leading-relaxed mb-8 max-w-lg">
+              <p className="fade-up stagger-2 text-lg text-slate-600 leading-relaxed mb-8 max-w-lg">
                 Every KJD BioLabs compound is third-party tested to 99%+ identity
                 purity in accredited U.S. labs — with a Certificate of Analysis
                 available for every batch.
               </p>
 
-              <div className="fade-up stagger-3 flex flex-col sm:flex-row gap-3">
+              <div className="fade-up stagger-3 flex flex-col sm:flex-row gap-3 mb-8">
                 <Link
                   href="/products"
-                  className="inline-flex items-center justify-center gap-2 bg-white text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-teal-50 hover:shadow-lg hover:shadow-cyan-400/20 transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-ink-950 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-600 hover:shadow-lg hover:shadow-ink-950/20 transition-all"
                 >
                   Browse Catalog
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -167,70 +166,47 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/about"
-                  className="inline-flex items-center justify-center gap-2 border border-white/25 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all"
+                  className="inline-flex items-center justify-center gap-2 border border-slate-300 text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-slate-50 transition-all"
                 >
                   Our Quality Process
                 </Link>
               </div>
 
-              <div className="fade-up stagger-4 flex flex-wrap items-center gap-x-6 gap-y-2.5 mt-8">
-                {["99%+ identity purity", "Third-party tested", "30-day money-back guarantee", "Free shipment protection"].map((t) => (
-                  <span key={t} className="inline-flex items-center gap-1.5 text-slate-300 text-sm font-medium">
-                    <svg className="w-4 h-4 text-teal-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                    {t}
+              {/* Feature pills (Peptora-style) */}
+              <div className="fade-up stagger-4 flex flex-wrap gap-2.5">
+                {[
+                  { d: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", t: "99%+ identity purity" },
+                  { d: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7l2 2 4-4", t: "Third-party tested" },
+                  { d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z", t: "CoA available" },
+                ].map((p) => (
+                  <span key={p.t} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 shadow-sm text-sm font-medium text-slate-700">
+                    <svg className="w-4 h-4 text-teal-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={p.d} /></svg>
+                    {p.t}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* Vial composition — glowing products on dark */}
+            {/* Product cluster — leaning, overlapping bottles (Peptora-style) */}
             <div className="relative h-[560px] hidden lg:flex items-center justify-center">
-              {/* strong glow behind the products */}
+              {/* soft glow */}
               <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32rem] h-[32rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.34), transparent 64%)" }} />
-                <div className="absolute bottom-2 right-4 w-72 h-72 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.30), transparent 70%)" }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.20), transparent 68%)" }} />
+                <div className="absolute bottom-8 right-10 w-64 h-64 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.16), transparent 70%)" }} />
               </div>
 
-              <div className="relative w-[440px] h-[330px] scale-[1.36]">
-                {/* glossy floor reflection */}
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-80 h-12 rounded-[50%] blur-md" style={{ background: "radial-gradient(ellipse, rgba(43,196,230,0.38), transparent 70%)" }} />
-                {/* back-left */}
-                <div className="absolute left-3 top-12 -rotate-[14deg] animate-float-slow z-10">
+              <div className="relative w-[470px] h-[450px]">
+                {/* back-left — leaning, lower, behind */}
+                <div className="absolute left-[58px] top-[170px] rotate-[12deg] animate-float-slow z-10" style={{ filter: "drop-shadow(0 26px 22px rgba(12,58,107,0.22))" }}>
                   <Vial name="TB-500" tint="sky" size="md" />
                 </div>
-                {/* back-right */}
-                <div className="absolute right-2 top-8 rotate-[14deg] animate-float-slow z-10" style={{ animationDelay: "0.5s" }}>
+                {/* back-right — leaning, lower, behind */}
+                <div className="absolute left-[262px] top-[190px] rotate-[12deg] animate-float-slow z-10" style={{ animationDelay: "0.6s", filter: "drop-shadow(0 26px 22px rgba(12,58,107,0.22))" }}>
                   <Vial name="GHK-Cu" tint="rose" size="md" />
                 </div>
-                {/* front-center */}
-                <div className="absolute left-1/2 -translate-x-1/2 top-0 animate-float z-20">
+                {/* front-center — leaning, highest, largest, front */}
+                <div className="absolute left-1/2 -translate-x-1/2 top-[44px] rotate-[12deg] animate-float z-20" style={{ filter: "drop-shadow(0 36px 30px rgba(12,58,107,0.28))" }}>
                   <Vial name="BPC-157" tint="mint" size="lg" />
-                </div>
-              </div>
-
-              {/* Floating verification badge — top right (dark glass) */}
-              <div className="absolute top-5 right-5 z-30">
-                <div className="flex items-center gap-3 bg-ink-950/40 backdrop-blur-md border border-white/15 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
-                  <span className="w-9 h-9 rounded-xl bg-logo-gradient text-white flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                  </span>
-                  <div className="leading-tight">
-                    <p className="text-white font-display font-bold text-sm">99%+ Purity</p>
-                    <p className="text-slate-300 text-[11px] font-medium">Verified by HPLC</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating CoA badge — bottom left (dark glass) */}
-              <div className="absolute bottom-5 left-5 z-30">
-                <div className="flex items-center gap-3 bg-ink-950/40 backdrop-blur-md border border-white/15 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
-                  <span className="w-9 h-9 rounded-xl bg-white text-ink-950 flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                  </span>
-                  <div className="leading-tight">
-                    <p className="text-white font-display font-bold text-sm">Certificate of Analysis</p>
-                    <p className="text-slate-300 text-[11px] font-medium">Available for every batch</p>
-                  </div>
                 </div>
               </div>
             </div>
