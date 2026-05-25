@@ -182,16 +182,14 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Vial composition — frosted glass */}
+            {/* Vial composition — floating on soft glow (no box) */}
             <div className="relative h-[560px] hidden lg:flex items-center justify-center">
-              {/* vivid mesh blobs behind the glass */}
-              <div className="absolute inset-2 rounded-[2.5rem] overflow-hidden">
-                <div className="absolute -top-10 -left-6 w-72 h-72 rounded-full" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.55), transparent 70%)" }} />
-                <div className="absolute -bottom-12 -right-8 w-80 h-80 rounded-full" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.45), transparent 70%)" }} />
-                <div className="absolute top-1/3 right-1/4 w-60 h-60 rounded-full" style={{ background: "radial-gradient(circle, rgba(54,205,238,0.34), transparent 70%)" }} />
+              {/* soft ambient glow behind the floating vials */}
+              <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.32), transparent 66%)" }} />
+                <div className="absolute bottom-4 right-2 w-72 h-72 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.26), transparent 70%)" }} />
+                <div className="absolute top-6 left-3 w-60 h-60 rounded-full blur-2xl" style={{ background: "radial-gradient(circle, rgba(54,205,238,0.24), transparent 70%)" }} />
               </div>
-              {/* frosted glass surface */}
-              <div className="absolute inset-0 rounded-[2.5rem] bg-white/30 backdrop-blur-2xl border border-white/60" style={{ boxShadow: "0 24px 70px rgba(12,58,107,0.18), inset 0 1px 0 rgba(255,255,255,0.65)" }} />
 
               <div className="relative w-[440px] h-[330px] scale-[1.34]">
                 {/* ground shadow */}
@@ -212,7 +210,7 @@ export default function Home() {
 
               {/* Floating verification badge — top right */}
               <div className="absolute top-5 right-5 z-30">
-                <div className="flex items-center gap-3 bg-white/55 backdrop-blur-md border border-white/70 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
+                <div className="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-white/80 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
                   <span className="w-9 h-9 rounded-xl bg-logo-gradient text-white flex items-center justify-center shrink-0">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
                   </span>
@@ -225,7 +223,7 @@ export default function Home() {
 
               {/* Floating CoA badge — bottom left */}
               <div className="absolute bottom-5 left-5 z-30">
-                <div className="flex items-center gap-3 bg-white/55 backdrop-blur-md border border-white/70 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
+                <div className="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-white/80 shadow-soft-lg rounded-2xl pl-3 pr-4 py-2.5">
                   <span className="w-9 h-9 rounded-xl bg-ink-950 text-teal-300 flex items-center justify-center shrink-0">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                   </span>
