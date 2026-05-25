@@ -165,12 +165,6 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </Link>
-                <Link
-                  href="/about"
-                  className="inline-flex items-center justify-center gap-2 border border-slate-300 text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-slate-50 transition-all"
-                >
-                  Our Quality Process
-                </Link>
               </div>
 
               {/* Feature pills (Peptora-style) */}
