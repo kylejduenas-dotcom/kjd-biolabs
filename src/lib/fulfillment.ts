@@ -133,8 +133,10 @@ function shell(heading: string, body: string): string {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef3fa;padding:28px 12px;font-family:Arial,Helvetica,sans-serif;">
     <tr><td align="center">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:18px;overflow:hidden;border:1px solid #e2e8f0;">
-        <tr><td style="background-color:#0c3a6b;background-image:linear-gradient(120deg,#0c3a6b 0%,#1287d2 50%,#2bc4e6 100%);padding:26px 32px;">
-          <span style="color:#ffffff;font-size:23px;font-weight:bold;letter-spacing:-0.5px;">KJD&nbsp;<span style="font-weight:normal;color:#cdeafb;">BioLabs</span></span>
+        <tr><td style="background-color:#0c3a6b;background-image:linear-gradient(120deg,#0c3a6b 0%,#1287d2 50%,#2bc4e6 100%);padding:22px 32px;">
+          <table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="background:#ffffff;border-radius:12px;padding:9px 16px;">
+            <img src="https://kjdbiolabs.com/kjd-logo-horizontal.png" alt="KJD BioLabs" width="140" style="display:block;width:140px;height:auto;border:0;outline:none;text-decoration:none;">
+          </td></tr></table>
         </td></tr>
         <tr><td style="padding:32px;">
           <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;color:#0a0e1a;font-weight:bold;">${esc(heading)}</h1>
