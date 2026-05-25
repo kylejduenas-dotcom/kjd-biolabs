@@ -137,16 +137,15 @@ export default function Home() {
                 </span>
               </div>
 
-              <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-ink-950 leading-[1.02] mb-6 text-balance">
-                Research-Grade Peptides,
-                <br className="hidden sm:block" />{" "}
-                <span className="text-logo-gradient">Independently Verified.</span>
+              <h1 className="text-5xl lg:text-[4.25rem] font-display font-extrabold text-ink-950 leading-[1.04] mb-6 text-balance">
+                Research begins with{" "}
+                <span className="text-logo-gradient">certainty.</span>
               </h1>
 
-              <p className="text-lg text-slate-500 leading-relaxed mb-8 max-w-lg">
-                Every compound ships with a full Certificate of Analysis and is
-                third-party tested in accredited U.S. labs — 99%+ identity
-                purity, batch after batch.
+              <p className="text-lg text-slate-600 leading-relaxed mb-8 max-w-lg">
+                Every KJD BioLabs compound is third-party tested to 99%+ identity
+                purity in accredited U.S. labs — and ships with the Certificate of
+                Analysis to prove it.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
