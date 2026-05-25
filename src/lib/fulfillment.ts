@@ -74,6 +74,9 @@ async function buyShippingLabel(order: OrderRow, totalQty: number): Promise<Labe
     state: process.env.SHIP_FROM_STATE,
     zip: process.env.SHIP_FROM_ZIP,
     country: process.env.SHIP_FROM_COUNTRY || "US",
+    // Carriers (USPS via Shippo) require a sender email + phone on the label.
+    email: process.env.SHIP_FROM_EMAIL || "orders@kjdbiolabs.com",
+    phone: process.env.SHIP_FROM_PHONE || "",
   };
   // Require a complete ship-from address before attempting a label.
   if (!addressFrom.name || !addressFrom.street1 || !addressFrom.city || !addressFrom.state || !addressFrom.zip) {
@@ -87,6 +90,7 @@ async function buyShippingLabel(order: OrderRow, totalQty: number): Promise<Labe
     state: order.shipping_state ?? "",
     zip: order.shipping_zip ?? "",
     country: order.shipping_country === "United States" ? "US" : order.shipping_country || "US",
+    email: order.email ?? "",
   };
   const weight = Math.max(0.5, 0.25 * Math.max(1, totalQty)).toFixed(2);
 
