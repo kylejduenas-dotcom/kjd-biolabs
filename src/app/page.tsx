@@ -12,10 +12,10 @@ const featured = products.filter((p) =>
 );
 
 const stats = [
-  { value: "99%+", label: "Purity Guaranteed" },
-  { value: "28+", label: "Research Compounds" },
-  { value: "100%", label: "U.S. Verified" },
-  { value: "5", label: "Quality Checks" },
+  { value: "99%+", label: "Purity Guaranteed", sub: "HPLC + mass spec", icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" },
+  { value: "28+", label: "Research Compounds", sub: "In-stock catalog", icon: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" },
+  { value: "100%", label: "U.S. Verified", sub: "Accredited labs", icon: "M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 2H21l-3 6 3 6h-8.5l-1-2H5a2 2 0 00-2 2zm9-13.5V9" },
+  { value: "5", label: "Quality Checks", sub: "Per-batch protocol", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" },
 ];
 
 const pillars = [
@@ -239,15 +239,23 @@ export default function Home() {
       </section>
 
       {/* ===== Stats band ===== */}
-      <section className="bg-logo-gradient">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <section className="relative bg-logo-gradient overflow-hidden">
+        <div className="glow-blob -top-24 left-1/4 w-96 h-96" style={{ background: "rgba(255,255,255,0.12)" }} />
+        <div className="absolute inset-0 bg-dots opacity-[0.15]" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 lg:divide-x lg:divide-white/20">
             {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-4xl sm:text-5xl font-display font-extrabold text-white mb-1">
+              <div key={s.label} className="flex flex-col items-center text-center lg:px-6">
+                <span className="w-12 h-12 rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur-sm flex items-center justify-center mb-4 text-white shadow-lg shadow-ink-950/10">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={s.icon} />
+                  </svg>
+                </span>
+                <p className="text-4xl sm:text-5xl font-display font-extrabold text-white leading-none">
                   {s.value}
                 </p>
-                <p className="text-white/70 text-sm">{s.label}</p>
+                <p className="text-white font-semibold text-sm mt-2">{s.label}</p>
+                <p className="text-white/60 text-xs mt-0.5">{s.sub}</p>
               </div>
             ))}
           </div>
@@ -451,26 +459,36 @@ export default function Home() {
             </h2>
             <p className="text-slate-600 text-lg">How we stack up against a typical research-chemical supplier.</p>
           </div>
-          <div className="rounded-3xl border border-slate-200/80 overflow-hidden shadow-soft-lg bg-white">
-            <div className="grid grid-cols-3 bg-white border-b border-slate-200/70">
-              <div className="p-4 sm:p-5" />
-              <div className="p-4 sm:p-5 text-center">
+          <div className="relative grid grid-cols-[1fr_auto_auto] sm:grid-cols-[1fr_9rem_9rem]">
+            {/* Highlighted KJD lane behind the middle column */}
+            <div className="hidden sm:block absolute top-0 bottom-0 right-[9rem] w-[9rem] rounded-3xl bg-white shadow-soft-lg ring-1 ring-teal-200/70 -z-0" />
+
+            {/* Header row */}
+            <div className="relative px-2 pb-4 flex items-end" />
+            <div className="relative px-2 pb-4 text-center">
+              <span className="inline-flex flex-col items-center gap-1">
+                <span className="inline-flex items-center gap-1.5 bg-logo-gradient text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.366-2.446a1 1 0 00-1.176 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.354 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.951-.69l1.286-3.957z" /></svg>
+                  Best
+                </span>
                 <span className="block font-display font-bold text-ink-950 text-sm sm:text-base">KJD BioLabs</span>
-              </div>
-              <div className="p-4 sm:p-5 text-center">
-                <span className="block text-slate-500 font-semibold text-sm sm:text-base">Typical supplier</span>
-              </div>
+              </span>
             </div>
-            {comparison.map((label, i) => (
-              <div key={label} className={`grid grid-cols-3 items-center ${i % 2 ? "bg-white" : "bg-slate-50/40"}`}>
-                <div className="p-4 sm:p-5 text-sm text-ink-950 font-medium">{label}</div>
-                <div className="p-4 sm:p-5 flex justify-center">
-                  <span className="w-7 h-7 rounded-full bg-teal-500 text-white flex items-center justify-center">
+            <div className="relative px-2 pb-4 text-center flex flex-col justify-end">
+              <span className="block text-slate-400 font-semibold text-sm sm:text-base">Typical supplier</span>
+            </div>
+
+            {/* Rows */}
+            {comparison.map((label) => (
+              <div key={label} className="contents">
+                <div className="relative px-4 sm:px-5 py-4 text-sm text-ink-950 font-medium border-t border-slate-200/70 flex items-center">{label}</div>
+                <div className="relative px-2 py-4 flex justify-center items-center border-t border-teal-100">
+                  <span className="w-8 h-8 rounded-full bg-logo-gradient text-white flex items-center justify-center shadow-soft">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                   </span>
                 </div>
-                <div className="p-4 sm:p-5 flex justify-center">
-                  <span className="w-7 h-7 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center">
+                <div className="relative px-2 py-4 flex justify-center items-center border-t border-slate-200/70">
+                  <span className="w-8 h-8 rounded-full bg-slate-100 text-slate-300 flex items-center justify-center">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
                   </span>
                 </div>
@@ -495,12 +513,14 @@ export default function Home() {
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {applications.map((a) => (
-              <div key={a.title} className="flex items-start gap-4 p-6 rounded-2xl bg-soft-cream border border-slate-200/60 hover:border-teal-300/60 hover:shadow-soft hover:-translate-y-0.5 transition-all">
-                <div className="w-11 h-11 rounded-xl bg-logo-gradient text-white flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d={a.icon} /></svg>
+            {applications.map((a, i) => (
+              <div key={a.title} className="group relative flex items-start gap-4 p-6 rounded-2xl bg-white border border-slate-200/70 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                <span className="absolute top-4 right-5 font-display font-extrabold text-5xl text-slate-100 group-hover:text-teal-50 transition-colors select-none">{`0${i + 1}`}</span>
+                <div className="relative w-12 h-12 rounded-2xl bg-logo-gradient flex items-center justify-center shrink-0 shadow-soft ring-1 ring-white/40">
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/30 to-transparent" />
+                  <svg className="relative w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={a.icon} /></svg>
                 </div>
-                <div>
+                <div className="relative">
                   <h3 className="text-ink-950 font-display font-bold text-base mb-1">{a.title}</h3>
                   <p className="text-slate-600 text-sm leading-relaxed">{a.desc}</p>
                 </div>
