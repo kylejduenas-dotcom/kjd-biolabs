@@ -310,8 +310,10 @@ export default function Home() {
       </section>
 
       {/* ===== The Science — molecular ===== */}
-      <section className="py-20 sm:py-28 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+      <section className="relative py-20 sm:py-28 bg-white overflow-hidden">
+        <div className="glow-blob top-[-6rem] right-[-4rem] w-[34rem] h-[34rem]" style={{ background: "rgba(43,196,230,0.12)" }} />
+        <div className="glow-blob bottom-[-8rem] left-[-6rem] w-[30rem] h-[30rem]" style={{ background: "rgba(18,135,210,0.08)" }} />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">The Science</span>
             <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-5">
@@ -415,8 +417,9 @@ export default function Home() {
       </section>
 
       {/* ===== Our Process — pipeline diagram ===== */}
-      <section className="py-20 sm:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-20 sm:py-28 bg-white overflow-hidden">
+        <div className="glow-blob top-1/4 left-[-5rem] w-[32rem] h-[32rem]" style={{ background: "rgba(18,135,210,0.10)" }} />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-14">
             <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">Our Process</span>
             <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
