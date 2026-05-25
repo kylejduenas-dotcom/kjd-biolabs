@@ -144,7 +144,7 @@ export default function Home() {
                 </span>
               </div>
 
-              <h1 className="fade-up stagger-1 text-5xl lg:text-[4.6rem] font-display font-extrabold text-ink-950 leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
+              <h1 className="fade-up stagger-1 text-4xl sm:text-5xl lg:text-[4.6rem] font-display font-extrabold text-ink-950 leading-[1.04] sm:leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
                 Research begins with{" "}
                 <span className="text-gradient-anim">certainty.</span>
               </h1>
@@ -182,15 +182,15 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Product cluster — leaning, overlapping bottles (Peptora-style) */}
-            <div className="relative h-[560px] hidden lg:flex items-center justify-center">
+            {/* Product cluster — leaning, overlapping bottles (Peptora-style); shown on mobile too, scaled to fit */}
+            <div className="relative h-[360px] sm:h-[460px] lg:h-[560px] flex items-center justify-center order-last">
               {/* soft glow */}
               <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.20), transparent 68%)" }} />
                 <div className="absolute bottom-8 right-10 w-64 h-64 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.16), transparent 70%)" }} />
               </div>
 
-              <div className="relative w-[500px] h-[500px]">
+              <div className="relative w-[500px] h-[500px] scale-[0.62] sm:scale-[0.82] lg:scale-100">
                 {/* left — tilts back (counter-clockwise), mid height */}
                 <div className="absolute left-[14px] top-[150px] rotate-[-9deg] animate-float-slow z-10" style={{ filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
                   <HeroBottle name="TB-500" tint="sky" size="md" />
