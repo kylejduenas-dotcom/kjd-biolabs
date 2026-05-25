@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink-950: #0a0e1a;
-  --color-ink-900: #11162a;
-  --color-ink-800: #1c2438;
+  /* Primary dark = navy blue (no harsh near-black anywhere on the site) */
+  --color-ink-950: #0c2348;
+  --color-ink-900: #123059;
+  --color-ink-800: #1b3d6b;
   /* Brand accent — KJD BioLabs BOLD OCEAN-CYAN ramp from the logo's bright aqua.
      Deliberately cyan-forward (NOT royal blue) so it's unmistakably distinct from
      AminoClub. Named "teal-*" so existing utilities pick it up site-wide. */
@@ -25,7 +26,7 @@ html {
 
 body {
   background: #ffffff;
-  color: #0a0e1a;
+  color: #0c2348;
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
