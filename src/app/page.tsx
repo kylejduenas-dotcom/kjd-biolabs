@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { products } from "@/data/products";
 import Vial from "@/components/Vial";
+import HeroBottle from "@/components/HeroBottle";
 import ProductCard from "@/components/ProductCard";
 import QualityProof from "@/components/QualityProof";
 
@@ -195,18 +196,18 @@ export default function Home() {
                 <div className="absolute bottom-8 right-10 w-64 h-64 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.16), transparent 70%)" }} />
               </div>
 
-              <div className="relative w-[470px] h-[450px]">
+              <div className="relative w-[500px] h-[490px]">
                 {/* back-left — leaning, lower, behind */}
-                <div className="absolute left-[58px] top-[170px] rotate-[12deg] animate-float-slow z-10" style={{ filter: "drop-shadow(0 26px 22px rgba(12,58,107,0.22))" }}>
-                  <Vial name="TB-500" tint="sky" size="md" />
+                <div className="absolute left-[28px] top-[150px] rotate-[12deg] animate-float-slow z-10" style={{ filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
+                  <HeroBottle name="TB-500" tint="sky" size="md" />
                 </div>
                 {/* back-right — leaning, lower, behind */}
-                <div className="absolute left-[262px] top-[190px] rotate-[12deg] animate-float-slow z-10" style={{ animationDelay: "0.6s", filter: "drop-shadow(0 26px 22px rgba(12,58,107,0.22))" }}>
-                  <Vial name="GHK-Cu" tint="rose" size="md" />
+                <div className="absolute left-[300px] top-[168px] rotate-[12deg] animate-float-slow z-10" style={{ animationDelay: "0.6s", filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
+                  <HeroBottle name="GHK-Cu" tint="rose" size="md" />
                 </div>
                 {/* front-center — leaning, highest, largest, front */}
-                <div className="absolute left-1/2 -translate-x-1/2 top-[44px] rotate-[12deg] animate-float z-20" style={{ filter: "drop-shadow(0 36px 30px rgba(12,58,107,0.28))" }}>
-                  <Vial name="BPC-157" tint="mint" size="lg" />
+                <div className="absolute left-1/2 -translate-x-1/2 top-[20px] rotate-[12deg] animate-float z-20" style={{ filter: "drop-shadow(0 40px 34px rgba(12,58,107,0.30))" }}>
+                  <HeroBottle name="BPC-157" tint="mint" size="lg" />
                 </div>
               </div>
             </div>
