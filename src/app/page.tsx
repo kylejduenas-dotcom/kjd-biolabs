@@ -126,29 +126,36 @@ export default function Home() {
     <>
       {/* ===== Hero ===== */}
       <section className="relative overflow-hidden bg-white">
+        {/* Animated aurora background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div className="aurora aurora-a" style={{ top: "-16%", left: "-8%", width: "44rem", height: "44rem", background: "radial-gradient(circle, rgba(43,196,230,0.20), transparent 65%)" }} />
+          <div className="aurora aurora-b" style={{ bottom: "-26%", right: "-6%", width: "40rem", height: "40rem", background: "radial-gradient(circle, rgba(18,135,210,0.16), transparent 65%)" }} />
+          <div className="absolute inset-0 bg-dots opacity-[0.35]" />
+        </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-20 lg:min-h-[620px]">
             {/* Copy */}
-            <div className="animate-fade-in">
-              <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200/60 rounded-full px-4 py-1.5 mb-7">
+            <div>
+              <div className="fade-up inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-teal-200/70 rounded-full px-4 py-1.5 mb-7 shadow-sm">
                 <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
                 <span className="text-teal-700 text-xs font-semibold uppercase tracking-wider">
                   Research-Grade Peptides
                 </span>
               </div>
 
-              <h1 className="text-5xl lg:text-[4.25rem] font-display font-extrabold text-ink-950 leading-[1.04] mb-6 text-balance">
+              <h1 className="fade-up stagger-1 text-5xl lg:text-[4.5rem] font-display font-extrabold text-ink-950 leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
                 Research begins with{" "}
-                <span className="text-logo-gradient">certainty.</span>
+                <span className="text-gradient-anim">certainty.</span>
               </h1>
 
-              <p className="text-lg text-slate-600 leading-relaxed mb-8 max-w-lg">
+              <p className="fade-up stagger-2 text-lg text-slate-600 leading-relaxed mb-8 max-w-lg">
                 Every KJD BioLabs compound is third-party tested to 99%+ identity
                 purity in accredited U.S. labs — with a Certificate of Analysis
                 available for every batch.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="fade-up stagger-3 flex flex-col sm:flex-row gap-3">
                 <Link
                   href="/products"
                   className="inline-flex items-center justify-center gap-2 bg-ink-950 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-600 hover:shadow-lg hover:shadow-ink-950/20 transition-all"
@@ -166,7 +173,7 @@ export default function Home() {
                 </Link>
               </div>
 
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 mt-8">
+              <div className="fade-up stagger-4 flex flex-wrap items-center gap-x-6 gap-y-2.5 mt-8">
                 {["99%+ identity purity", "Third-party tested", "30-day money-back guarantee", "Free shipment protection"].map((t) => (
                   <span key={t} className="inline-flex items-center gap-1.5 text-slate-500 text-sm font-medium">
                     <svg className="w-4 h-4 text-teal-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>

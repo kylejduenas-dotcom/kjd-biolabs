@@ -66,13 +66,36 @@ h1, h2, h3, h4, h5 {
 .animate-float-slow { animation: float-slow 7s ease-in-out infinite; }
 .animate-marquee { animation: marquee 30s linear infinite; }
 
-/* Respect reduced-motion: stop all infinite animations to cut compositor load */
+/* Hero aurora — slow, GPU-composited drifting glows (transform-only) */
+@keyframes aurora-a { 0%, 100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(7%, -9%, 0) scale(1.18); } }
+@keyframes aurora-b { 0%, 100% { transform: translate3d(0,0,0) scale(1.06); } 50% { transform: translate3d(-9%, 7%, 0) scale(1); } }
+.aurora { position: absolute; border-radius: 9999px; filter: blur(72px); will-change: transform; pointer-events: none; }
+.aurora-a { animation: aurora-a 24s ease-in-out infinite; }
+.aurora-b { animation: aurora-b 30s ease-in-out infinite; }
+
+/* Subtle animated brand-gradient text (gentle sheen) */
+@keyframes gradient-pan { to { background-position: -200% center; } }
+.text-gradient-anim {
+  background-image: linear-gradient(90deg, #0c3a6b, #1287d2, #2bc4e6, #1287d2, #0c3a6b);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradient-pan 7s linear infinite;
+}
+
+/* Staggered entrance */
+@keyframes fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.fade-up { opacity: 0; animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* Respect reduced-motion: stop all motion to cut compositor load */
 @media (prefers-reduced-motion: reduce) {
-  .animate-float,
-  .animate-float-slow,
-  .animate-marquee {
+  .animate-float, .animate-float-slow, .animate-marquee,
+  .aurora-a, .aurora-b, .text-gradient-anim, .fade-up {
     animation: none !important;
   }
+  .fade-up { opacity: 1; }
 }
 
 .stagger-1 { animation-delay: 0.08s; }
