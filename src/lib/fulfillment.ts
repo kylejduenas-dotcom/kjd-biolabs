@@ -126,37 +126,77 @@ async function buyShippingLabel(order: OrderRow, totalQty: number): Promise<Labe
   }
 }
 
-// --- Email templates --------------------------------------------------------
-function shell(title: string, body: string): string {
-  return `<div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#0a0e1a">
-    <h1 style="font-size:20px;margin:0 0 16px">${esc(title)}</h1>${body}
-    <p style="color:#94a3b8;font-size:12px;margin-top:28px;line-height:1.6">KJD BioLabs — a KJD Capital LLC company. Products are for laboratory research use only; not for human or veterinary use.</p>
-  </div>`;
+// --- Email templates (premium, branded, email-client-safe tables) -----------
+function shell(heading: string, body: string): string {
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#eef3fa;-webkit-font-smoothing:antialiased;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef3fa;padding:28px 12px;font-family:Arial,Helvetica,sans-serif;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:18px;overflow:hidden;border:1px solid #e2e8f0;">
+        <tr><td style="background-color:#0c3a6b;background-image:linear-gradient(120deg,#0c3a6b 0%,#1287d2 50%,#2bc4e6 100%);padding:26px 32px;">
+          <span style="color:#ffffff;font-size:23px;font-weight:bold;letter-spacing:-0.5px;">KJD&nbsp;<span style="font-weight:normal;color:#cdeafb;">BioLabs</span></span>
+        </td></tr>
+        <tr><td style="padding:32px;">
+          <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;color:#0a0e1a;font-weight:bold;">${esc(heading)}</h1>
+          ${body}
+        </td></tr>
+        <tr><td style="background:#f1f6fc;padding:22px 32px;border-top:1px solid #e8eef6;">
+          <p style="margin:0 0 6px;color:#64748b;font-size:12px;line-height:1.6;">KJD BioLabs — a KJD Capital LLC company.</p>
+          <p style="margin:0;color:#94a3b8;font-size:11px;line-height:1.6;">For laboratory research use only. Not for human or veterinary use, not for use in diagnostic procedures, and not evaluated by the U.S. Food and Drug Administration.</p>
+        </td></tr>
+      </table>
+      <p style="margin:16px 0 0;color:#94a3b8;font-size:11px;">© KJD BioLabs · research-grade peptides</p>
+    </td></tr>
+  </table>
+</body></html>`;
+}
+
+function infoCard(label: string, value: string, accent = false): string {
+  const bg = accent ? "#ecfdf5" : "#f1f6fc";
+  const border = accent ? "#a7f3d0" : "#e2e8f0";
+  const labelColor = accent ? "#047857" : "#64748b";
+  const valueColor = accent ? "#065f46" : "#0a0e1a";
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px;"><tr><td style="background:${bg};border:1px solid ${border};border-radius:12px;padding:14px 16px;">
+    <span style="color:${labelColor};font-size:11px;text-transform:uppercase;letter-spacing:0.6px;font-weight:bold;">${esc(label)}</span><br>
+    <span style="color:${valueColor};font-size:16px;font-weight:bold;">${value}</span>
+  </td></tr></table>`;
 }
 
 function confirmationHtml(orderRef: string, items: LineItem[], total: number, order: OrderRow): string {
   const rows = items
     .map(
       (i) =>
-        `<tr><td style="padding:6px 0;color:#475569">${esc(i.product_name)} × ${i.quantity}</td><td style="padding:6px 0;text-align:right">${formatPrice(i.unit_price * i.quantity)}</td></tr>`,
+        `<tr>
+          <td style="padding:11px 0;border-bottom:1px solid #f1f5f9;color:#0a0e1a;font-size:14px;">${esc(i.product_name)}<span style="color:#94a3b8;"> &times; ${i.quantity}</span></td>
+          <td style="padding:11px 0;border-bottom:1px solid #f1f5f9;text-align:right;color:#0a0e1a;font-size:14px;font-weight:bold;white-space:nowrap;">${formatPrice(i.unit_price * i.quantity)}</td>
+        </tr>`,
     )
     .join("");
   const ship = [order.shipping_address, order.shipping_city, order.shipping_state, order.shipping_zip].filter(Boolean).map(esc).join(", ");
-  return shell(`Order ${orderRef} confirmed`, `
-    <p style="color:#475569;line-height:1.6">Thanks${order.shipping_name ? ", " + esc(order.shipping_name) : ""} — we've received your order and payment. Here's your summary:</p>
-    <table style="width:100%;border-collapse:collapse;font-size:14px;margin:12px 0">${rows}
-      <tr><td style="padding:8px 0;border-top:1px solid #e2e8f0;color:#475569">Total</td><td style="padding:8px 0;border-top:1px solid #e2e8f0;text-align:right;font-weight:700">${formatPrice(total)}</td></tr>
+  return shell(`Order confirmed — thank you${order.shipping_name ? ", " + esc(order.shipping_name.split(" ")[0]) : ""}!`, `
+    <p style="margin:0 0 20px;color:#475569;font-size:15px;line-height:1.6;">We've received your order and payment. Here's your summary:</p>
+    ${infoCard("Order number", `<span style="font-family:'Courier New',monospace;">${esc(orderRef)}</span>`)}
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:4px 0 0;">
+      ${rows}
+      <tr>
+        <td style="padding:16px 0 0;color:#0a0e1a;font-size:16px;font-weight:bold;">Total paid</td>
+        <td style="padding:16px 0 0;text-align:right;color:#0a0e1a;font-size:20px;font-weight:bold;">${formatPrice(total)}</td>
+      </tr>
     </table>
-    ${order.delivery_estimate ? `<p style="color:#475569;font-size:14px"><strong>Estimated delivery:</strong> ${esc(order.delivery_estimate)}</p>` : ""}
-    ${ship ? `<p style="color:#475569;font-size:14px"><strong>Shipping to:</strong> ${ship}</p>` : ""}
-    <p style="color:#475569;line-height:1.6">We'll email you tracking as soon as your order ships.</p>`);
+    <div style="height:22px;"></div>
+    ${order.delivery_estimate ? infoCard("Estimated delivery", esc(order.delivery_estimate), true) : ""}
+    ${ship ? `<p style="margin:14px 0 0;color:#64748b;font-size:13px;line-height:1.6;"><strong style="color:#0a0e1a;">Shipping to:</strong> ${ship}</p>` : ""}
+    <p style="margin:18px 0 0;color:#475569;font-size:14px;line-height:1.6;">We'll email you tracking the moment your order ships. Every compound ships with its Certificate of Analysis.</p>`);
 }
 
 function shippedHtml(orderRef: string, label: LabelResult): string {
-  return shell(`Order ${orderRef} has shipped`, `
-    <p style="color:#475569;line-height:1.6">Good news — your order is on its way${label.carrier ? " via " + esc(label.carrier) : ""}.</p>
-    ${label.tracking_number ? `<p style="font-size:14px"><strong>Tracking #:</strong> ${esc(label.tracking_number)}</p>` : ""}
-    ${label.tracking_url ? `<p><a href="${esc(label.tracking_url)}" style="display:inline-block;background:#0a0e1a;color:#fff;text-decoration:none;padding:10px 18px;border-radius:9999px;font-size:14px">Track your shipment</a></p>` : ""}`);
+  return shell("Your order is on its way 🚚", `
+    <p style="margin:0 0 20px;color:#475569;font-size:15px;line-height:1.6;">Great news — order <strong style="color:#0a0e1a;">${esc(orderRef)}</strong> has shipped${label.carrier ? " via " + esc(label.carrier) : ""} and is heading your way.</p>
+    ${label.tracking_number ? infoCard("Tracking number", `<span style="font-family:'Courier New',monospace;">${esc(label.tracking_number)}</span>`) : ""}
+    ${label.tracking_url ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:6px 0 0;"><tr><td style="background-color:#0c3a6b;background-image:linear-gradient(120deg,#0c3a6b,#1287d2,#2bc4e6);border-radius:9999px;">
+      <a href="${esc(label.tracking_url)}" style="display:inline-block;padding:13px 30px;color:#ffffff;text-decoration:none;font-size:14px;font-weight:bold;">Track your shipment &rarr;</a>
+    </td></tr></table>` : ""}
+    <p style="margin:22px 0 0;color:#475569;font-size:14px;line-height:1.6;">Store lyophilized peptides at -20°C until reconstitution.</p>`);
 }
 
 // --- Orchestration ----------------------------------------------------------
