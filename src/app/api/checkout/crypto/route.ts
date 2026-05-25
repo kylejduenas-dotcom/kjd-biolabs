@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { buildCoinbaseJwt } from "@/lib/coinbase";
+import { priceFor } from "@/data/products";
+import { shippingCostFor } from "@/data/shipping";
 
 export const runtime = "nodejs";
 
@@ -44,7 +46,7 @@ export async function POST(req: Request) {
 
   const { data: order, error: orderErr } = await supabase
     .from("orders")
-    .select("id, order_number, subtotal, shipping_cost, status")
+    .select("id, order_number, subtotal, shipping_cost, shipping_method, status")
     .eq("id", orderId)
     .single();
 
@@ -55,7 +57,20 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "This order is already paid." }, { status: 409 });
   }
 
-  const amount = (Number(order.subtotal) + Number(order.shipping_cost ?? 0)).toFixed(2);
+  // Recompute the amount server-side from authoritative product prices + the
+  // shipping table — never trust the client-inserted subtotal/shipping_cost.
+  const { data: lineItems } = await supabase
+    .from("order_items")
+    .select("product_slug, quantity")
+    .eq("order_id", order.id);
+  const realSubtotal = (lineItems ?? []).reduce(
+    (sum, it) => sum + priceFor(String(it.product_slug)) * Number(it.quantity),
+    0,
+  );
+  if (realSubtotal <= 0) {
+    return NextResponse.json({ ok: false, error: "Could not price this order. Please try again." }, { status: 400 });
+  }
+  const amount = (realSubtotal + shippingCostFor(order.shipping_method, realSubtotal)).toFixed(2);
   const orderRef = order.order_number ?? order.id;
   const origin = req.headers.get("origin") ?? `https://${req.headers.get("host") ?? "kjd-biolabs.vercel.app"}`;
 

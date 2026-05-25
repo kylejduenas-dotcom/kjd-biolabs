@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { fulfillPaidOrder } from "@/lib/fulfillment";
+import { priceFor } from "@/data/products";
+import { shippingCostFor } from "@/data/shipping";
 
 export const runtime = "nodejs";
 
@@ -46,7 +48,7 @@ export async function POST(req: Request) {
   const { data: order, error: orderErr } = await admin
     .from("orders")
     .select(
-      "id, order_number, subtotal, shipping_cost, status, email, shipping_name, shipping_address, shipping_city, shipping_state, shipping_zip, user_id",
+      "id, order_number, subtotal, shipping_cost, shipping_method, status, email, shipping_name, shipping_address, shipping_city, shipping_state, shipping_zip, user_id",
     )
     .eq("id", orderId)
     .single();
@@ -61,7 +63,20 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, alreadyPaid: true });
   }
 
-  const amount = (Number(order.subtotal) + Number(order.shipping_cost ?? 0)).toFixed(2);
+  // Recompute the amount server-side from authoritative product prices + the
+  // shipping table — never trust the client-inserted subtotal/shipping_cost.
+  const { data: lineItems } = await admin
+    .from("order_items")
+    .select("product_slug, quantity")
+    .eq("order_id", order.id);
+  const realSubtotal = (lineItems ?? []).reduce(
+    (sum, it) => sum + priceFor(String(it.product_slug)) * Number(it.quantity),
+    0,
+  );
+  if (realSubtotal <= 0) {
+    return NextResponse.json({ ok: false, error: "Could not price this order. Please contact support." }, { status: 400 });
+  }
+  const amount = (realSubtotal + shippingCostFor(order.shipping_method, realSubtotal)).toFixed(2);
   const nameParts = (order.shipping_name ?? "").trim().split(/\s+/).filter(Boolean);
   const firstName = nameParts.shift() ?? "";
   const lastName = nameParts.join(" ");

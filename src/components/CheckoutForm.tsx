@@ -7,18 +7,12 @@ import { useCart } from "@/context/CartContext";
 import { createClient } from "@/lib/supabase/client";
 import { formatPrice, tintStyles } from "@/data/products";
 import NmiCardFields, { type NmiHandle } from "@/components/NmiCardFields";
+import { SHIPPING_OPTIONS as SHIPPING, FREE_SHIPPING_THRESHOLD } from "@/data/shipping";
 
-const FREE_SHIPPING_THRESHOLD = 150;
 const HANDLING_MIN_DAYS = 1; // business days to dispatch (ships by)
 const HANDLING_MAX_DAYS = 2;
 const NMI_ENABLED = !!process.env.NEXT_PUBLIC_NMI_TOKENIZATION_KEY;
 const CRYPTO_ENABLED = !!process.env.NEXT_PUBLIC_CRYPTO_CHECKOUT;
-
-const SHIPPING = [
-  { id: "standard", label: "Standard", eta: "3–5 business days", cost: 4.99, transitMin: 3, transitMax: 5 },
-  { id: "express", label: "Express", eta: "1–2 business days", cost: 19.99, transitMin: 1, transitMax: 2 },
-  { id: "overnight", label: "Overnight", eta: "Next business day", cost: 39.99, transitMin: 1, transitMax: 1 },
-];
 
 // US shipping holidays (carriers pause) — observed dates, 2026–2027.
 const SHIPPING_HOLIDAYS = new Set([
