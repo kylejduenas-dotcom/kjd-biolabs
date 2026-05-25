@@ -72,7 +72,7 @@ const applications = [
 
 const comparison = [
   "99%+ identity purity",
-  "Per-batch third-party Certificate of Analysis",
+  "Per-batch Certificate of Analysis on request",
   "HPLC + mass-spectrometry verified",
   "Cold-pack, insured shipping",
   "Free shipment protection",
@@ -144,8 +144,8 @@ export default function Home() {
 
               <p className="text-lg text-slate-600 leading-relaxed mb-8 max-w-lg">
                 Every KJD BioLabs compound is third-party tested to 99%+ identity
-                purity in accredited U.S. labs — and ships with the Certificate of
-                Analysis to prove it.
+                purity in accredited U.S. labs — with a Certificate of Analysis
+                available for every batch.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
@@ -225,7 +225,7 @@ export default function Home() {
                   </span>
                   <div className="leading-tight">
                     <p className="text-ink-950 font-display font-bold text-sm">Certificate of Analysis</p>
-                    <p className="text-slate-500 text-[11px] font-medium">Included with every batch</p>
+                    <p className="text-slate-500 text-[11px] font-medium">Available for every batch</p>
                   </div>
                 </div>
               </div>
@@ -268,7 +268,7 @@ export default function Home() {
                 Featured Compounds
               </h2>
               <p className="text-slate-600 text-lg">
-                Research-grade, lab-tested, and ready to ship — every vial with a Certificate of Analysis.
+                Research-grade, lab-tested, and ready to ship — with a Certificate of Analysis available for every batch.
               </p>
             </div>
             <Link
@@ -348,8 +348,8 @@ export default function Home() {
               Quality you can verify, not just trust
             </h2>
             <p className="text-slate-600 text-lg">
-              Every batch clears a five-point protocol — and we hand you the proof, from the
-              Certificate of Analysis down to the chromatogram.
+              Every batch clears a five-point protocol — and the proof is yours on request,
+              from the Certificate of Analysis to the chromatogram.
             </p>
           </div>
 

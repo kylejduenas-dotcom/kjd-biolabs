@@ -53,8 +53,8 @@ export default function TermsPage() {
               <p>
                 Prices are listed in U.S. dollars and may change at any time without notice. We strive for accuracy,
                 but product descriptions, specifications, images, and research citations are provided for informational
-                purposes only and may contain errors; product images are illustrative. Each batch ships with a
-                Certificate of Analysis reflecting independent third-party testing for that batch. We may limit,
+                purposes only and may contain errors; product images are illustrative. A Certificate of Analysis
+                reflecting independent third-party testing is available for each batch on request. We may limit,
                 discontinue, or modify any product or quantity at our discretion.
               </p>
             </Section>

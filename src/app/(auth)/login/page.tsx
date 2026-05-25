@@ -73,7 +73,7 @@ function LoginForm() {
             Research-grade peptides, independently verified.
           </h2>
           <p className="text-white/75 text-sm">
-            99%+ identity purity · third-party tested · CoA on every batch
+            99%+ identity purity · third-party tested · CoA on request
           </p>
         </div>
       </div>

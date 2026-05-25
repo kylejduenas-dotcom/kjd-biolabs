@@ -188,7 +188,7 @@ function confirmationHtml(orderRef: string, items: LineItem[], total: number, or
     <div style="height:22px;"></div>
     ${order.delivery_estimate ? infoCard("Estimated delivery", esc(order.delivery_estimate), true) : ""}
     ${ship ? `<p style="margin:14px 0 0;color:#64748b;font-size:13px;line-height:1.6;"><strong style="color:#0a0e1a;">Shipping to:</strong> ${ship}</p>` : ""}
-    <p style="margin:18px 0 0;color:#475569;font-size:14px;line-height:1.6;">We'll email you tracking the moment your order ships. Every compound ships with its Certificate of Analysis.</p>`);
+    <p style="margin:18px 0 0;color:#475569;font-size:14px;line-height:1.6;">We'll email you tracking the moment your order ships. A Certificate of Analysis is available for every batch — just reply to request one.</p>`);
 }
 
 function shippedHtml(orderRef: string, label: LabelResult): string {

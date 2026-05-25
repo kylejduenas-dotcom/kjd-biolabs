@@ -108,7 +108,7 @@ export default async function ProductPage({
 
             <div className="flex flex-wrap items-center gap-4 mb-6">
               <Tick>Third-party tested</Tick>
-              <Tick>CoA included</Tick>
+              <Tick>CoA on request</Tick>
               <Tick>U.S. verified</Tick>
             </div>
 
