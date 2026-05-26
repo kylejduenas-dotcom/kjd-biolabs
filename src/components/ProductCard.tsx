@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/data/products";
-import { tintStyles, priceFor, formatPrice, imageFor } from "@/data/products";
+import { tintStyles, priceFor, formatPrice, imageFor, strengthFor } from "@/data/products";
 import Vial from "@/components/Vial";
 import { useCart } from "@/context/CartContext";
 
@@ -11,6 +11,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const style = tintStyles[product.tint];
   const price = priceFor(product.slug);
   const photo = imageFor(product.slug);
+  const strength = strengthFor(product.slug);
   const { add } = useCart();
 
   return (
@@ -43,7 +44,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.name}
           </h3>
         </Link>
-        <p className="text-slate-500 text-sm mt-1 mb-4">{product.subtitle}</p>
+        <p className="text-slate-500 text-sm mt-1 mb-4">{product.subtitle}{strength ? ` · ${strength}` : ""}</p>
         <div className="mt-auto flex items-center justify-between">
           <span className="text-ink-950 font-display font-bold text-lg">
             {formatPrice(price)}

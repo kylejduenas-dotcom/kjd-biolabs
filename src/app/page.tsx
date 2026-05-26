@@ -1,7 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { products, type Product } from "@/data/products";
 import Vial from "@/components/Vial";
-import HeroBottle from "@/components/HeroBottle";
 import FeaturedCarousel from "@/components/FeaturedCarousel";
 import QualityProof from "@/components/QualityProof";
 
@@ -65,15 +65,6 @@ const processSteps = [
     title: "Cold-pack shipping",
     desc: "Lyophilized, sealed, and dispatched same-day with protected, insured shipping.",
   },
-];
-
-const applications = [
-  { icon: "M13 10V3L4 14h7v7l9-11h-7z", title: "Metabolic research", desc: "GLP-1, GIP & glucagon-pathway models studied in vitro." },
-  { icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z", title: "Tissue & repair", desc: "BPC-157, TB-500 & regeneration-pathway research." },
-  { icon: "M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15", title: "Cellular & longevity", desc: "NAD+, epitalon & senescence-related investigation." },
-  { icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z", title: "Cognitive & neuro", desc: "Semax, selank & neuropeptide signaling assays." },
-  { icon: "M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z", title: "Cosmetic & skin", desc: "GHK-Cu & collagen-pathway studies in vitro." },
-  { icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6", title: "Growth factors", desc: "Secretagogues & signaling-peptide research." },
 ];
 
 const comparison = [
@@ -232,17 +223,17 @@ export default function Home() {
 
               <div className="relative w-[306px] h-[306px] sm:w-[410px] sm:h-[410px] lg:w-[500px] lg:h-[500px]">
                 <div className="absolute top-0 left-0 w-[500px] h-[500px] origin-top-left scale-[0.612] sm:scale-[0.82] lg:scale-100">
-                {/* left — tilts back (counter-clockwise), mid height */}
-                <div className="absolute left-[14px] top-[150px] rotate-[-9deg] animate-float-slow z-10" style={{ filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
-                  <HeroBottle name="TB-500" tint="sky" size="md" />
+                {/* left — TB-500 */}
+                <div className="absolute left-[0px] top-[170px] rotate-[-8deg] animate-float-slow z-10" style={{ filter: "drop-shadow(0 26px 26px rgba(12,58,107,0.20))" }}>
+                  <Image src="/products/transparent/tb-500.png" alt="TB-500 research peptide vial" width={190} height={238} priority className="w-[190px] h-auto" />
                 </div>
-                {/* right — kicks out hard (clockwise), sits lowest */}
-                <div className="absolute left-[312px] top-[198px] rotate-[24deg] animate-float-slow z-10" style={{ animationDelay: "0.6s", filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
-                  <HeroBottle name="GHK-Cu" tint="rose" size="md" />
+                {/* right — GHK-Cu */}
+                <div className="absolute left-[300px] top-[195px] rotate-[10deg] animate-float-slow z-10" style={{ animationDelay: "0.6s", filter: "drop-shadow(0 26px 26px rgba(12,58,107,0.20))" }}>
+                  <Image src="/products/transparent/ghk-cu.png" alt="GHK-Cu research peptide vial" width={180} height={225} priority className="w-[180px] h-auto" />
                 </div>
-                {/* center — slight clockwise tilt, highest + front */}
-                <div className="absolute left-1/2 -translate-x-1/2 top-[14px] rotate-[6deg] animate-float z-20" style={{ filter: "drop-shadow(0 40px 34px rgba(12,58,107,0.30))" }}>
-                  <HeroBottle name="BPC-157" tint="mint" size="lg" />
+                {/* center — BPC-157, front + tallest */}
+                <div className="absolute left-1/2 -translate-x-1/2 top-[0px] rotate-[5deg] animate-float z-20" style={{ filter: "drop-shadow(0 38px 34px rgba(12,58,107,0.26))" }}>
+                  <Image src="/products/transparent/bpc-157.png" alt="BPC-157 research peptide vial" width={240} height={300} priority className="w-[240px] h-auto" />
                 </div>
                 </div>
               </div>
@@ -509,38 +500,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== Research applications ===== */}
-      <section className="relative py-20 sm:py-28 bg-white overflow-hidden">
-        <div className="glow-blob top-10 right-0 w-80 h-80" style={{ background: "rgba(43,196,230,0.12)" }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="max-w-2xl mb-14">
-            <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">Applications</span>
-            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-4">
-              Studied across the life sciences
-            </h2>
-            <p className="text-slate-600 text-lg">
-              Researchers use our compounds across a broad range of in-vitro and
-              pre-clinical investigation — for laboratory research use only.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {applications.map((a, i) => (
-              <div key={a.title} className="group relative flex items-start gap-4 p-6 rounded-2xl bg-white border border-slate-200/70 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                <span className="absolute top-4 right-5 font-display font-extrabold text-5xl text-slate-100 group-hover:text-teal-50 transition-colors select-none">{`0${i + 1}`}</span>
-                <div className="relative w-12 h-12 rounded-2xl bg-logo-gradient flex items-center justify-center shrink-0 shadow-soft ring-1 ring-white/40">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/30 to-transparent" />
-                  <svg className="relative w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={a.icon} /></svg>
-                </div>
-                <div className="relative">
-                  <h3 className="text-ink-950 font-display font-bold text-base mb-1">{a.title}</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">{a.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ===== Affiliate (slim band) ===== */}
       <section className="pb-4 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -570,37 +529,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== CTA (with flanking vials) ===== */}
-      <section className="relative py-20 sm:py-28 bg-white overflow-hidden">
-        {/* decorative vials */}
-        <div className="hidden lg:block absolute left-6 xl:left-16 top-1/2 -translate-y-1/2 -rotate-[12deg] animate-float-slow">
-          <Vial name="CJC-1295" tint="peach" size="md" />
+      {/* ===== CTA (full-bleed blue, floating vials) ===== */}
+      <section className="relative overflow-hidden bg-logo-gradient py-24 sm:py-32">
+        <div className="glow-blob -top-24 left-1/4 w-96 h-96" style={{ background: "rgba(255,255,255,0.12)" }} />
+        {/* floating product vials */}
+        <div className="hidden md:block absolute left-4 lg:left-24 top-1/2 -translate-y-1/2 -rotate-[14deg] animate-float-slow" style={{ filter: "drop-shadow(0 18px 26px rgba(8,30,60,0.3))" }}>
+          <Image src="/products/transparent/glutathione.png" alt="Glutathione research peptide vial" width={128} height={160} sizes="160px" className="w-24 lg:w-32 h-auto" />
         </div>
-        <div className="hidden lg:block absolute right-6 xl:right-16 top-1/2 -translate-y-1/2 rotate-[12deg] animate-float">
-          <Vial name="NAD+" tint="aqua" size="md" />
+        <div className="hidden md:block absolute right-4 lg:right-24 top-1/2 -translate-y-1/2 rotate-[14deg] animate-float" style={{ filter: "drop-shadow(0 18px 26px rgba(8,30,60,0.3))" }}>
+          <Image src="/products/transparent/5-amino-1mq.png" alt="5-Amino-1MQ research peptide vial" width={128} height={160} sizes="160px" className="w-24 lg:w-32 h-auto" />
         </div>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-[2rem] bg-logo-gradient px-8 py-20 sm:px-16 lg:py-24 text-center">
-            <div className="relative">
-              <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-4">
-                Ready to Start Your Research?
-              </h2>
-              <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
-                Browse our catalog of 28+ research-grade peptides. Every compound
-                backed by third-party testing and full documentation.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link href="/products" className="inline-flex items-center gap-2 bg-white text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-teal-50 transition-all">
-                  Explore Catalog
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-                <Link href="/contact" className="inline-flex items-center gap-2 border border-white/30 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all">
-                  Contact Us
-                </Link>
-              </div>
-            </div>
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-4">
+            Ready to Start Your Research?
+          </h2>
+          <p className="text-white/85 text-lg mb-8 max-w-xl mx-auto">
+            Browse our catalog of 28+ research-grade peptides. Every compound
+            backed by third-party testing and full documentation.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link href="/products" className="inline-flex items-center gap-2 bg-white text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-teal-50 transition-all">
+              Explore Catalog
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+            <Link href="/contact" className="inline-flex items-center gap-2 border border-white/40 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all">
+              Contact Us
+            </Link>
           </div>
         </div>
       </section>

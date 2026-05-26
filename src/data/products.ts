@@ -512,7 +512,7 @@ export const tintStyles: Record<
 export const productPrices: Record<string, number> = {
   "bpc-157": 36.99,
   "tb-500": 36.99,
-  "ghk-cu": 26.99,
+  "ghk-cu": 45,
   "snap-8": 26.99,
   "glp-3-rt": 65.99,
   "mots-c": 36.99,
@@ -544,26 +544,37 @@ export function priceFor(slug: string): number {
   return productPrices[slug] ?? 0;
 }
 
+// Per-vial strength, shown on the product page + bundle UI. Only set where known.
+export const productStrength: Record<string, string> = {
+  "bpc-157": "10 mg",
+  "ghk-cu": "100 mg",
+  "5-amino-1mq": "5 mg",
+  glutathione: "600 mg",
+  "igf-1-lr3": "1 mg",
+};
+
+export function strengthFor(slug: string): string | null {
+  return productStrength[slug] ?? null;
+}
+
 export function formatPrice(value: number): string {
   return `$${value.toFixed(2)}`;
 }
 
 // --- Bundle pricing ---------------------------------------------------------
-// Quantity-based "Bundle & Save" tiers, applied per product line. Distinct tiers
-// run all the way to 5 vials and undercut the comparable competitor (whose 3+
-// tier flat-caps at 7.5%). This is the SINGLE SOURCE OF TRUTH — imported by the
-// product-page selector, the cart, the checkout summary, BOTH server payment
-// routes (card + crypto, which recompute the charge), and the confirmation
-// email — so the discount can never disagree across surfaces or be tampered
-// with client-side.
-export const MAX_BUNDLE_QTY = 5;
+// Quantity-based "Bundle & Save" tiers, applied per product line. Tiers run up
+// to 3 vials (2× = 5% off, 3× = 7.5% off), matching the comparable competitor's
+// structure on lower base prices. This is the SINGLE SOURCE OF TRUTH — imported
+// by the product-page selector, the cart, the checkout summary, BOTH server
+// payment routes (card + crypto, which recompute the charge), and the
+// confirmation email — so the discount can never disagree across surfaces or be
+// tampered with client-side.
+export const MAX_BUNDLE_QTY = 3;
 
 export const BUNDLE_TIERS: { qty: number; pct: number }[] = [
   { qty: 1, pct: 0 },
   { qty: 2, pct: 5 },
   { qty: 3, pct: 7.5 },
-  { qty: 4, pct: 10 },
-  { qty: 5, pct: 12.5 },
 ];
 
 /** Bundle discount fraction for a quantity. Tiers cap at the 5-vial rate. */
@@ -636,5 +647,19 @@ const PRODUCTS_WITH_PHOTOS = new Set<string>([
 /** Returns the product photo path for a slug, or null to fall back to the illustrated Vial. */
 export function imageFor(slug: string): string | null {
   return PRODUCTS_WITH_PHOTOS.has(slug) ? `/products/${slug}.png` : null;
+}
+
+// Background-free (transparent) PNGs for compositing — used in the bundle
+// selector (stacked vials) and small cart thumbnails where the studio
+// background would clash. Add slugs here as transparent art arrives.
+// Only slugs with genuinely background-free (alpha) art belong here. The other
+// product "transparent" exports arrived on a baked white background, so they're
+// excluded until real cut-outs replace them (they fall back to the illustrated
+// vial in the bundle selector and the studio photo elsewhere).
+const PRODUCTS_WITH_TRANSPARENT = new Set<string>([]);
+
+/** Transparent product PNG path, or null to fall back to the studio photo. */
+export function imageTransparentFor(slug: string): string | null {
+  return PRODUCTS_WITH_TRANSPARENT.has(slug) ? `/products/transparent/${slug}.png` : null;
 }
 
