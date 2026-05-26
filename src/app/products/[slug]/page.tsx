@@ -1,5 +1,6 @@
-import { products, tintStyles, priceFor, formatPrice } from "@/data/products";
+import { products, tintStyles, priceFor, formatPrice, imageFor } from "@/data/products";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Vial from "@/components/Vial";
 import AddToCartButton from "@/components/AddToCartButton";
@@ -18,6 +19,7 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const style = tintStyles[product.tint];
+  const photo = imageFor(product.slug);
 
   const specs = [
     { label: "Sequence", value: product.sequence },
@@ -49,15 +51,29 @@ export default async function ProductPage({
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
           {/* Vial */}
           <div
-            className="rounded-[2rem] flex items-center justify-center p-12 min-h-[440px] relative overflow-hidden"
+            className="rounded-[2rem] relative overflow-hidden min-h-[440px] lg:min-h-[560px]"
             style={{ background: style.bg }}
           >
-            <span className="absolute top-5 left-5 text-[11px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full bg-white/70 backdrop-blur text-ink-900">
+            <span className="absolute top-5 left-5 z-10 text-[11px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full bg-white/70 backdrop-blur text-ink-900">
               {product.category}
             </span>
-            <div className="animate-float scale-110">
-              <Vial name={product.name} tint={product.tint} size="lg" />
-            </div>
+            {photo ? (
+              <Image
+                src={photo}
+                alt={`${product.name} research peptide vial`}
+                fill
+                priority
+                quality={95}
+                sizes="(max-width: 1024px) 100vw, 560px"
+                className="object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center p-12">
+                <div className="animate-float scale-110">
+                  <Vial name={product.name} tint={product.tint} size="lg" />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Info */}
@@ -128,14 +144,21 @@ export default async function ProductPage({
             <h2 className="text-3xl font-display font-bold text-ink-950 mb-8">
               Related Products
             </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {related.map((p) => {
                 const rStyle = tintStyles[p.tint];
+                const rPhoto = imageFor(p.slug);
                 return (
                   <Link key={p.slug} href={`/products/${p.slug}`} className="group block">
                     <div className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
-                      <div className="h-40 flex items-center justify-center" style={{ background: rStyle.bg }}>
-                        <Vial name={p.name} tint={p.tint} size="sm" />
+                      <div className="h-44 relative overflow-hidden" style={{ background: rStyle.bg }}>
+                        {rPhoto ? (
+                          <Image src={rPhoto} alt={p.name} fill quality={85} sizes="(max-width: 1024px) 50vw, 300px" className="object-cover transition-transform duration-300 group-hover:scale-[1.04]" />
+                        ) : (
+                          <div className="h-full flex items-center justify-center">
+                            <Vial name={p.name} tint={p.tint} size="sm" />
+                          </div>
+                        )}
                       </div>
                       <div className="p-5">
                         <h3 className="text-ink-950 font-display font-bold group-hover:text-teal-600 transition-colors">

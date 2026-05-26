@@ -548,3 +548,23 @@ export function formatPrice(value: number): string {
   return `$${value.toFixed(2)}`;
 }
 
+// Products that have a real product photo in /public/products/<slug>.png.
+// Filenames match the slug, so the path is derived. Add slugs here as photos arrive.
+const PRODUCTS_WITH_PHOTOS = new Set<string>([
+  "bpc-157",
+  "tb-500",
+  "ghk-cu",
+  "snap-8",
+  "glp-3-rt",
+  "mots-c",
+  "5-amino-1mq",
+  "cagrilintide",
+  "aod-9604",
+  "tesamorelin",
+]);
+
+/** Returns the product photo path for a slug, or null to fall back to the illustrated Vial. */
+export function imageFor(slug: string): string | null {
+  return PRODUCTS_WITH_PHOTOS.has(slug) ? `/products/${slug}.png` : null;
+}
+
