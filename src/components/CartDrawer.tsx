@@ -31,8 +31,10 @@ export default function CartDrawer() {
         className={`fixed inset-0 z-[60] bg-ink-950/40 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       />
 
+      {/* Viewport-sized clip wrapper so the off-canvas panel never causes page-wide horizontal scroll */}
+      <div className="fixed inset-0 z-[70] overflow-hidden pointer-events-none">
       <aside
-        className={`fixed top-0 right-0 z-[70] h-full w-full max-w-md bg-white shadow-2xl flex flex-col transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col transition-transform duration-300 ${isOpen ? "translate-x-0 pointer-events-auto" : "translate-x-full"}`}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
@@ -133,6 +135,7 @@ export default function CartDrawer() {
           </>
         )}
       </aside>
+      </div>
     </>
   );
 }

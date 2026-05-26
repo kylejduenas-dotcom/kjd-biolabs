@@ -44,7 +44,7 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white">
+      <body className="min-h-full flex flex-col bg-white overflow-x-clip">
         <CartProvider>
           <AgeGate>
             <Navbar />

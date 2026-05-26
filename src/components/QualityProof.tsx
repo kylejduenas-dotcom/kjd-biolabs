@@ -113,7 +113,7 @@ export default function QualityProof() {
   const d = dims[active];
 
   return (
-    <div className="grid lg:grid-cols-5 gap-6 lg:gap-10 items-stretch">
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-10 items-stretch">
       <div className="lg:col-span-2 flex flex-col gap-2.5">
         {dims.map((dim, i) => (
           <button

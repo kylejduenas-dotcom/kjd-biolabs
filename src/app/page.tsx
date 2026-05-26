@@ -134,7 +134,7 @@ export default function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-center py-16 lg:py-20 lg:min-h-[620px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center py-16 lg:py-20 lg:min-h-[620px]">
             {/* Copy */}
             <div>
               <div className="fade-up inline-flex items-center gap-2 bg-teal-50 border border-teal-200/70 rounded-full px-4 py-1.5 mb-7">
@@ -183,14 +183,15 @@ export default function Home() {
             </div>
 
             {/* Product cluster — leaning, overlapping bottles (Peptora-style); shown on mobile too, scaled to fit */}
-            <div className="relative h-[360px] sm:h-[460px] lg:h-[560px] flex items-center justify-center order-last">
+            <div className="relative h-[360px] sm:h-[460px] lg:h-[560px] flex items-center justify-center order-last overflow-x-clip lg:overflow-visible">
               {/* soft glow */}
               <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.20), transparent 68%)" }} />
                 <div className="absolute bottom-8 right-10 w-64 h-64 rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.16), transparent 70%)" }} />
               </div>
 
-              <div className="relative w-[500px] h-[500px] scale-[0.62] sm:scale-[0.82] lg:scale-100">
+              <div className="relative w-[306px] h-[306px] sm:w-[410px] sm:h-[410px] lg:w-[500px] lg:h-[500px]">
+                <div className="absolute top-0 left-0 w-[500px] h-[500px] origin-top-left scale-[0.612] sm:scale-[0.82] lg:scale-100">
                 {/* left — tilts back (counter-clockwise), mid height */}
                 <div className="absolute left-[14px] top-[150px] rotate-[-9deg] animate-float-slow z-10" style={{ filter: "drop-shadow(0 28px 24px rgba(12,58,107,0.26))" }}>
                   <HeroBottle name="TB-500" tint="sky" size="md" />
@@ -203,6 +204,7 @@ export default function Home() {
                 <div className="absolute left-1/2 -translate-x-1/2 top-[14px] rotate-[6deg] animate-float z-20" style={{ filter: "drop-shadow(0 40px 34px rgba(12,58,107,0.30))" }}>
                   <HeroBottle name="BPC-157" tint="mint" size="lg" />
                 </div>
+                </div>
               </div>
             </div>
           </div>
@@ -213,19 +215,19 @@ export default function Home() {
       <section className="relative bg-logo-gradient overflow-hidden">
         <div className="glow-blob -top-24 left-1/4 w-96 h-96" style={{ background: "rgba(255,255,255,0.12)" }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 lg:divide-x lg:divide-white/20">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 lg:divide-x lg:divide-white/20">
             {stats.map((s) => (
-              <div key={s.label} className="flex flex-col items-center text-center lg:px-6">
-                <span className="w-12 h-12 rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur-sm flex items-center justify-center mb-4 text-white shadow-lg shadow-ink-950/10">
+              <div key={s.label} className="flex flex-col items-center text-center px-1 lg:px-6">
+                <span className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur-sm flex items-center justify-center mb-3 sm:mb-4 text-white shadow-lg shadow-ink-950/10">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={s.icon} />
                   </svg>
                 </span>
-                <p className="text-4xl sm:text-5xl font-display font-extrabold text-white leading-none">
+                <p className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white leading-none">
                   {s.value}
                 </p>
-                <p className="text-white font-semibold text-sm mt-2">{s.label}</p>
-                <p className="text-white/60 text-xs mt-0.5">{s.sub}</p>
+                <p className="text-white font-semibold text-xs sm:text-sm mt-2 text-balance">{s.label}</p>
+                <p className="text-white/60 text-[11px] sm:text-xs mt-0.5 text-balance">{s.sub}</p>
               </div>
             ))}
           </div>
@@ -256,7 +258,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featured.map((product) => (
               <ProductCard key={product.slug} product={product} />
             ))}
@@ -280,7 +282,7 @@ export default function Home() {
       <section className="relative py-20 sm:py-28 bg-white overflow-hidden">
         <div className="glow-blob top-[-6rem] right-[-4rem] w-[34rem] h-[34rem]" style={{ background: "rgba(43,196,230,0.12)" }} />
         <div className="glow-blob bottom-[-8rem] left-[-6rem] w-[30rem] h-[30rem]" style={{ background: "rgba(18,135,210,0.08)" }} />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="inline-flex items-center bg-teal-50 text-teal-700 font-semibold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-teal-200/60">The Science</span>
             <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-2 mb-5">
@@ -330,7 +332,7 @@ export default function Home() {
           </div>
 
           {/* Bento */}
-          <div className="grid lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             {/* Feature tile — gradient, spans 2 cols & 2 rows */}
             <div className="lg:col-span-2 lg:row-span-2 relative overflow-hidden rounded-3xl bg-logo-gradient p-8 sm:p-10 flex flex-col justify-between min-h-[20rem]">
               <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full border border-white/15" />
@@ -403,7 +405,7 @@ export default function Home() {
             <div className="glow-blob -bottom-20 -right-10 w-72 h-72" style={{ background: "rgba(18,135,210,0.16)" }} />
             <div className="relative">
               <div className="hidden lg:block absolute top-7 left-[10%] right-[10%] h-0.5 bg-logo-gradient opacity-50" />
-              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-5 relative">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-5 relative">
                 {processSteps.map((p, i) => (
                   <div key={p.title} className="relative text-center">
                     <div className="w-14 h-14 rounded-2xl bg-logo-gradient text-white flex items-center justify-center mb-4 mx-auto shadow-soft relative z-10 ring-4 ring-white/70">
@@ -485,7 +487,7 @@ export default function Home() {
               pre-clinical investigation — for laboratory research use only.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {applications.map((a, i) => (
               <div key={a.title} className="group relative flex items-start gap-4 p-6 rounded-2xl bg-white border border-slate-200/70 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
                 <span className="absolute top-4 right-5 font-display font-extrabold text-5xl text-slate-100 group-hover:text-teal-50 transition-colors select-none">{`0${i + 1}`}</span>
