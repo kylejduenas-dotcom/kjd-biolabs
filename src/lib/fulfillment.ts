@@ -175,11 +175,24 @@ function confirmationHtml(orderRef: string, items: LineItem[], total: number, or
     )
     .join("");
   const ship = [order.shipping_address, order.shipping_city, order.shipping_state, order.shipping_zip].filter(Boolean).map(esc).join(", ");
+  // Itemize at list price, then show the bundle discount as an explicit
+  // deduction so the receipt reconciles: list − savings + shipping = total.
+  const fullSubtotal = items.reduce((s, i) => s + Number(i.unit_price) * Number(i.quantity), 0);
+  const shipping = Number(order.shipping_cost ?? 0);
+  const savings = Math.round((fullSubtotal - Number(order.subtotal)) * 100) / 100;
+  const summaryRow = (label: string, value: string, color = "#475569", valueColor = "#0a0e1a") =>
+    `<tr>
+      <td style="padding:8px 0 0;color:${color};font-size:13px;">${label}</td>
+      <td style="padding:8px 0 0;text-align:right;color:${valueColor};font-size:13px;font-weight:bold;white-space:nowrap;">${value}</td>
+    </tr>`;
   return shell(`Order confirmed — thank you${order.shipping_name ? ", " + esc(order.shipping_name.split(" ")[0]) : ""}!`, `
     <p style="margin:0 0 20px;color:#475569;font-size:15px;line-height:1.6;">We've received your order and payment. Here's your summary:</p>
     ${infoCard("Order number", `<span style="font-family:'Courier New',monospace;">${esc(orderRef)}</span>`)}
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin:4px 0 0;">
       ${rows}
+      ${summaryRow("Subtotal", formatPrice(fullSubtotal))}
+      ${savings > 0 ? summaryRow("Bundle savings", `&minus;${formatPrice(savings)}`, "#047857", "#047857") : ""}
+      ${summaryRow("Shipping", shipping > 0 ? formatPrice(shipping) : "Free", "#475569", shipping > 0 ? "#0a0e1a" : "#047857")}
       <tr>
         <td style="padding:16px 0 0;color:#0a0e1a;font-size:16px;font-weight:bold;">Total paid</td>
         <td style="padding:16px 0 0;text-align:right;color:#0a0e1a;font-size:20px;font-weight:bold;">${formatPrice(total)}</td>

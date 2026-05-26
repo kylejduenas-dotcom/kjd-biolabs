@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient as createServerClient } from "@/lib/supabase/server";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { fulfillPaidOrder } from "@/lib/fulfillment";
-import { priceFor } from "@/data/products";
+import { priceFor, lineTotal } from "@/data/products";
 import { shippingCostFor } from "@/data/shipping";
 
 export const runtime = "nodejs";
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
     .select("product_slug, quantity")
     .eq("order_id", order.id);
   const realSubtotal = (lineItems ?? []).reduce(
-    (sum, it) => sum + priceFor(String(it.product_slug)) * Number(it.quantity),
+    (sum, it) => sum + lineTotal(priceFor(String(it.product_slug)), Number(it.quantity)),
     0,
   );
   if (realSubtotal <= 0) {

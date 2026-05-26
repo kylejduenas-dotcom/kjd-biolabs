@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { createClient } from "@/lib/supabase/client";
-import { formatPrice, tintStyles } from "@/data/products";
+import Image from "next/image";
+import { formatPrice, tintStyles, lineTotal, imageFor } from "@/data/products";
 import Vial from "@/components/Vial";
 import NmiCardFields, { type NmiHandle } from "@/components/NmiCardFields";
 import { SHIPPING_OPTIONS as SHIPPING, FREE_SHIPPING_THRESHOLD } from "@/data/shipping";
@@ -67,7 +68,7 @@ export default function CheckoutForm({
   defaultName: string;
 }) {
   const router = useRouter();
-  const { items, subtotal, clear, hydrated } = useCart();
+  const { items, subtotal, savings, clear, hydrated } = useCart();
   const [form, setForm] = useState({
     name: defaultName || "",
     address: "",
@@ -446,10 +447,14 @@ export default function CheckoutForm({
             {items.map((i) => (
               <div key={i.slug} className="flex items-center gap-3">
                 <div className="relative shrink-0">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden" style={{ background: tintStyles[i.tint].bg }}>
-                    <div className="scale-[0.34]">
-                      <Vial name={i.name} tint={i.tint} size="sm" />
-                    </div>
+                  <div className="w-12 h-12 rounded-xl relative flex items-center justify-center overflow-hidden" style={imageFor(i.slug) ? undefined : { background: tintStyles[i.tint].bg }}>
+                    {imageFor(i.slug) ? (
+                      <Image src={imageFor(i.slug)!} alt={i.name} fill sizes="48px" className="object-cover" />
+                    ) : (
+                      <div className="scale-[0.34]">
+                        <Vial name={i.name} tint={i.tint} size="sm" />
+                      </div>
+                    )}
                   </div>
                   <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-ink-950 text-white text-[10px] font-bold flex items-center justify-center">{i.quantity}</span>
                 </div>
@@ -457,7 +462,7 @@ export default function CheckoutForm({
                   <p className="text-ink-950 text-sm font-medium truncate">{i.name}</p>
                   <p className="text-slate-400 text-xs">Qty {i.quantity}</p>
                 </div>
-                <span className="text-ink-950 text-sm font-medium">{formatPrice(i.price * i.quantity)}</span>
+                <span className="text-ink-950 text-sm font-medium">{formatPrice(lineTotal(i.price, i.quantity))}</span>
               </div>
             ))}
           </div>
@@ -466,6 +471,15 @@ export default function CheckoutForm({
               <span className="text-slate-500">Subtotal</span>
               <span className="text-ink-950 font-medium">{formatPrice(subtotal)}</span>
             </div>
+            {savings > 0 && (
+              <div className="flex justify-between text-sm">
+                <span className="text-teal-700 font-medium inline-flex items-center gap-1.5">
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Bundle savings
+                </span>
+                <span className="text-teal-700 font-semibold">&minus;{formatPrice(savings)}</span>
+              </div>
+            )}
             <div className="flex justify-between text-sm">
               <span className="text-slate-500">Shipping ({SHIPPING[ship].label})</span>
               <span className="font-medium">

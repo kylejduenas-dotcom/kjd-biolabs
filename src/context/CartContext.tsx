@@ -8,6 +8,7 @@ import {
   useCallback,
 } from "react";
 import type { Tint } from "@/data/products";
+import { lineTotal, lineSavings } from "@/data/products";
 
 export interface CartItem {
   slug: string;
@@ -26,6 +27,7 @@ interface CartContextValue {
   clear: () => void;
   count: number;
   subtotal: number;
+  savings: number;
   isOpen: boolean;
   setOpen: (v: boolean) => void;
   hydrated: boolean;
@@ -87,11 +89,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clear = useCallback(() => setItems([]), []);
 
   const count = items.reduce((s, i) => s + i.quantity, 0);
-  const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
+  // Bundle discount is a deterministic function of each line's quantity.
+  const subtotal = items.reduce((s, i) => s + lineTotal(i.price, i.quantity), 0);
+  const savings = items.reduce((s, i) => s + lineSavings(i.price, i.quantity), 0);
 
   return (
     <CartContext.Provider
-      value={{ items, add, remove, setQty, clear, count, subtotal, isOpen, setOpen, hydrated }}
+      value={{ items, add, remove, setQty, clear, count, subtotal, savings, isOpen, setOpen, hydrated }}
     >
       {children}
     </CartContext.Provider>

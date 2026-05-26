@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import LogoutButton from "@/components/auth/LogoutButton";
-import { formatPrice } from "@/data/products";
+import { formatPrice, lineTotal } from "@/data/products";
 
 interface OrderItem {
   product_name: string;
@@ -161,7 +161,7 @@ export default async function AccountPage() {
                       {o.order_items?.map((it, idx) => (
                         <div key={idx} className="flex justify-between gap-4">
                           <span>{it.quantity}&times; {it.product_name}</span>
-                          <span className="text-slate-400">{formatPrice(Number(it.unit_price) * it.quantity)}</span>
+                          <span className="text-slate-400">{formatPrice(lineTotal(Number(it.unit_price), it.quantity))}</span>
                         </div>
                       ))}
                     </div>

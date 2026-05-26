@@ -1,25 +1,31 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/context/CartContext";
-import { tintStyles, formatPrice, priceFor } from "@/data/products";
+import { tintStyles, formatPrice, priceFor, lineTotal, bundleDiscountPct, imageFor } from "@/data/products";
 import { FREE_SHIPPING_THRESHOLD } from "@/data/shipping";
 import Vial from "@/components/Vial";
 
 const BAC = { slug: "bacteriostatic-water", name: "Bacteriostatic Water", subtitle: "Research Supplies", tint: "aqua" as const };
 
-function Thumb({ name, tint }: { name: string; tint: keyof typeof tintStyles }) {
+function Thumb({ slug, name, tint }: { slug: string; name: string; tint: keyof typeof tintStyles }) {
+  const photo = imageFor(slug);
   return (
-    <div className="w-16 h-16 rounded-2xl shrink-0 flex items-center justify-center overflow-hidden" style={{ background: tintStyles[tint].bg }}>
-      <div className="scale-[0.42]">
-        <Vial name={name} tint={tint} size="sm" />
-      </div>
+    <div className="w-16 h-16 rounded-2xl shrink-0 relative overflow-hidden flex items-center justify-center" style={photo ? undefined : { background: tintStyles[tint].bg }}>
+      {photo ? (
+        <Image src={photo} alt={name} fill sizes="64px" className="object-cover" />
+      ) : (
+        <div className="scale-[0.42]">
+          <Vial name={name} tint={tint} size="sm" />
+        </div>
+      )}
     </div>
   );
 }
 
 export default function CartDrawer() {
-  const { items, isOpen, setOpen, setQty, remove, add, subtotal, count } = useCart();
+  const { items, isOpen, setOpen, setQty, remove, add, subtotal, savings, count } = useCart();
   const hasBac = items.some((i) => i.slug === BAC.slug);
   const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const progress = Math.min(100, subtotal === 0 ? 0 : (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
@@ -59,7 +65,7 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto px-5 py-4 space-y-3">
               {items.map((item) => (
                 <div key={item.slug} className="flex gap-3 p-3 rounded-2xl border border-slate-200/70 bg-soft-cream">
-                  <Thumb name={item.name} tint={item.tint} />
+                  <Thumb slug={item.slug} name={item.name} tint={item.tint} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
@@ -76,7 +82,15 @@ export default function CartDrawer() {
                         <span className="w-7 text-center text-sm text-ink-950 font-semibold">{item.quantity}</span>
                         <button onClick={() => setQty(item.slug, item.quantity + 1)} aria-label="Increase" className="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-ink-950 text-lg leading-none">+</button>
                       </div>
-                      <span className="text-ink-950 font-bold text-sm">{formatPrice(item.price * item.quantity)}</span>
+                      <div className="text-right">
+                        <span className="block text-ink-950 font-bold text-sm">{formatPrice(lineTotal(item.price, item.quantity))}</span>
+                        {item.quantity > 1 && (
+                          <span className="inline-flex items-center gap-1.5">
+                            <span className="text-slate-400 text-xs line-through">{formatPrice(item.price * item.quantity)}</span>
+                            <span className="text-teal-700 text-[11px] font-semibold">&minus;{bundleDiscountPct(item.quantity)}%</span>
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -85,7 +99,7 @@ export default function CartDrawer() {
               {/* BAC Water upsell */}
               {!hasBac && (
                 <div className="flex items-center gap-3 p-3 rounded-2xl border border-teal-300/60 bg-teal-50/60">
-                  <Thumb name={BAC.name} tint={BAC.tint} />
+                  <Thumb slug={BAC.slug} name={BAC.name} tint={BAC.tint} />
                   <div className="flex-1 min-w-0">
                     <p className="text-ink-950 font-semibold text-sm">Don&apos;t forget BAC Water</p>
                     <p className="text-slate-500 text-xs mt-0.5">Needed to reconstitute peptides · {formatPrice(priceFor(BAC.slug))}</p>
@@ -117,7 +131,17 @@ export default function CartDrawer() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-1">
+              {savings > 0 && (
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-teal-700 text-sm font-medium inline-flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    Bundle savings
+                  </span>
+                  <span className="text-teal-700 font-semibold text-sm">&minus;{formatPrice(savings)}</span>
+                </div>
+              )}
+
+              <div className={`flex items-center justify-between ${savings > 0 ? "" : "pt-1"}`}>
                 <span className="text-slate-500 text-sm">Subtotal</span>
                 <span className="text-ink-950 font-display font-bold text-xl">{formatPrice(subtotal)}</span>
               </div>

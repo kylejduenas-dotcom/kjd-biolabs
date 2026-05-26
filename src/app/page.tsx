@@ -1,19 +1,24 @@
 import Link from "next/link";
-import { products } from "@/data/products";
+import { products, type Product } from "@/data/products";
 import Vial from "@/components/Vial";
 import HeroBottle from "@/components/HeroBottle";
-import ProductCard from "@/components/ProductCard";
+import FeaturedCarousel from "@/components/FeaturedCarousel";
 import QualityProof from "@/components/QualityProof";
 
-const featured = products.filter((p) =>
-  ["bpc-157", "ghk-cu", "tb-500", "tesamorelin", "cjc-1295-ipamorelin", "nad-plus"].includes(p.slug)
-);
+// Curated, ordered set for the Featured carousel — spans the main research categories.
+const featuredSlugs = [
+  "bpc-157", "tb-500", "ghk-cu", "glp-3-rt", "tesamorelin",
+  "cjc-1295-ipamorelin", "nad-plus", "mots-c",
+];
+const featured: Product[] = featuredSlugs
+  .map((slug) => products.find((p) => p.slug === slug))
+  .filter((p): p is Product => p !== undefined);
 
 const stats = [
-  { value: "99%+", label: "Purity Guaranteed", sub: "HPLC + mass spec", icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" },
-  { value: "28+", label: "Research Compounds", sub: "In-stock catalog", icon: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" },
-  { value: "100%", label: "U.S. Verified", sub: "Accredited labs", icon: "M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 2H21l-3 6 3 6h-8.5l-1-2H5a2 2 0 00-2 2zm9-13.5V9" },
-  { value: "5", label: "Quality Checks", sub: "Per-batch protocol", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" },
+  { value: "99%+", label: "Average batch purity", sub: "HPLC + mass spec", icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" },
+  { value: "100%", label: "U.S. lab-tested", sub: "Accredited labs", icon: "M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 2H21l-3 6 3 6h-8.5l-1-2H5a2 2 0 00-2 2zm9-13.5V9" },
+  { value: "1–2", label: "Day dispatch", sub: "Business days", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+  { value: "28+", label: "Research compounds", sub: "In-stock catalog", icon: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" },
 ];
 
 const pillars = [
@@ -78,6 +83,41 @@ const comparison = [
   "Cold-pack, insured shipping",
   "Free shipment protection",
   "U.S.-based researcher support",
+];
+
+const homeFaqs = [
+  {
+    q: "Are these compounds for human use?",
+    a: "No. Every KJD BioLabs compound is sold strictly for in vitro laboratory and research use only — not for human or veterinary use, not for food or cosmetic purposes, and not for use in diagnostic procedures. By ordering, you confirm you are a qualified researcher.",
+  },
+  {
+    q: "What is a Certificate of Analysis?",
+    a: "A Certificate of Analysis (CoA) is the lab document reporting a specific batch's identity and purity, confirmed by HPLC and mass spectrometry at an independent, accredited U.S. laboratory. A CoA is available for every batch — request one for any product through our contact page.",
+  },
+  {
+    q: "What purity do you guarantee?",
+    a: "Every research compound in our catalog is guaranteed to 99%+ identity purity, verified by HPLC and mass spectrometry as part of our five-point, per-batch quality protocol.",
+  },
+  {
+    q: "How should I store the lyophilized product?",
+    a: "Store lyophilized (freeze-dried) peptides at -20°C for long-term stability, protected from light and moisture. Once reconstituted, most peptides are best kept at 2–8°C and used within the window noted on each product page.",
+  },
+  {
+    q: "How long is the lyophilized product stable?",
+    a: "Stored sealed at -20°C, lyophilized peptides typically remain stable for 2+ years. Brief exposure to ambient temperature in transit won't compromise a properly freeze-dried product — refer to each product's storage notes for specifics.",
+  },
+  {
+    q: "How fast do you ship, and is cold shipping required?",
+    a: "Orders are typically dispatched within 1–2 business days. Because compounds ship as a stable lyophilized powder, cold shipping isn't required — every order is sealed and protected, and you should store it at -20°C once it arrives.",
+  },
+  {
+    q: "How does shipment protection work?",
+    a: "Every order includes free shipment protection. If a package is lost, stolen, or damaged in transit, we'll replace it at no cost to you — just reach out to support.",
+  },
+  {
+    q: "Do you ship internationally?",
+    a: "Currently, we ship to all 50 U.S. states. International shipping varies by country due to customs regulations on research materials. Contact our support team for specific country availability. All international orders may be subject to local customs fees and import duties.",
+  },
 ];
 
 function PeptideDiagram() {
@@ -258,11 +298,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featured.map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
+          <FeaturedCarousel products={featured} />
 
           <div className="sm:hidden mt-8">
             <Link
@@ -565,6 +601,41 @@ export default function Home() {
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FAQ (bottom of page) ===== */}
+      <section className="py-20 sm:py-28 bg-white border-t border-slate-200/60">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 sm:mb-14">
+            <span className="text-teal-600 font-semibold text-xs uppercase tracking-[0.2em]">FAQ</span>
+            <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mt-3">
+              Common questions, <span className="text-gradient-anim">answered.</span>
+            </h2>
+          </div>
+          <div className="divide-y divide-slate-200">
+            {homeFaqs.map((f) => (
+              <details key={f.q} className="group">
+                <summary className="flex items-center justify-between gap-5 cursor-pointer list-none py-5 sm:py-6">
+                  <span className="text-ink-950 font-display font-semibold text-base sm:text-lg">{f.q}</span>
+                  <span className="shrink-0 text-teal-600 transition-transform duration-300 group-open:rotate-45">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14M5 12h14" />
+                    </svg>
+                  </span>
+                </summary>
+                <div className="pb-6 -mt-1 pr-9">
+                  <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed">{f.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link href="/faq" className="inline-flex items-center gap-2 text-teal-600 font-semibold text-sm hover:text-teal-700">
+              See all FAQs
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </Link>
           </div>
         </div>
       </section>

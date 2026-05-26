@@ -548,6 +548,55 @@ export function formatPrice(value: number): string {
   return `$${value.toFixed(2)}`;
 }
 
+// --- Bundle pricing ---------------------------------------------------------
+// Quantity-based "Bundle & Save" tiers, applied per product line. Distinct tiers
+// run all the way to 5 vials and undercut the comparable competitor (whose 3+
+// tier flat-caps at 7.5%). This is the SINGLE SOURCE OF TRUTH — imported by the
+// product-page selector, the cart, the checkout summary, BOTH server payment
+// routes (card + crypto, which recompute the charge), and the confirmation
+// email — so the discount can never disagree across surfaces or be tampered
+// with client-side.
+export const MAX_BUNDLE_QTY = 5;
+
+export const BUNDLE_TIERS: { qty: number; pct: number }[] = [
+  { qty: 1, pct: 0 },
+  { qty: 2, pct: 5 },
+  { qty: 3, pct: 7.5 },
+  { qty: 4, pct: 10 },
+  { qty: 5, pct: 12.5 },
+];
+
+/** Bundle discount fraction for a quantity. Tiers cap at the 5-vial rate. */
+export function bundleDiscountRate(qty: number): number {
+  const capped = Math.min(Math.max(1, Math.floor(qty || 1)), MAX_BUNDLE_QTY);
+  const tier = BUNDLE_TIERS.find((t) => t.qty === capped) ?? BUNDLE_TIERS[0];
+  return tier.pct / 100;
+}
+
+/** Whole-percent (or 7.5) discount for a quantity — for "Save X%" labels. */
+export function bundleDiscountPct(qty: number): number {
+  return bundleDiscountRate(qty) * 100;
+}
+
+function round2(n: number): number {
+  return Math.round((n + Number.EPSILON) * 100) / 100;
+}
+
+/** Discounted line total for `qty` units at `unit` base price (rounded to cents). */
+export function lineTotal(unit: number, qty: number): number {
+  return round2(unit * qty * (1 - bundleDiscountRate(qty)));
+}
+
+/** Effective per-unit price after the bundle discount (rounded to cents). */
+export function unitPriceAfterBundle(unit: number, qty: number): number {
+  return round2(lineTotal(unit, qty) / Math.max(1, qty));
+}
+
+/** Money saved on this line versus paying full unit price. */
+export function lineSavings(unit: number, qty: number): number {
+  return round2(unit * qty - lineTotal(unit, qty));
+}
+
 // Products that have a real product photo in /public/products/<slug>.png.
 // Filenames match the slug, so the path is derived. Add slugs here as photos arrive.
 const PRODUCTS_WITH_PHOTOS = new Set<string>([
