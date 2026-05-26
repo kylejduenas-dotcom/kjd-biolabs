@@ -64,7 +64,7 @@ export default async function ProductPage({
                 fill
                 priority
                 quality={95}
-                sizes="(max-width: 1024px) 100vw, 560px"
+                sizes="(max-width: 1024px) 100vw, 620px"
                 className="object-cover"
               />
             ) : (
@@ -153,7 +153,7 @@ export default async function ProductPage({
                     <div className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
                       <div className="h-44 relative overflow-hidden" style={{ background: rStyle.bg }}>
                         {rPhoto ? (
-                          <Image src={rPhoto} alt={p.name} fill quality={85} sizes="(max-width: 1024px) 50vw, 300px" className="object-cover transition-transform duration-300 group-hover:scale-[1.04]" />
+                          <Image src={rPhoto} alt={p.name} fill quality={85} sizes="(max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-300 group-hover:scale-[1.04]" />
                         ) : (
                           <div className="h-full flex items-center justify-center">
                             <Vial name={p.name} tint={p.tint} size="sm" />

@@ -26,7 +26,7 @@ export default function ProductCard({ product }: { product: Product }) {
               alt={`${product.name} research peptide vial`}
               fill
               quality={90}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             />
           ) : (
