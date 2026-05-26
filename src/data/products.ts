@@ -573,6 +573,15 @@ const PRODUCTS_WITH_PHOTOS = new Set<string>([
   "pt-141",
   "melanotan-ii",
   "melanotan-i",
+  // Batch 3 — completes the catalog
+  "igf-1-lr3",
+  "selank",
+  "semax",
+  "dsip",
+  "bpc-157-tb-500-wolverine",
+  "glow",
+  "klow",
+  "bacteriostatic-water",
 ]);
 
 /** Returns the product photo path for a slug, or null to fall back to the illustrated Vial. */
