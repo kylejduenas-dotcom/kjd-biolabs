@@ -551,6 +551,7 @@ export function formatPrice(value: number): string {
 // Products that have a real product photo in /public/products/<slug>.png.
 // Filenames match the slug, so the path is derived. Add slugs here as photos arrive.
 const PRODUCTS_WITH_PHOTOS = new Set<string>([
+  // Batch 1
   "bpc-157",
   "tb-500",
   "ghk-cu",
@@ -561,6 +562,17 @@ const PRODUCTS_WITH_PHOTOS = new Set<string>([
   "cagrilintide",
   "aod-9604",
   "tesamorelin",
+  // Batch 2
+  "cjc-1295-ipamorelin",
+  "ipamorelin",
+  "kpv",
+  "nad-plus",
+  "glutathione",
+  "thymosin-alpha-1",
+  "epithalon",
+  "pt-141",
+  "melanotan-ii",
+  "melanotan-i",
 ]);
 
 /** Returns the product photo path for a slug, or null to fall back to the illustrated Vial. */

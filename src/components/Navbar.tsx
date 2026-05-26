@@ -41,7 +41,8 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center group" aria-label="KJD BioLabs home">
+          {/* Full reload to home so the logo always refreshes the landing page */}
+          <a href="/" className="flex items-center group" aria-label="KJD BioLabs home">
             <Image
               src="/kjd-logo-horizontal.png"
               alt="KJD BioLabs"
@@ -51,7 +52,7 @@ export default function Navbar() {
               className="h-9 w-auto"
               style={{ width: "auto", height: "2.25rem" }}
             />
-          </Link>
+          </a>
 
           <div className="hidden md:flex items-center gap-1">
             <NavLink href="/products">Products</NavLink>
