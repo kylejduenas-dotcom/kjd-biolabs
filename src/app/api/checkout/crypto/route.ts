@@ -4,6 +4,7 @@ import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { buildCoinbaseJwt } from "@/lib/coinbase";
 import { priceFor, lineTotal } from "@/data/products";
 import { shippingCostFor } from "@/data/shipping";
+import { couponDiscount } from "@/data/coupons";
 
 export const runtime = "nodejs";
 
@@ -24,13 +25,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Crypto payments are not configured yet." }, { status: 503 });
   }
 
-  let body: { orderId?: string };
+  let body: { orderId?: string; coupon?: string };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 400 });
   }
-  const { orderId } = body;
+  const { orderId, coupon } = body;
   if (!orderId) {
     return NextResponse.json({ ok: false, error: "Missing order." }, { status: 400 });
   }
@@ -70,7 +71,8 @@ export async function POST(req: Request) {
   if (realSubtotal <= 0) {
     return NextResponse.json({ ok: false, error: "Could not price this order. Please try again." }, { status: 400 });
   }
-  const amount = (realSubtotal + shippingCostFor(order.shipping_method, realSubtotal)).toFixed(2);
+  const discount = couponDiscount(coupon, realSubtotal);
+  const amount = (realSubtotal - discount + shippingCostFor(order.shipping_method, realSubtotal)).toFixed(2);
   const orderRef = order.order_number ?? order.id;
   const origin = req.headers.get("origin") ?? `https://${req.headers.get("host") ?? "kjd-biolabs.vercel.app"}`;
 

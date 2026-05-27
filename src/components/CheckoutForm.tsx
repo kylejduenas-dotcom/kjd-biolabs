@@ -7,6 +7,7 @@ import { useCart } from "@/context/CartContext";
 import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
 import { formatPrice, tintStyles, lineTotal, imageFor } from "@/data/products";
+import { couponDiscount, normalizeCoupon } from "@/data/coupons";
 import Vial from "@/components/Vial";
 import NmiCardFields, { type NmiHandle } from "@/components/NmiCardFields";
 import { SHIPPING_OPTIONS as SHIPPING, FREE_SHIPPING_THRESHOLD } from "@/data/shipping";
@@ -83,6 +84,20 @@ export default function CheckoutForm({
   const [error, setError] = useState<string | null>(null);
   const [agree, setAgree] = useState({ research: false, powder: false });
   const confirmed = agree.research && agree.powder;
+  const [couponInput, setCouponInput] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [couponMsg, setCouponMsg] = useState<string | null>(null);
+
+  const applyCoupon = () => {
+    const code = normalizeCoupon(couponInput);
+    if (code) {
+      setAppliedCoupon(code);
+      setCouponMsg(null);
+    } else {
+      setAppliedCoupon(null);
+      setCouponMsg("That promo code isn't valid.");
+    }
+  };
   const [today, setToday] = useState<Date | null>(null);
   useEffect(() => setToday(new Date()), []);
   const estimates = today ? SHIPPING.map((m) => estimateFor(m, today)) : null;
@@ -94,7 +109,8 @@ export default function CheckoutForm({
 
   const qualifiesFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
   const shippingCost = ship === 0 && qualifiesFreeShipping ? 0 : SHIPPING[ship].cost;
-  const total = subtotal + shippingCost;
+  const discount = couponDiscount(appliedCoupon, subtotal);
+  const total = subtotal - discount + shippingCost;
 
   const payMethodLabel =
     payMethod === "card" ? "Credit / debit card" : payMethod === "crypto" ? "Crypto (Coinbase)" : "Payment instructions by email";
@@ -191,7 +207,7 @@ export default function CheckoutForm({
         const res = await fetch("/api/checkout/crypto", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ orderId }),
+          body: JSON.stringify({ orderId, coupon: appliedCoupon }),
         });
         const data = await res.json();
         if (res.ok && data.ok && data.url) {
@@ -209,7 +225,7 @@ export default function CheckoutForm({
     }
 
     if (payMethod === "card" && NMI_ENABLED) {
-      nmiRef.current?.startPayment(orderId); // result handled in callbacks
+      nmiRef.current?.startPayment(orderId, appliedCoupon); // result handled in callbacks
       return;
     }
 
@@ -466,11 +482,43 @@ export default function CheckoutForm({
               </div>
             ))}
           </div>
+          {/* Promo code */}
+          <div className="border-t border-slate-200 pt-4 mb-4">
+            <div className="flex gap-2">
+              <input
+                value={couponInput}
+                onChange={(e) => setCouponInput(e.target.value)}
+                placeholder="Promo code"
+                className="field-input flex-1 uppercase placeholder:normal-case"
+              />
+              <button
+                type="button"
+                onClick={applyCoupon}
+                className="shrink-0 px-5 rounded-xl bg-ink-950 text-white text-sm font-semibold hover:bg-teal-600 transition-all"
+              >
+                Apply
+              </button>
+            </div>
+            {appliedCoupon && (
+              <p className="mt-2 text-xs font-medium text-teal-700 inline-flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                Code <strong>{appliedCoupon}</strong> applied
+              </p>
+            )}
+            {couponMsg && <p className="mt-2 text-xs text-red-600">{couponMsg}</p>}
+          </div>
+
           <div className="border-t border-slate-200 pt-4 space-y-2 mb-5">
             <div className="flex justify-between text-sm">
               <span className="text-slate-500">Subtotal</span>
               <span className="text-ink-950 font-medium">{formatPrice(subtotal)}</span>
             </div>
+            {discount > 0 && (
+              <div className="flex justify-between text-sm">
+                <span className="text-teal-700 font-medium">Promo ({appliedCoupon})</span>
+                <span className="text-teal-700 font-semibold">&minus;{formatPrice(discount)}</span>
+              </div>
+            )}
             {savings > 0 && (
               <div className="flex justify-between text-sm">
                 <span className="text-teal-700 font-medium inline-flex items-center gap-1.5">

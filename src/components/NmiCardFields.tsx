@@ -4,7 +4,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 
 export interface NmiHandle {
   /** Tokenize the entered card and charge it against the given order. */
-  startPayment: (orderId: string) => void;
+  startPayment: (orderId: string, coupon?: string | null) => void;
 }
 
 interface NmiCardFieldsProps {
@@ -42,6 +42,7 @@ const NmiCardFields = forwardRef<NmiHandle, NmiCardFieldsProps>(function NmiCard
   const [ready, setReady] = useState(false);
   const configuredRef = useRef(false);
   const orderIdRef = useRef<string | null>(null);
+  const couponRef = useRef<string | null>(null);
 
   // Keep latest callbacks reachable from the (once-configured) Collect.js closure.
   const onApprovedRef = useRef(onApproved);
@@ -73,7 +74,7 @@ const NmiCardFields = forwardRef<NmiHandle, NmiCardFieldsProps>(function NmiCard
             const res = await fetch("/api/checkout/charge", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ orderId, paymentToken: response.token }),
+              body: JSON.stringify({ orderId, paymentToken: response.token, coupon: couponRef.current }),
             });
             const data = await res.json();
             if (res.ok && data.ok) onApprovedRef.current(orderId);
@@ -106,12 +107,13 @@ const NmiCardFields = forwardRef<NmiHandle, NmiCardFieldsProps>(function NmiCard
   useImperativeHandle(
     ref,
     () => ({
-      startPayment: (orderId: string) => {
+      startPayment: (orderId: string, coupon: string | null = null) => {
         if (!window.CollectJS || !configuredRef.current) {
           onErrorRef.current("Payment form is still loading — please try again in a moment.");
           return;
         }
         orderIdRef.current = orderId;
+        couponRef.current = coupon;
         window.CollectJS.startPaymentRequest();
       },
     }),
