@@ -49,11 +49,11 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
           />
         </div>
 
-        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-soft-lg p-8">
-          <h2 className="text-ink-950 text-2xl font-serif font-semibold mb-2 tracking-[-0.01em]">
+        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-soft-lg p-8 antialiased">
+          <h2 className="text-ink-950 text-[1.7rem] font-serif font-semibold mb-2.5 tracking-[-0.02em] leading-tight">
             Researcher Verification
           </h2>
-          <p className="text-slate-500 text-sm mb-6 leading-relaxed">
+          <p className="text-slate-500 text-[15px] mb-7 leading-relaxed tracking-[-0.005em]">
             Access to KJD BioLabs is limited to qualified researchers purchasing
             for laboratory and in vitro use only. Please confirm the following
             before you continue.
@@ -64,16 +64,16 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
               checked={checks.age}
               onChange={(v) => setChecks({ ...checks, age: v })}
             >
-              I am at least <strong className="text-ink-950">21 years of age</strong>.
+              I am at least <strong className="text-ink-950 font-semibold">21 years of age</strong>.
             </Check>
             <Check
               checked={checks.researcher}
               onChange={(v) => setChecks({ ...checks, researcher: v })}
             >
               I confirm I am a{" "}
-              <strong className="text-ink-950">qualified researcher</strong>{" "}
+              <strong className="text-ink-950 font-semibold">qualified researcher</strong>{" "}
               purchasing for{" "}
-              <strong className="text-ink-950">in vitro / laboratory research</strong>{" "}
+              <strong className="text-ink-950 font-semibold">in vitro / laboratory research</strong>{" "}
               only &mdash; not for human or veterinary use.
             </Check>
           </div>
@@ -81,7 +81,7 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
           <button
             onClick={handleEnter}
             disabled={!checks.age || !checks.researcher}
-            className="w-full py-3.5 rounded-full font-semibold text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-ink-950 text-white hover:bg-teal-600 hover:shadow-lg hover:shadow-ink-950/20 inline-flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-full font-semibold text-[15px] tracking-[-0.01em] transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-ink-950 text-white hover:bg-teal-600 hover:shadow-lg hover:shadow-ink-950/20 inline-flex items-center justify-center gap-2"
           >
             Enter KJD BioLabs
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -89,7 +89,7 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
             </svg>
           </button>
 
-          <p className="text-slate-400 text-xs mt-4 leading-relaxed">
+          <p className="text-slate-400 text-[11.5px] mt-5 leading-[1.6] tracking-[0.002em]">
             By proceeding you affirm the statements above are true. Products are
             not for human or veterinary use, not for use in diagnostic
             procedures, and have not been evaluated by the U.S. Food and Drug
@@ -124,7 +124,7 @@ function Check({
         onChange={(e) => onChange(e.target.checked)}
         className="mt-0.5 w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500/25"
       />
-      <span className="text-slate-600 text-sm leading-relaxed">{children}</span>
+      <span className="text-slate-600 text-[14.5px] leading-relaxed tracking-[-0.005em]">{children}</span>
     </label>
   );
 }
