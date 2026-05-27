@@ -1,13 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/data/products";
-import { tintStyles, priceFor, formatPrice, imageTransparentFor } from "@/data/products";
+import { tintStyles, priceFor, formatPrice, imageFor } from "@/data/products";
 import Vial from "@/components/Vial";
 
 export default function ProductCard({ product }: { product: Product }) {
   const style = tintStyles[product.tint];
   const price = priceFor(product.slug);
-  const photo = imageTransparentFor(product.slug);
+  // Original studio photo (keeps each product's own background) — fills the tile.
+  const photo = imageFor(product.slug);
 
   return (
     <Link
@@ -23,7 +24,7 @@ export default function ProductCard({ product }: { product: Product }) {
             fill
             quality={90}
             sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
-            className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.05]"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.05]"
           />
         ) : (
           <div className="flex h-full items-center justify-center">
