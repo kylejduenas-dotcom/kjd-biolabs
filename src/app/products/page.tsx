@@ -49,7 +49,7 @@ export default function ProductsPage() {
               />
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               <FilterPill active={activeCategory === "All"} onClick={() => setActiveCategory("All")}>
                 All
               </FilterPill>
@@ -108,7 +108,7 @@ function FilterPill({
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+      className={`shrink-0 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
         active
           ? "bg-ink-950 text-white"
           : "bg-slate-100 text-slate-600 hover:bg-slate-200"
