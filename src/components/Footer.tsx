@@ -23,14 +23,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr] gap-12 lg:gap-10">
           {/* Brand block */}
           <div className="sm:col-span-2 lg:col-span-1 max-w-sm">
-            <Image
-              src="/kjd-logo-horizontal.png"
-              alt="KJD BioLabs"
-              width={190}
-              height={62}
-              className="mb-7"
-              style={{ width: "auto", height: "2.75rem" }}
-            />
+            <Link href="/" aria-label="KJD BioLabs — back to top" className="inline-block mb-7">
+              <Image
+                src="/kjd-logo-horizontal.png"
+                alt="KJD BioLabs"
+                width={190}
+                height={62}
+                style={{ width: "auto", height: "2.75rem" }}
+              />
+            </Link>
             <p className="text-ink-950 font-display font-bold text-2xl sm:text-[1.7rem] leading-[1.18] tracking-tight">
               Research-grade peptides, third-party tested to 99%+ purity.
             </p>

@@ -204,10 +204,12 @@ body {
 @keyframes fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 .fade-up { opacity: 0; animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-/* Scroll-reveal — sections gently rise as they enter the viewport.
+/* Scroll-reveal — sections gently fade in as they enter the viewport.
+   Fade only (no translate): a scroll-linked transform shifts position while you
+   scroll, which on tall sections can make text look clipped/covered mid-scroll.
    Gated behind @supports so content is always visible where scroll-driven
    animations aren't available (never hides content). */
-@keyframes reveal-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+@keyframes reveal-up { from { opacity: 0; } to { opacity: 1; } }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .reveal {
