@@ -312,9 +312,9 @@ function PaymentBadges() {
       </span>
       {/* Discover — orange ball */}
       <span className={`${chip} gap-[1px]`} aria-label="Discover">
-        <span className="text-[8px] font-extrabold text-ink-950 tracking-tight leading-none">DISC</span>
+        <span className="text-[9px] font-extrabold text-ink-950 tracking-tight leading-none">DISC</span>
         <span className="w-1.5 h-1.5 rounded-full bg-[#F76B1C]" />
-        <span className="text-[8px] font-extrabold text-ink-950 tracking-tight leading-none">VER</span>
+        <span className="text-[9px] font-extrabold text-ink-950 tracking-tight leading-none">VER</span>
       </span>
     </div>
   );

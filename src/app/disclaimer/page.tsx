@@ -17,7 +17,7 @@ export default function DisclaimerPage() {
           <div className="prose prose-slate max-w-none space-y-12">
             {/* FDA Disclaimer */}
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-8">
-              <h2 className="text-xl font-bold text-navy-950 mb-4 flex items-center gap-3">
+              <h2 className="text-xl font-bold text-ink-950 mb-4 flex items-center gap-3">
                 <svg className="w-6 h-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
@@ -38,7 +38,7 @@ export default function DisclaimerPage() {
 
             {/* Research Use Only */}
             <div id="research-use">
-              <h2 className="text-xl font-bold text-navy-950 mb-4">
+              <h2 className="text-xl font-bold text-ink-950 mb-4">
                 Research Use Only
               </h2>
               <div className="text-slate-600 text-sm leading-relaxed space-y-3">
@@ -64,7 +64,7 @@ export default function DisclaimerPage() {
 
             {/* Product Information */}
             <div>
-              <h2 className="text-xl font-bold text-navy-950 mb-4">
+              <h2 className="text-xl font-bold text-ink-950 mb-4">
                 Product Information Disclaimer
               </h2>
               <div className="text-slate-600 text-sm leading-relaxed space-y-3">
@@ -82,7 +82,7 @@ export default function DisclaimerPage() {
 
             {/* Liability */}
             <div>
-              <h2 className="text-xl font-bold text-navy-950 mb-4">
+              <h2 className="text-xl font-bold text-ink-950 mb-4">
                 Limitation of Liability
               </h2>
               <div className="text-slate-600 text-sm leading-relaxed space-y-3">
@@ -97,7 +97,7 @@ export default function DisclaimerPage() {
 
             {/* Privacy */}
             <div id="privacy">
-              <h2 className="text-xl font-bold text-navy-950 mb-4">
+              <h2 className="text-xl font-bold text-ink-950 mb-4">
                 Privacy Policy
               </h2>
               <div className="text-slate-600 text-sm leading-relaxed space-y-3">
@@ -118,7 +118,7 @@ export default function DisclaimerPage() {
 
             {/* Terms */}
             <div id="terms">
-              <h2 className="text-xl font-bold text-navy-950 mb-4">
+              <h2 className="text-xl font-bold text-ink-950 mb-4">
                 Terms of Service
               </h2>
               <div className="text-slate-600 text-sm leading-relaxed space-y-3">
@@ -136,7 +136,7 @@ export default function DisclaimerPage() {
 
             {/* Shipping & Returns */}
             <div>
-              <h2 className="text-xl font-bold text-navy-950 mb-4">
+              <h2 className="text-xl font-bold text-ink-950 mb-4">
                 Shipping &amp; Returns
               </h2>
               <div className="text-slate-600 text-sm leading-relaxed space-y-3">

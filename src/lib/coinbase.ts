@@ -42,7 +42,10 @@ export async function getCheckoutStatus(checkoutId: string): Promise<string | nu
   const apiKeyId = process.env.COINBASE_API_KEY_ID;
   const apiSecret = process.env.COINBASE_PRIVATE_KEY;
   if (!apiKeyId || !apiSecret) return null;
-  if (!/^[0-9a-f]{24}$/.test(checkoutId)) return null;
+  // Guard against path injection in the GET URL while accepting any reasonable
+  // Coinbase id format (24-char hex, UUID with hyphens, etc.). Do NOT hard-lock
+  // to 24-hex — if the real id format differs, every confirmation silently fails.
+  if (!/^[A-Za-z0-9-]{8,64}$/.test(checkoutId)) return null;
 
   const path = `/api/v1/checkouts/${checkoutId}`;
   let jwt: string;

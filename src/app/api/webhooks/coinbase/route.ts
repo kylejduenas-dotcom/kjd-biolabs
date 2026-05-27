@@ -19,14 +19,16 @@ export async function POST(req: Request) {
   }
 
   const raw = await req.text();
-  let event: { id?: string; eventType?: string };
+  let event: { id?: string; eventType?: string; data?: { id?: string } };
   try {
     event = JSON.parse(raw);
   } catch {
     return NextResponse.json({ ok: false, error: "Invalid payload." }, { status: 400 });
   }
 
-  const checkoutId = event.id;
+  // Coinbase nests the checkout under event.data.id; event.id is the event id.
+  // Fall back to event.id for older/alternate payload shapes.
+  const checkoutId = event.data?.id ?? event.id;
   if (!checkoutId) {
     return NextResponse.json({ ok: true, ignored: "no checkout id" });
   }
