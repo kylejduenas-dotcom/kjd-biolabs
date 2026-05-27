@@ -1,13 +1,22 @@
 import { createClient } from "@/lib/supabase/server";
+import { reconcileCryptoOrderById } from "@/lib/crypto-confirm";
 import { formatPrice } from "@/data/products";
 import Link from "next/link";
 
 export default async function CheckoutSuccessPage({
   searchParams,
 }: {
-  searchParams: Promise<{ order?: string }>;
+  searchParams: Promise<{ order?: string; payment?: string }>;
 }) {
-  const { order: orderId } = await searchParams;
+  const { order: orderId, payment } = await searchParams;
+
+  // Coinbase Business has no webhook — so when a customer returns from a crypto
+  // checkout we authoritatively re-confirm the payment with Coinbase here and
+  // mark the order paid + fulfill. Idempotent and safe against manual visits.
+  let paid = false;
+  if (orderId && payment === "crypto") {
+    paid = (await reconcileCryptoOrderById(orderId)) === "paid";
+  }
 
   let order: { id: string; order_number: string | null; subtotal: number; shipping_cost: number | null; shipping_method: string | null; created_at: string; ships_by: string | null; delivery_estimate: string | null } | null = null;
   if (orderId) {
@@ -29,11 +38,12 @@ export default async function CheckoutSuccessPage({
           </svg>
         </div>
         <h1 className="text-3xl font-display font-extrabold text-ink-950 mb-3">
-          Order placed
+          {paid ? "Payment confirmed" : "Order placed"}
         </h1>
         <p className="text-slate-500 leading-relaxed mb-6">
-          Thank you for your order. We&apos;ve received it and will email you a
-          confirmation along with secure payment instructions shortly.
+          {paid
+            ? "Thank you — your payment is confirmed and your order is being prepared. A confirmation email with tracking is on its way."
+            : "Thank you for your order. We’ve received it and will email you a confirmation along with secure payment instructions shortly."}
         </p>
 
         {order && (
