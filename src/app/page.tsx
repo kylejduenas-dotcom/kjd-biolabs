@@ -259,17 +259,53 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Vials composition */}
-            <div className="relative hidden lg:flex items-center justify-center h-[540px]">
-              <div className="absolute left-[6%] top-[12%] rotate-[-7deg] animate-float-slow vial-3d">
-                <Image src="/products/vialimg/mots-c.png" alt="MOTS-C vial" width={172} height={215} className="w-[172px] h-auto" />
+            {/* Featured vial — boxed proof card */}
+            <div className="relative hidden lg:flex flex-col rounded-[2rem] bg-gradient-to-br from-slate-50 via-white to-sky-50/70 ring-1 ring-slate-200/70 p-6 min-h-[520px] overflow-hidden">
+              {/* faint concentric ring behind the vial */}
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
+                <div className="w-72 h-72 rounded-full ring-1 ring-slate-200/70" />
+                <div className="absolute w-96 h-96 rounded-full ring-1 ring-slate-200/40" />
               </div>
-              <div className="absolute right-[4%] top-[6%] rotate-[9deg] animate-float vial-3d" style={{ animationDelay: "0.7s" }}>
-                <Image src="/products/vialimg/tesamorelin.png" alt="Tesamorelin vial" width={184} height={230} className="w-[184px] h-auto" />
+
+              {/* Purity badge — floats top-right */}
+              <div className="relative z-10 flex justify-end">
+                <div className="flex items-center gap-3 rounded-2xl bg-white shadow-soft-lg px-4 py-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-600">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                  </span>
+                  <span className="leading-tight">
+                    <span className="block text-ink-950 text-sm font-bold">99%+ Purity</span>
+                    <span className="block text-slate-500 text-xs">Verified by HPLC</span>
+                  </span>
+                </div>
               </div>
-              <div className="absolute left-[34%] bottom-[6%] rotate-[3deg] animate-float-slow vial-3d" style={{ animationDelay: "1.3s" }}>
-                <Image src="/products/vialimg/aod-9604.png" alt="AOD-9604 vial" width={206} height={258} className="w-[206px] h-auto" />
+
+              {/* Vial */}
+              <div className="relative z-10 flex flex-1 items-center justify-center py-6">
+                <Image
+                  src="/products/vialimg/glp-3-rt.png"
+                  alt="GLP-3 (RT) research peptide vial"
+                  width={260}
+                  height={325}
+                  className="w-[210px] h-auto vial-3d animate-vial-a"
+                  style={{ "--r": "-12deg" } as React.CSSProperties}
+                />
               </div>
+
+              {/* See the Proof — bottom card */}
+              <Link
+                href="/about"
+                className="group relative z-10 flex items-center gap-3.5 rounded-2xl bg-white shadow-soft px-4 py-3.5 transition-shadow hover:shadow-soft-lg"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-ink-950">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                </span>
+                <span className="flex-1 leading-tight">
+                  <span className="block text-ink-950 text-sm font-semibold">See the Proof</span>
+                  <span className="block text-slate-500 text-xs">View our quality procedures</span>
+                </span>
+                <svg className="w-5 h-5 text-slate-400 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              </Link>
             </div>
           </div>
         </div>
