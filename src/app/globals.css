@@ -16,8 +16,16 @@
   --color-teal-500: #0499cc;
   --color-teal-600: #0a7ba6;
   --color-teal-700: #0d5f80;
-  --font-display: var(--font-display);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-nacelle), "DM Sans", system-ui, sans-serif;
+  --font-display: var(--font-nacelle), "DM Sans", system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), Georgia, serif;
+
+  /* Body text is dark navy (never light grey) for strong, premium contrast.
+     The slate-400/500/600 utilities are used almost exclusively for copy, so
+     we override them to a near-black navy ramp site-wide. */
+  --color-slate-400: #2e3d57;
+  --color-slate-500: #1f2f49;
+  --color-slate-600: #14233c;
 }
 
 html {
@@ -38,10 +46,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5 {
-  font-family: var(--font-display), system-ui, sans-serif;
-  letter-spacing: -0.03em;
-  font-weight: 700;
+@layer base {
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display), system-ui, sans-serif;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
 }
 
 ::selection {
@@ -54,15 +64,51 @@ h1, h2, h3, h4, h5 {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Float animates the individual `translate` property only, so a per-vial
+   `rotate:` (set via inline style/utility) is preserved and the two compose.
+   A gentle x+y arc reads as an organic bob-and-sway, not a stiff up/down. */
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(-4deg); }
-  50% { transform: translateY(-14px) rotate(-2deg); }
+  0% { translate: 0 0; }
+  30% { translate: 5px -13px; }
+  60% { translate: -5px -21px; }
+  100% { translate: 0 0; }
 }
 
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0) rotate(6deg); }
-  50% { transform: translateY(-10px) rotate(8deg); }
+  0% { translate: 0 0; }
+  30% { translate: -6px -17px; }
+  60% { translate: 6px -9px; }
+  100% { translate: 0 0; }
 }
+
+/* Layered drop-shadows give the transparent vial PNGs a believable 3D
+   presence: a tight contact shadow plus a soft, wide ambient shadow. */
+.vial-3d {
+  filter:
+    drop-shadow(0 6px 8px rgba(12, 35, 72, 0.16))
+    drop-shadow(0 26px 32px rgba(12, 35, 72, 0.24));
+}
+.vial-3d-dark {
+  filter:
+    drop-shadow(0 8px 10px rgba(0, 0, 0, 0.34))
+    drop-shadow(0 30px 42px rgba(0, 0, 0, 0.46));
+}
+
+/* Premium vial motion — bob + gentle rotation sway around each vial's own
+   resting angle (set per-vial via --r), so the cluster drifts organically
+   instead of all moving in lockstep. translate + rotate compose cleanly. */
+/* Subtle, slow vertical drift only — keeps each vial's resting angle and adds
+   no wobble, so the motion reads as premium, not gimmicky. */
+@keyframes vial-a {
+  0%, 100% { translate: 0 0; rotate: var(--r, 0deg); }
+  50% { translate: 0 -8px; rotate: var(--r, 0deg); }
+}
+@keyframes vial-b {
+  0%, 100% { translate: 0 0; rotate: var(--r, 0deg); }
+  50% { translate: 0 -12px; rotate: var(--r, 0deg); }
+}
+.animate-vial-a { animation: vial-a 9s ease-in-out infinite; }
+.animate-vial-b { animation: vial-b 11s ease-in-out infinite; }
 
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -70,8 +116,8 @@ h1, h2, h3, h4, h5 {
 }
 
 .animate-fade-in { animation: fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-float-slow { animation: float-slow 7s ease-in-out infinite; }
+.animate-float { animation: float 7.5s ease-in-out infinite; }
+.animate-float-slow { animation: float-slow 9.5s ease-in-out infinite; }
 .animate-marquee { animation: marquee 30s linear infinite; }
 
 /* Hero aurora — slow, GPU-composited drifting glows (transform-only) */
@@ -107,9 +153,23 @@ h1, h2, h3, h4, h5 {
 @keyframes fade-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 .fade-up { opacity: 0; animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
+/* Scroll-reveal — sections gently rise as they enter the viewport.
+   Gated behind @supports so content is always visible where scroll-driven
+   animations aren't available (never hides content). */
+@keyframes reveal-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 42%;
+    }
+  }
+}
+
 /* Respect reduced-motion: stop all motion to cut compositor load */
 @media (prefers-reduced-motion: reduce) {
-  .animate-float, .animate-float-slow, .animate-marquee,
+  .animate-float, .animate-float-slow, .animate-vial-a, .animate-vial-b, .animate-marquee,
   .aurora-a, .aurora-b, .text-gradient-anim, .text-aqua-anim, .fade-up {
     animation: none !important;
   }

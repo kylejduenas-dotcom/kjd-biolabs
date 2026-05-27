@@ -36,7 +36,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-ink-950 mb-6 leading-[0.95]">
             Proof in{" "}
-            <span className="text-teal-600">Every Vial.</span>
+            <em className="font-serif italic font-semibold text-ink-950">every vial.</em>
           </h1>
           <p className="text-lg text-slate-500 max-w-2xl leading-relaxed">
             We don&apos;t ask for blind trust. Every batch is independently
@@ -69,7 +69,7 @@ export default function AboutPage() {
       {/* Quality checks */}
       <section className="py-20 sm:py-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-serif font-semibold text-ink-950 mb-4 tracking-[-0.02em]">
             Five-Point Quality Protocol
           </h2>
           <p className="text-slate-500 text-lg mb-12 max-w-2xl">
@@ -83,8 +83,8 @@ export default function AboutPage() {
                 key={check.title}
                 className="group flex gap-6 p-6 rounded-3xl bg-soft-cream border border-slate-200/70 hover:shadow-soft hover:-translate-y-0.5 transition-all"
               >
-                <div className="w-12 h-12 rounded-2xl bg-ink-950 text-teal-400 flex items-center justify-center shrink-0 text-lg font-display font-bold group-hover:bg-teal-600 group-hover:text-white transition-colors">
-                  {i + 1}
+                <div className="shrink-0 w-10 text-center pt-0.5">
+                  <span className="font-serif text-3xl sm:text-4xl text-teal-600 font-medium leading-none">{i + 1}</span>
                 </div>
                 <div>
                   <div className="flex flex-wrap items-center gap-3 mb-2">
@@ -108,7 +108,7 @@ export default function AboutPage() {
       {/* About */}
       <section className="py-20 sm:py-28 bg-soft-lavender">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl sm:text-5xl font-display font-bold text-ink-950 mb-6">
+          <h2 className="text-4xl sm:text-5xl font-serif font-semibold text-ink-950 mb-6 tracking-[-0.02em]">
             About KJD BioLabs
           </h2>
           <div className="text-slate-600 leading-relaxed space-y-4 text-lg">
@@ -135,7 +135,7 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-ink-950 mb-6">
+          <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-ink-950 mb-6 tracking-[-0.02em]">
             Ready to explore our catalog?
           </h2>
           <Link

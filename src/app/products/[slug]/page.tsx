@@ -31,9 +31,13 @@ export default async function ProductPage({
     { label: "Storage", value: product.storage },
   ];
 
-  const related = products
-    .filter((p) => p.category === product.category && p.slug !== product.slug)
-    .slice(0, 3);
+  const sameCategory = products.filter(
+    (p) => p.category === product.category && p.slug !== product.slug
+  );
+  const fillers = products.filter(
+    (p) => p.slug !== product.slug && p.category !== product.category
+  );
+  const combos = [...sameCategory, ...fillers].slice(0, 4);
 
   return (
     <div className="bg-white min-h-screen">
@@ -102,7 +106,7 @@ export default async function ProductPage({
               {product.description}
             </p>
 
-            <div className="mb-8">
+            <div className="mb-6">
               <AddToCartButton
                 slug={product.slug}
                 name={product.name}
@@ -110,6 +114,14 @@ export default async function ProductPage({
                 price={priceFor(product.slug)}
                 tint={product.tint}
               />
+            </div>
+
+            <div className="flex items-center gap-3 mb-8">
+              <span className="inline-flex items-center gap-1.5 text-slate-500 text-xs font-medium">
+                <svg className="w-3.5 h-3.5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                Secure checkout
+              </span>
+              <PaymentBadges />
             </div>
 
             <div className="grid grid-cols-3 gap-3 mb-6">
@@ -148,19 +160,12 @@ export default async function ProductPage({
 
         {/* Compound Information */}
         <div className="mt-16 sm:mt-20">
-          <div className="flex items-center gap-3 mb-8">
-            <span className="w-11 h-11 rounded-2xl bg-soft-cream flex items-center justify-center text-teal-600 shrink-0">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-            </span>
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-ink-950 leading-tight">Compound Information</h2>
-              <p className="text-slate-500 text-sm">Technical specifications</p>
-            </div>
-          </div>
+          <h2 className="text-2xl sm:text-3xl font-serif font-semibold text-ink-950 mb-8 tracking-[-0.02em]">
+            Compound Information
+          </h2>
           <div className="grid md:grid-cols-2 gap-5">
             <div className="rounded-3xl border border-slate-200/70 bg-white p-6 sm:p-7">
-              <p className="text-slate-400 text-[11px] font-semibold uppercase tracking-[0.18em] mb-1">Molecular Profile</p>
-              <h3 className="text-ink-950 font-display font-bold text-lg mb-5">What is {product.name}?</h3>
+              <h3 className="text-ink-950 font-display font-bold text-lg mb-5">Specifications</h3>
               <dl>
                 {specs.filter((s) => s.label !== "Storage").map((spec) => (
                   <div key={spec.label} className="flex items-start justify-between gap-4 py-3 border-b border-slate-100 last:border-0">
@@ -171,8 +176,7 @@ export default async function ProductPage({
               </dl>
             </div>
             <div className="rounded-3xl border border-slate-200/70 bg-white p-6 sm:p-7">
-              <p className="text-slate-400 text-[11px] font-semibold uppercase tracking-[0.18em] mb-1">Storage Requirements</p>
-              <h3 className="text-ink-950 font-display font-bold text-lg mb-5">Stability Information</h3>
+              <h3 className="text-ink-950 font-display font-bold text-lg mb-5">Storage &amp; Stability</h3>
               <div className="flex flex-wrap gap-2 mb-5">
                 <span className="inline-flex items-center rounded-full bg-slate-100 text-slate-600 text-xs font-medium px-3 py-1.5">{product.form}</span>
                 <span className="inline-flex items-center rounded-full bg-slate-100 text-slate-600 text-xs font-medium px-3 py-1.5">Avoid freeze/thaw</span>
@@ -191,33 +195,39 @@ export default async function ProductPage({
           </div>
         </div>
 
-        {/* Related */}
-        {related.length > 0 && (
+        {/* Frequently paired — upsell */}
+        {combos.length > 0 && (
           <div className="mt-20">
-            <h2 className="text-3xl font-display font-bold text-ink-950 mb-8">
-              Related Products
+            <h2 className="text-2xl sm:text-3xl font-serif font-semibold text-ink-950 mb-2 tracking-[-0.02em]">
+              Frequently paired in research
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {related.map((p) => {
+            <p className="text-slate-500 mb-8">
+              Compounds researchers commonly run alongside {product.name}.
+            </p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {combos.map((p) => {
                 const rStyle = tintStyles[p.tint];
                 const rPhoto = imageFor(p.slug);
                 return (
-                  <Link key={p.slug} href={`/products/${p.slug}`} className="group block">
-                    <div className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
-                      <div className="h-44 relative overflow-hidden" style={{ background: rStyle.bg }}>
+                  <Link key={p.slug} href={`/products/${p.slug}`} className="group block h-full">
+                    <div className="h-full bg-white rounded-3xl border border-slate-200/80 overflow-hidden hover:shadow-soft-lg hover:-translate-y-1 hover:border-teal-300/70 transition-all duration-300">
+                      <div className="aspect-square relative overflow-hidden" style={{ background: rStyle.bg }}>
                         {rPhoto ? (
-                          <Image src={rPhoto} alt={p.name} fill quality={85} sizes="(max-width: 1024px) 50vw, 33vw" className="object-cover transition-transform duration-300 group-hover:scale-[1.04]" />
+                          <Image src={rPhoto} alt={p.name} fill quality={85} sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover transition-transform duration-300 group-hover:scale-[1.05]" />
                         ) : (
                           <div className="h-full flex items-center justify-center">
                             <Vial name={p.name} tint={p.tint} size="sm" />
                           </div>
                         )}
                       </div>
-                      <div className="p-5">
-                        <h3 className="text-ink-950 font-display font-bold group-hover:text-teal-600 transition-colors">
+                      <div className="p-4">
+                        <h3 className="text-ink-950 font-display font-bold text-sm sm:text-base leading-tight group-hover:text-teal-600 transition-colors">
                           {p.name}
                         </h3>
-                        <p className="text-slate-500 text-sm mt-0.5">{p.subtitle}</p>
+                        <p className="text-slate-500 text-xs mt-0.5 line-clamp-2">{p.subtitle}</p>
+                        <p className="text-ink-950 font-display font-bold text-sm mt-2">
+                          {formatPrice(priceFor(p.slug))}
+                        </p>
                       </div>
                     </div>
                   </Link>
@@ -228,20 +238,29 @@ export default async function ProductPage({
         )}
       </section>
 
-      {/* CTA — Ready to start your research */}
-      <section className="relative overflow-hidden bg-logo-gradient py-20 sm:py-24">
-        <div className="glow-blob -top-24 left-1/4 w-96 h-96" style={{ background: "rgba(255,255,255,0.12)" }} />
+      {/* CTA — navy closer (matches homepage) */}
+      <section className="relative overflow-hidden bg-ink-950 py-20 sm:py-28">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute -top-10 left-1/4 w-96 h-96 rounded-full blur-3xl" style={{ background: "rgba(43,196,230,0.12)" }} />
+          <div className="absolute -bottom-16 right-1/4 w-96 h-96 rounded-full blur-3xl" style={{ background: "rgba(18,135,210,0.10)" }} />
+        </div>
+        <div className="hidden md:block absolute left-6 lg:left-24 top-1/2 rotate-[-12deg] animate-float-slow vial-3d-dark" style={{ marginTop: "-80px" }}>
+          <Image src="/products/vialimg/glutathione.png" alt="" width={150} height={188} sizes="160px" className="w-24 lg:w-32 h-auto" />
+        </div>
+        <div className="hidden md:block absolute right-6 lg:right-24 top-1/2 rotate-[12deg] animate-float vial-3d-dark" style={{ marginTop: "-80px", animationDelay: "0.8s" }}>
+          <Image src="/products/vialimg/5-amino-1mq.png" alt="" width={150} height={188} sizes="160px" className="w-24 lg:w-32 h-auto" />
+        </div>
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
-            Ready to Start Your Research?
+          <h2 className="font-serif text-2xl sm:text-3xl lg:text-[2.2rem] text-white font-medium leading-snug mb-4 tracking-[-0.01em]">
+            Built for research you can trust.
           </h2>
-          <p className="text-white/85 text-base sm:text-lg mb-8 max-w-xl mx-auto">
-            Browse our catalog of 28+ research-grade peptides. Every compound
-            backed by third-party testing and full documentation.
+          <p className="text-white/90 text-base sm:text-lg mb-8 max-w-xl mx-auto">
+            Browse 28+ research-grade peptides — independently tested, fully
+            documented, and shipped within 24 hours.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link href="/products" className="inline-flex items-center gap-2 bg-white text-ink-950 px-8 py-4 rounded-full font-semibold hover:bg-teal-50 transition-all">
-              Explore Catalog
+              Browse Compounds
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </Link>
             <Link href="/contact" className="inline-flex items-center gap-2 border border-white/40 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all">
@@ -261,6 +280,42 @@ function Tick({ children }: { children: React.ReactNode }) {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
       {children}
+    </div>
+  );
+}
+
+function PaymentBadges() {
+  const chip =
+    "h-7 w-11 rounded-md bg-white border border-slate-200 flex items-center justify-center shadow-sm";
+  return (
+    <div className="flex items-center gap-2">
+      {/* Visa */}
+      <span className={chip} aria-label="Visa">
+        <span className="text-[13px] font-black italic tracking-[-0.04em] text-[#1434CB] leading-none">VISA</span>
+      </span>
+      {/* Mastercard — two circles with a true orange overlap */}
+      <span className={chip} aria-label="Mastercard">
+        <svg width="30" height="19" viewBox="0 0 48 30" aria-hidden="true">
+          <defs>
+            <clipPath id="mc-overlap">
+              <circle cx="19" cy="15" r="10" />
+            </clipPath>
+          </defs>
+          <circle cx="19" cy="15" r="10" fill="#EB001B" />
+          <circle cx="29" cy="15" r="10" fill="#F79E1B" />
+          <circle cx="29" cy="15" r="10" fill="#FF5F00" clipPath="url(#mc-overlap)" />
+        </svg>
+      </span>
+      {/* American Express */}
+      <span className="h-7 w-11 rounded-md bg-[#1F72CD] flex items-center justify-center shadow-sm" aria-label="American Express">
+        <span className="text-[9px] font-extrabold text-white tracking-tight leading-none">AMEX</span>
+      </span>
+      {/* Discover — orange ball */}
+      <span className={`${chip} gap-[1px]`} aria-label="Discover">
+        <span className="text-[8px] font-extrabold text-ink-950 tracking-tight leading-none">DISC</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-[#F76B1C]" />
+        <span className="text-[8px] font-extrabold text-ink-950 tracking-tight leading-none">VER</span>
+      </span>
     </div>
   );
 }

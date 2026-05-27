@@ -50,7 +50,7 @@ export default function AgeGate({ children }: { children: React.ReactNode }) {
         </div>
 
         <div className="bg-white rounded-3xl border border-slate-200/80 shadow-soft-lg p-8">
-          <h2 className="text-ink-950 text-xl font-display font-bold mb-2">
+          <h2 className="text-ink-950 text-2xl font-serif font-semibold mb-2 tracking-[-0.01em]">
             Researcher Verification
           </h2>
           <p className="text-slate-500 text-sm mb-6 leading-relaxed">

@@ -1,23 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 
 const steps = [
   {
-    n: "1",
+    n: "01",
     title: "Apply & get approved",
-    desc: "Tell us about your audience. Approved partners get a unique referral link and a dashboard.",
+    desc: "Tell us about your audience. Approved partners get a unique referral link and a live dashboard.",
   },
   {
-    n: "2",
+    n: "02",
     title: "Share your link",
     desc: "Promote KJD BioLabs to fellow researchers, labs, and your community with your tracked link.",
   },
   {
-    n: "3",
+    n: "03",
     title: "Earn on every order",
-    desc: "Earn commission on every qualifying order placed through your link — paid out on a reliable schedule.",
+    desc: "Earn commission on every qualifying order placed through your link — paid on a reliable schedule.",
   },
 ];
 
@@ -57,45 +58,56 @@ export default function AffiliatePage() {
   return (
     <div className="bg-white min-h-screen">
       {/* Hero */}
-      <section className="bg-soft-cream border-b border-slate-200/70 py-16 sm:py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-200/60 rounded-full px-4 py-1.5 mb-6">
-            <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-            <span className="text-teal-700 text-xs font-semibold uppercase tracking-wider">
-              Affiliate Program
-            </span>
+      <section className="relative overflow-hidden border-b border-slate-200/60 bg-white">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="hidden lg:block absolute top-1/2 right-[12%] -translate-y-1/2 w-[30rem] h-[30rem] rounded-full" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.10), transparent 70%)" }} />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-center py-16 sm:py-20">
+          <div>
+            <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-ink-950 leading-[0.98] mb-5">
+              Earn with{" "}
+              <em className="font-serif italic font-semibold text-ink-950">KJD BioLabs.</em>
+            </h1>
+            <p className="text-lg text-slate-600 max-w-lg leading-relaxed mb-8">
+              Refer researchers and labs to premium, independently verified
+              peptides — and earn commission on every order you send our way.
+            </p>
+            <a
+              href="#apply"
+              className="inline-flex items-center gap-2 bg-ink-950 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-600 transition-all"
+            >
+              Become a Partner
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </a>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-ink-950 mb-5 leading-[0.97]">
-            Earn with <span className="text-teal-600">KJD BioLabs</span>
-          </h1>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            Refer researchers and labs to premium, independently verified
-            peptides — and earn commission on every order you send our way.
-          </p>
-          <a
-            href="#apply"
-            className="inline-flex items-center gap-2 bg-ink-950 text-white px-8 py-4 rounded-full font-semibold hover:bg-teal-600 transition-all mt-8"
-          >
-            Become a Partner
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-          </a>
+
+          {/* Floating bottles */}
+          <div className="relative hidden lg:block h-[360px]">
+            <div className="absolute left-[12%] top-[14%] rotate-[-9deg] animate-float-slow vial-3d">
+              <Image src="/products/vialimg/ghk-cu.png" alt="" width={150} height={188} className="w-[150px] h-auto" />
+            </div>
+            <div className="absolute right-[14%] bottom-[6%] rotate-[9deg] animate-float vial-3d" style={{ animationDelay: "0.9s" }}>
+              <Image src="/products/vialimg/tb-500.png" alt="" width={142} height={178} className="w-[142px] h-auto" />
+            </div>
+            <div className="absolute left-[36%] top-[0%] rotate-[3deg] animate-float vial-3d z-10" style={{ animationDelay: "0.35s" }}>
+              <Image src="/products/vialimg/bpc-157.png" alt="" width={188} height={235} className="w-[188px] h-auto" />
+            </div>
+          </div>
         </div>
       </section>
 
       {/* How it works */}
-      <section className="py-20 sm:py-24">
+      <section className="py-20 sm:py-24 bg-soft-cream">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-ink-950 mb-12 text-center">
+          <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-ink-950 mb-12 text-center tracking-[-0.02em]">
             How it works
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
             {steps.map((s) => (
-              <div key={s.n} className="p-8 rounded-3xl bg-soft-cream border border-slate-200/70">
-                <div className="w-12 h-12 rounded-2xl bg-ink-950 text-teal-400 flex items-center justify-center mb-5 text-lg font-display font-bold">
-                  {s.n}
-                </div>
-                <h3 className="text-ink-950 font-display font-bold text-xl mb-2">{s.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{s.desc}</p>
+              <div key={s.n}>
+                <span className="font-serif text-4xl sm:text-5xl text-teal-600 font-medium leading-none">{s.n}</span>
+                <h3 className="text-ink-950 font-display font-bold text-xl mt-4 mb-2">{s.title}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -103,19 +115,19 @@ export default function AffiliatePage() {
       </section>
 
       {/* Benefits */}
-      <section className="py-20 sm:py-24 bg-soft-lavender">
+      <section className="py-20 sm:py-24 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-ink-950 mb-12 text-center">
+          <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-ink-950 mb-12 text-center tracking-[-0.02em]">
             Why partner with us
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((b) => (
-              <div key={b.title} className="bg-white rounded-3xl border border-slate-200/70 p-6">
-                <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M5 13l4 4L19 7" /></svg>
-                </div>
-                <h3 className="text-ink-950 font-semibold mb-1.5">{b.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{b.desc}</p>
+              <div key={b.title} className="rounded-3xl border border-slate-200/70 bg-soft-cream p-6">
+                <svg className="w-6 h-6 text-teal-600 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 className="text-ink-950 font-display font-bold mb-1.5">{b.title}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">{b.desc}</p>
               </div>
             ))}
           </div>
@@ -123,22 +135,22 @@ export default function AffiliatePage() {
       </section>
 
       {/* Apply */}
-      <section id="apply" className="py-20 sm:py-24">
+      <section id="apply" className="py-20 sm:py-24 bg-soft-cream">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-ink-950 mb-3 text-center">
+          <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-ink-950 mb-3 text-center tracking-[-0.02em]">
             Apply to the program
           </h2>
-          <p className="text-slate-500 text-center mb-8">
+          <p className="text-slate-600 text-center mb-8">
             Tell us a bit about you. We review every application and respond within 24 business hours.
           </p>
 
           {submitted ? (
-            <div className="bg-soft-cream rounded-3xl border border-teal-200 p-10 text-center">
+            <div className="bg-white rounded-3xl border border-teal-200 p-10 text-center shadow-soft">
               <div className="w-16 h-16 rounded-2xl bg-teal-500 flex items-center justify-center mx-auto mb-5">
                 <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
               </div>
               <h3 className="text-ink-950 font-display font-bold text-xl mb-2">Application received</h3>
-              <p className="text-slate-500 text-sm">
+              <p className="text-slate-600 text-sm">
                 Thanks for your interest — we&apos;ll review it and get back to you within 24 business hours.
               </p>
             </div>

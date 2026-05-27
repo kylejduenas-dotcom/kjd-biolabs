@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Newsreader } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,16 +8,26 @@ import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/CartDrawer";
 import AgeGate from "@/components/AgeGate";
 
-// Match Peptora — Inter across the whole site (display + body)
-const display = Inter({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+// Nacelle — the KJD Capital brand sans. Self-hosted so the two sites match.
+const nacelle = localFont({
+  variable: "--font-nacelle",
+  display: "swap",
+  src: [
+    { path: "./fonts/nacelle-light.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/nacelle-regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/nacelle-semibold.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/nacelle-bold.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/nacelle-heavy.woff2", weight: "800", style: "normal" },
+    { path: "./fonts/nacelle-black.woff2", weight: "900", style: "normal" },
+  ],
 });
 
-const sans = Inter({
-  variable: "--font-sans",
+// Editorial serif — same Newsreader pairing as the KJD Capital ATS page.
+const serif = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -42,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${sans.variable} h-full antialiased`}
+      className={`${nacelle.variable} ${serif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white overflow-x-clip">
         <CartProvider>

@@ -30,18 +30,18 @@ function VialStack({
   return (
     <span className="flex items-end justify-center">
       {Array.from({ length: n }).map((_, i) => (
-        <span key={i} className={i > 0 ? "-ml-4" : ""} style={{ zIndex: i }}>
+        <span key={i} className={i > 0 ? "-ml-3" : ""} style={{ zIndex: i }}>
           {photo ? (
             <Image
               src={photo}
               alt=""
-              width={40}
-              height={50}
-              sizes="48px"
-              className="h-12 w-auto object-contain drop-shadow"
+              width={28}
+              height={35}
+              sizes="32px"
+              className="h-8 w-auto object-contain"
             />
           ) : (
-            <span className="block scale-[0.34] origin-bottom">
+            <span className="block scale-[0.25] origin-bottom">
               <Vial name={name} tint={tint} size="sm" />
             </span>
           )}
@@ -72,11 +72,7 @@ export default function AddToCartButton({
 
   return (
     <div>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400 mb-3.5">
-        Save more &middot; Bundle
-      </p>
-
-      <div className="space-y-3.5">
+      <div className="space-y-2">
         {BUNDLE_TIERS.map((tier) => {
           const total = lineTotal(price, tier.qty);
           const full = price * tier.qty;
@@ -89,7 +85,7 @@ export default function AddToCartButton({
               key={tier.qty}
               type="button"
               onClick={() => setQty(tier.qty)}
-              className={`relative w-full flex items-center gap-3 sm:gap-4 rounded-2xl border bg-white p-3.5 sm:p-4 text-left transition-all ${
+              className={`relative w-full flex items-center gap-3 rounded-xl border bg-white px-3 py-2.5 text-left transition-all ${
                 selected
                   ? "border-ink-950 ring-2 ring-ink-950/10"
                   : "border-slate-200 hover:border-slate-300"
@@ -109,7 +105,7 @@ export default function AddToCartButton({
                 </span>
               )}
 
-              <span className="shrink-0 w-24 flex justify-center">
+              <span className="shrink-0 w-16 flex justify-center">
                 <VialStack count={tier.qty} photo={photo} name={name} tint={tint} />
               </span>
 
