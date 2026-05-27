@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { products, type Product } from "@/data/products";
 import FeaturedCarousel from "@/components/FeaturedCarousel";
+import TrustedByResearchers from "@/components/TrustedByResearchers";
 
 const featuredSlugs = [
   "bpc-157", "tb-500", "ghk-cu", "glp-3-rt", "tesamorelin",
@@ -284,6 +285,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ===== Trusted by researchers (social proof) ===== */}
+      <TrustedByResearchers />
 
       {/* ===== Closing CTA (navy) ===== */}
       <section className="relative overflow-hidden bg-ink-950 py-24 sm:py-32">
