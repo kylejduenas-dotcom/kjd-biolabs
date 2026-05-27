@@ -4,6 +4,32 @@ Tailwind v4 with `@theme inline` tokens in `src/app/globals.css`. Utilities are
 remapped, so use the named classes (`bg-ink-950`, `text-teal-600`) rather than
 raw hex in components.
 
+## Token architecture (3-layer)
+
+`globals.css` holds the source of truth in a primitive → semantic → component
+structure. Important Tailwind v4 quirk: `@theme inline` **inlines color literals
+into utilities and does NOT expose them as `:root` variables**, so colors are
+re-declared once as named primitives in a `:root` block for the file's custom
+CSS. Font tokens (`--font-sans/-display/-serif`) DO reach `:root` (they reference
+the next/font runtime vars) and are used directly.
+
+- **Layer 1 · Primitives** — raw values. Two homes: the `@theme` block (generates
+  `bg-*`/`text-*` utilities) and `:root` `--p-*` vars (mirror the same hex for
+  custom CSS). Examples: `--p-ink-950`, `--p-teal-500`, `--p-cream-100`.
+- **Layer 2 · Semantic** — purpose aliases mapped onto primitives. **Theme by
+  overriding only this layer.** `--color-primary` (ink-950), `--color-accent`
+  (teal-500), `--color-surface`, `--color-on-surface`, `--color-border`,
+  `--color-danger`, `--gradient-brand`, `--surface-cream`, `--focus-ring`.
+- **Layer 3 · Component** — component-scoped: `--field-bg/-fg/-border/-border-focus/
+  -radius`, `--shadow-soft`, `--shadow-soft-lg`.
+
+In React components keep using the Tailwind utility classes (they read Layer 1
+via `@theme`). The custom CSS classes in `globals.css` (`.field-input`,
+`.bg-soft-cream`, `.bg-logo-gradient`, `.shadow-soft`, `body`, `::selection`, …)
+consume the token layers. To add dark mode later: set `--color-surface`,
+`--color-on-surface`, etc. inside a `[data-theme="dark"]` block — nothing else
+needs to change.
+
 ## Color
 
 Strategy: **committed**. Deep navy carries dark surfaces (hero, panels, CTAs);
