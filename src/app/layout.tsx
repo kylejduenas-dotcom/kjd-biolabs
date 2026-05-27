@@ -53,9 +53,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nacelle.variable} ${serif.variable} h-full antialiased`}
+      className={`${nacelle.variable} ${serif.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white overflow-x-clip">
+      <body className="min-h-screen flex flex-col bg-white">
         <CartProvider>
           <AgeGate>
             <Navbar />

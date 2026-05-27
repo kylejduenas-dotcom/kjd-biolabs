@@ -28,20 +28,20 @@ function VialStack({
 }) {
   const n = Math.min(Math.max(count, 1), 3);
   return (
-    <span className="flex items-end justify-center">
+    <span className="flex items-center justify-center">
       {Array.from({ length: n }).map((_, i) => (
-        <span key={i} className={i > 0 ? "-ml-3" : ""} style={{ zIndex: i }}>
+        <span key={i} className={`flex items-center justify-center ${i > 0 ? "-ml-2.5" : ""}`} style={{ zIndex: i }}>
           {photo ? (
             <Image
               src={photo}
               alt=""
-              width={28}
-              height={35}
-              sizes="32px"
-              className="h-8 w-auto object-contain"
+              width={44}
+              height={55}
+              sizes="48px"
+              className="h-12 w-auto object-contain"
             />
           ) : (
-            <span className="block scale-[0.25] origin-bottom">
+            <span className="block scale-[0.3] origin-center">
               <Vial name={name} tint={tint} size="sm" />
             </span>
           )}
@@ -105,7 +105,7 @@ export default function AddToCartButton({
                 </span>
               )}
 
-              <span className="shrink-0 w-16 flex justify-center">
+              <span className="shrink-0 w-20 flex justify-center">
                 <VialStack count={tier.qty} photo={photo} name={name} tint={tint} />
               </span>
 
