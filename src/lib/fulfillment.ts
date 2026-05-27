@@ -12,7 +12,7 @@ function esc(s: string | null | undefined): string {
     .replace(/"/g, "&quot;");
 }
 
-interface OrderRow {
+export interface OrderRow {
   id: string;
   order_number: string | null;
   email: string | null;
@@ -32,7 +32,7 @@ interface OrderRow {
   fulfilled_at: string | null;
 }
 
-interface LineItem {
+export interface LineItem {
   product_name: string;
   unit_price: number;
   quantity: number;
@@ -56,7 +56,7 @@ async function sendEmail(to: string, subject: string, html: string): Promise<boo
 }
 
 // --- Shippo label purchase --------------------------------------------------
-interface LabelResult {
+export interface LabelResult {
   tracking_number: string | null;
   tracking_url: string | null;
   carrier: string | null;
@@ -164,7 +164,7 @@ function infoCard(label: string, value: string, accent = false): string {
   </td></tr></table>`;
 }
 
-function confirmationHtml(orderRef: string, items: LineItem[], total: number, order: OrderRow): string {
+export function confirmationHtml(orderRef: string, items: LineItem[], total: number, order: OrderRow): string {
   const rows = items
     .map(
       (i) =>
@@ -204,7 +204,7 @@ function confirmationHtml(orderRef: string, items: LineItem[], total: number, or
     <p style="margin:18px 0 0;color:#475569;font-size:14px;line-height:1.6;">We'll email you tracking the moment your order ships. A Certificate of Analysis is available for every batch — just reply to request one.</p>`);
 }
 
-function shippedHtml(orderRef: string, label: LabelResult): string {
+export function shippedHtml(orderRef: string, label: LabelResult): string {
   return shell("Your order is on its way 🚚", `
     <p style="margin:0 0 20px;color:#475569;font-size:15px;line-height:1.6;">Great news — order <strong style="color:#0a0e1a;">${esc(orderRef)}</strong> has shipped${label.carrier ? " via " + esc(label.carrier) : ""} and is heading your way.</p>
     ${label.tracking_number ? infoCard("Tracking number", `<span style="font-family:'Courier New',monospace;">${esc(label.tracking_number)}</span>`) : ""}

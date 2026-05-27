@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/reconcile-crypto",
+      "schedule": "*/15 * * * *"
+    }
+  ]
+}

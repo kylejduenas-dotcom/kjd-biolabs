@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { reconcileCryptoOrderById } from "@/lib/crypto-confirm";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import LogoutButton from "@/components/auth/LogoutButton";
@@ -32,6 +33,22 @@ export default async function AccountPage() {
     .select("full_name, organization, email, created_at")
     .eq("id", user.id)
     .single();
+
+  // Backstop for crypto payments (Coinbase has no webhook): if the customer
+  // paid but never returned to the success page, re-confirm their pending
+  // crypto orders now so they flip to paid + fulfill when they check here.
+  const { data: pendingCrypto } = await supabase
+    .from("orders")
+    .select("id")
+    .eq("status", "pending")
+    .like("payment_ref", "coinbase:%");
+  for (const o of pendingCrypto ?? []) {
+    try {
+      await reconcileCryptoOrderById(o.id);
+    } catch {
+      // best-effort
+    }
+  }
 
   const { data: ordersData } = await supabase
     .from("orders")
