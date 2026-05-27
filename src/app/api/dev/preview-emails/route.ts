@@ -23,6 +23,8 @@ const sampleOrder: OrderRow = {
   shipping_state: "NY",
   shipping_zip: "10118",
   shipping_country: "United States",
+  discount: 78.0, // KJD20 (20% off) applied — shows the promo line on the receipt
+  coupon_code: "KJD20",
   confirmation_emailed_at: null,
   tracking_number: null,
   fulfilled_at: null,

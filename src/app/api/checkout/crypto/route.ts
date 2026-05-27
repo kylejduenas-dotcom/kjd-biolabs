@@ -118,7 +118,16 @@ export async function POST(req: Request) {
   if (checkoutId && supabaseUrl && serviceKey) {
     try {
       const admin = createAdminClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
-      await admin.from("orders").update({ payment_ref: `coinbase:${checkoutId}` }).eq("id", order.id);
+      // Record the checkout id for confirmation, plus the authoritative coupon +
+      // discount so the receipt and emails reconcile with what Coinbase charges.
+      await admin
+        .from("orders")
+        .update({
+          payment_ref: `coinbase:${checkoutId}`,
+          coupon_code: discount > 0 ? (coupon ?? "").toUpperCase().trim() : null,
+          discount,
+        })
+        .eq("id", order.id);
     } catch {
       // best-effort; not required for the customer to pay
     }

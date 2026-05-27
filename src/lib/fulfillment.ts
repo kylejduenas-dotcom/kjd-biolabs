@@ -27,6 +27,8 @@ export interface OrderRow {
   shipping_state: string | null;
   shipping_zip: string | null;
   shipping_country: string | null;
+  discount: number | null;
+  coupon_code: string | null;
   confirmation_emailed_at: string | null;
   tracking_number: string | null;
   fulfilled_at: string | null;
@@ -179,7 +181,9 @@ export function confirmationHtml(orderRef: string, items: LineItem[], total: num
   // deduction so the receipt reconciles: list − savings + shipping = total.
   const fullSubtotal = items.reduce((s, i) => s + Number(i.unit_price) * Number(i.quantity), 0);
   const shipping = Number(order.shipping_cost ?? 0);
+  const discount = Number(order.discount ?? 0);
   const savings = Math.round((fullSubtotal - Number(order.subtotal)) * 100) / 100;
+  const promoLabel = order.coupon_code ? `Promo (${esc(order.coupon_code)})` : "Promo";
   const summaryRow = (label: string, value: string, color = "#475569", valueColor = "#0a0e1a") =>
     `<tr>
       <td style="padding:8px 0 0;color:${color};font-size:13px;">${label}</td>
@@ -192,6 +196,7 @@ export function confirmationHtml(orderRef: string, items: LineItem[], total: num
       ${rows}
       ${summaryRow("Subtotal", formatPrice(fullSubtotal))}
       ${savings > 0 ? summaryRow("Bundle savings", `&minus;${formatPrice(savings)}`, "#047857", "#047857") : ""}
+      ${discount > 0 ? summaryRow(promoLabel, `&minus;${formatPrice(discount)}`, "#047857", "#047857") : ""}
       ${summaryRow("Shipping", shipping > 0 ? formatPrice(shipping) : "Free", "#475569", shipping > 0 ? "#0a0e1a" : "#047857")}
       <tr>
         <td style="padding:16px 0 0;color:#0a0e1a;font-size:16px;font-weight:bold;">Total paid</td>
@@ -225,7 +230,7 @@ export async function fulfillPaidOrder(orderId: string, admin: SupabaseClient): 
   const { data: order } = await admin
     .from("orders")
     .select(
-      "id, order_number, email, subtotal, shipping_cost, shipping_method, ships_by, delivery_estimate, shipping_name, shipping_address, shipping_city, shipping_state, shipping_zip, shipping_country, confirmation_emailed_at, tracking_number, fulfilled_at",
+      "id, order_number, email, subtotal, shipping_cost, shipping_method, ships_by, delivery_estimate, shipping_name, shipping_address, shipping_city, shipping_state, shipping_zip, shipping_country, discount, coupon_code, confirmation_emailed_at, tracking_number, fulfilled_at",
     )
     .eq("id", orderId)
     .single();
@@ -236,7 +241,7 @@ export async function fulfillPaidOrder(orderId: string, admin: SupabaseClient): 
   const { data: itemRows } = await admin.from("order_items").select("product_name, unit_price, quantity").eq("order_id", orderId);
   const items: LineItem[] = (itemRows as LineItem[]) ?? [];
   const totalQty = items.reduce((s, i) => s + Number(i.quantity), 0);
-  const total = Number(o.subtotal) + Number(o.shipping_cost ?? 0);
+  const total = Number(o.subtotal) - Number(o.discount ?? 0) + Number(o.shipping_cost ?? 0);
   const orderRef = o.order_number ?? o.id.slice(0, 8).toUpperCase();
 
   // 1) Confirmation email (once).

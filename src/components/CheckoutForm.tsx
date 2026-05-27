@@ -140,6 +140,8 @@ export default function CheckoutForm({
         subtotal,
         shipping_method: SHIPPING[ship].label,
         shipping_cost: shippingCost,
+        coupon_code: appliedCoupon,
+        discount,
         status: "pending",
         shipping_name: form.name,
         shipping_address: form.address,

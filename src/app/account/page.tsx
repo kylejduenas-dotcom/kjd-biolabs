@@ -16,6 +16,7 @@ interface OrderRow {
   status: string;
   subtotal: number;
   shipping_cost: number | null;
+  discount: number | null;
   created_at: string;
   order_items: OrderItem[];
 }
@@ -52,7 +53,7 @@ export default async function AccountPage() {
 
   const { data: ordersData } = await supabase
     .from("orders")
-    .select("id, order_number, status, subtotal, shipping_cost, created_at, order_items(product_name, quantity, unit_price)")
+    .select("id, order_number, status, subtotal, shipping_cost, discount, created_at, order_items(product_name, quantity, unit_price)")
     .order("created_at", { ascending: false });
   const orders = (ordersData ?? []) as OrderRow[];
 
@@ -170,7 +171,7 @@ export default async function AccountPage() {
                           {o.status}
                         </span>
                         <span className="text-ink-950 font-semibold text-sm">
-                          {formatPrice(Number(o.subtotal) + Number(o.shipping_cost ?? 0))}
+                          {formatPrice(Number(o.subtotal) - Number(o.discount ?? 0) + Number(o.shipping_cost ?? 0))}
                         </span>
                       </div>
                     </div>

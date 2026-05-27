@@ -119,7 +119,13 @@ export async function POST(req: Request) {
   if (approved) {
     await admin
       .from("orders")
-      .update({ status: "paid", payment_ref: transactionId, paid_at: new Date().toISOString() })
+      .update({
+        status: "paid",
+        payment_ref: transactionId,
+        paid_at: new Date().toISOString(),
+        coupon_code: discount > 0 ? (coupon ?? "").toUpperCase().trim() : null,
+        discount,
+      })
       .eq("id", order.id);
     try {
       await fulfillPaidOrder(order.id, admin); // confirmation email + shipping label (env-gated, best-effort)
