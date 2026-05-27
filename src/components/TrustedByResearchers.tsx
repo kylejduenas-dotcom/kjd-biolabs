@@ -60,14 +60,13 @@ export default function TrustedByResearchers() {
               key={t.name}
               className="flex flex-col rounded-3xl border border-slate-200/70 bg-soft-cream p-7 sm:p-8"
             >
-              <svg
-                className="mb-5 h-8 w-8 text-teal-500/40"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M7.17 6A5.17 5.17 0 002 11.17V18h6.83v-6.83H5.5A1.67 1.67 0 017.17 9.5zm9 0A5.17 5.17 0 0011 11.17V18h6.83v-6.83H14.5a1.67 1.67 0 011.67-1.67z" />
-              </svg>
+              <div className="mb-4 flex items-center gap-0.5" role="img" aria-label="Rated 5 out of 5 stars">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <svg key={i} className="h-4 w-4 text-amber-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                  </svg>
+                ))}
+              </div>
               <blockquote className="flex-1 text-[15px] leading-relaxed text-ink-950">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
