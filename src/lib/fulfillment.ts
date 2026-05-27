@@ -4,7 +4,7 @@ import { formatPrice } from "@/data/products";
 // Default parcel for research-peptide vials (small + light). Tune via env if needed.
 const PARCEL = { length: "6", width: "4", height: "2", distance_unit: "in", mass_unit: "lb" };
 
-function esc(s: string | null | undefined): string {
+export function esc(s: string | null | undefined): string {
   return String(s ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -41,7 +41,7 @@ export interface LineItem {
 }
 
 // --- Resend transactional email -------------------------------------------
-async function sendEmail(to: string, subject: string, html: string): Promise<boolean> {
+export async function sendEmail(to: string, subject: string, html: string): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM; // e.g. "KJD BioLabs <orders@kjdbiolabs.com>" (verified domain)
   if (!apiKey || !from || !to) return false;
@@ -129,7 +129,7 @@ async function buyShippingLabel(order: OrderRow, totalQty: number): Promise<Labe
 }
 
 // --- Email templates (premium, branded, email-client-safe tables) -----------
-function shell(heading: string, body: string): string {
+export function shell(heading: string, body: string): string {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#eef3fa;-webkit-font-smoothing:antialiased;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef3fa;padding:28px 12px;font-family:Arial,Helvetica,sans-serif;">
@@ -155,7 +155,7 @@ function shell(heading: string, body: string): string {
 </body></html>`;
 }
 
-function infoCard(label: string, value: string, accent = false): string {
+export function infoCard(label: string, value: string, accent = false): string {
   const bg = accent ? "#ecfdf5" : "#f1f6fc";
   const border = accent ? "#a7f3d0" : "#e2e8f0";
   const labelColor = accent ? "#047857" : "#64748b";

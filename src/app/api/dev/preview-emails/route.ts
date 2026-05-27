@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { confirmationHtml, shippedHtml, type OrderRow, type LineItem, type LabelResult } from "@/lib/fulfillment";
+import { abandonedCartHtml, winbackHtml } from "@/lib/retention-emails";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,6 +57,14 @@ function buildEmails() {
       subject: `Your KJD BioLabs order ${orderRef} has shipped`,
       html: shippedHtml(orderRef, sampleLabel),
     },
+    abandoned: {
+      subject: "You left items in your cart — finish your KJD BioLabs order",
+      html: abandonedCartHtml(orderRef, sampleItems, "Jane"),
+    },
+    winback: {
+      subject: "Time to restock your research supplies?",
+      html: winbackHtml(sampleItems, "Jane"),
+    },
   };
 }
 
@@ -81,21 +90,30 @@ export async function GET(req: Request) {
   const send = url.searchParams.get("send");
   const emails = buildEmails();
 
+  const order: Array<["confirmation" | "shipped" | "abandoned" | "winback", string]> = [
+    ["confirmation", "Order confirmation"],
+    ["shipped", "Shipped / tracking"],
+    ["abandoned", "Abandoned cart recovery"],
+    ["winback", "Reorder / win-back"],
+  ];
+
   if (send) {
-    const results = {
-      confirmation: await sendViaResend(send, emails.confirmation.subject, emails.confirmation.html),
-      shipped: await sendViaResend(send, emails.shipped.subject, emails.shipped.html),
-    };
+    const results: Record<string, unknown> = {};
+    for (const [key] of order) {
+      results[key] = await sendViaResend(send, emails[key].subject, emails[key].html);
+    }
     return NextResponse.json({ ok: true, sentTo: send, results });
   }
 
-  // Visual preview: both emails stacked with labels.
+  // Visual preview: all emails stacked with labels.
+  const sections = order
+    .map(([key, label], i) => `<div class="section"><div class="tag">${i + 1} · ${label}</div>${emails[key].html}</div>`)
+    .join("");
   const page = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>KJD BioLabs — Email Preview</title>
 <style>body{margin:0;background:#cbd5e1;font-family:Arial,sans-serif}.bar{position:sticky;top:0;background:#0a0e1a;color:#fff;padding:12px 20px;font-size:14px;z-index:10}.bar b{color:#2bc4e6}.section{padding:18px}.tag{max-width:600px;margin:0 auto 10px;color:#0a0e1a;font-weight:bold;font-size:13px;text-transform:uppercase;letter-spacing:.5px}</style>
 </head><body>
-<div class="bar">KJD BioLabs — email preview · <b>Order confirmation</b> + <b>Shipped</b> notification · sample data</div>
-<div class="section"><div class="tag">1 · Order confirmation email</div>${emails.confirmation.html}</div>
-<div class="section"><div class="tag">2 · Shipped / tracking email</div>${emails.shipped.html}</div>
+<div class="bar">KJD BioLabs — email preview · transactional + <b>retention</b> · sample data</div>
+${sections}
 </body></html>`;
   return new NextResponse(page, { headers: { "Content-Type": "text/html; charset=utf-8" } });
 }
