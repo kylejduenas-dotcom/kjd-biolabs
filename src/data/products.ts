@@ -649,26 +649,10 @@ export function imageFor(slug: string): string | null {
   return PRODUCTS_WITH_PHOTOS.has(slug) ? `/products/${slug}.png` : null;
 }
 
-// Background-free (transparent) PNGs for compositing — used in the bundle
-// selector (stacked vials) and small cart thumbnails where the studio
-// background would clash. Add slugs here as transparent art arrives.
-const PRODUCTS_WITH_TRANSPARENT = new Set<string>([
-  "5-amino-1mq",
-  "aod-9604",
-  "bpc-157",
-  "cagrilintide",
-  "ghk-cu",
-  "glp-3-rt",
-  "glutathione",
-  "igf-1-lr3",
-  "mots-c",
-  "snap-8",
-  "tb-500",
-  "tesamorelin",
-]);
-
-/** Transparent product PNG path, or null to fall back to the studio photo. */
+/** Transparent (background-free) vial PNG for a product — used on product
+    cards, the bundle selector, and cart thumbnails. Every product has one
+    in /public/products/vialimg; returns null only for an unknown slug. */
 export function imageTransparentFor(slug: string): string | null {
-  return PRODUCTS_WITH_TRANSPARENT.has(slug) ? `/products/vialimg/${slug}.png` : null;
+  return products.some((p) => p.slug === slug) ? `/products/vialimg/${slug}.png` : null;
 }
 
