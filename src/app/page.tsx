@@ -121,8 +121,13 @@ export default function Home() {
                   { d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z", t: "CoA on Request" },
                   { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", t: "Ships Within 24h" },
                 ].map((p) => (
-                  <span key={p.t} className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur px-4 py-2 text-sm font-medium text-white">
-                    <svg className="w-4 h-4 text-teal-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={p.d} /></svg>
+                  <span
+                    key={p.t}
+                    className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.06] py-1.5 pl-1.5 pr-4 text-sm font-medium text-white/95 ring-1 ring-inset ring-white/15 transition-colors hover:bg-white/[0.12]"
+                  >
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-400/15 text-teal-300 ring-1 ring-inset ring-teal-300/20">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={p.d} /></svg>
+                    </span>
                     {p.t}
                   </span>
                 ))}
