@@ -83,10 +83,35 @@ export default function Home() {
   return (
     <>
       {/* ===== Hero ===== */}
-      <section className="relative bg-ink-950">
+      <section className="relative overflow-hidden bg-ink-950">
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <div className="absolute -top-10 right-[10%] w-[38rem] h-[38rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.18), transparent 68%)" }} />
+          {/* aurora depth */}
+          <div className="absolute -top-10 right-[10%] w-[38rem] h-[38rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.16), transparent 68%)" }} />
           <div className="absolute bottom-[-24%] left-[4%] w-[30rem] h-[30rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.12), transparent 70%)" }} />
+          {/* light rays from the upper right */}
+          <div className="absolute inset-0" style={{ background: "conic-gradient(from 208deg at 90% -8%, rgba(186,230,253,0.16), transparent 22%)" }} />
+          <div className="absolute inset-0" style={{ background: "conic-gradient(from 198deg at 99% -2%, rgba(255,255,255,0.08), transparent 14%)" }} />
+          {/* molecular network */}
+          <svg className="absolute right-[-4%] top-[4%] h-[82%] w-[60%] text-teal-300" viewBox="0 0 500 500" fill="none" preserveAspectRatio="xMidYMid meet">
+            {(() => {
+              const n: [number, number][] = [[60,90],[150,46],[250,86],[205,168],[108,182],[300,196],[382,120],[432,228],[338,300],[240,286],[150,320],[404,360],[300,402],[176,430]];
+              const l = [[0,1],[1,2],[2,3],[3,4],[4,0],[2,5],[5,6],[6,7],[5,8],[8,7],[3,9],[9,8],[4,10],[10,9],[8,11],[11,12],[12,9],[10,13],[13,12],[1,4]];
+              return (
+                <>
+                  <g stroke="currentColor" strokeWidth="1" opacity="0.28">
+                    {l.map(([a, b], i) => (
+                      <line key={i} x1={n[a][0]} y1={n[a][1]} x2={n[b][0]} y2={n[b][1]} />
+                    ))}
+                  </g>
+                  <g fill="currentColor" opacity="0.5">
+                    {n.map(([x, y], i) => (
+                      <circle key={i} cx={x} cy={y} r={i % 4 === 0 ? 3.2 : 2} />
+                    ))}
+                  </g>
+                </>
+              );
+            })()}
+          </svg>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -134,42 +159,60 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Vials cluster — simple flex row, sizes to content so nothing can clip it */}
-            <div className="relative order-last flex items-end justify-center gap-1 sm:gap-2 px-2 pt-6 pb-2">
-              <Image
-                src="/products/vialimg/tb-500.png"
-                alt="TB-500 research peptide vial"
-                width={218}
-                height={273}
-                priority
-                className="w-[30%] max-w-[185px] h-auto vial-3d-dark animate-vial-b"
-                style={{ "--r": "-6deg" } as React.CSSProperties}
-              />
-              <Image
-                src="/products/vialimg/bpc-157.png"
-                alt="BPC-157 research peptide vial"
-                width={300}
-                height={375}
-                priority
-                className="relative z-10 -mb-3 w-[42%] max-w-[275px] h-auto vial-3d-dark animate-vial-a"
-                style={{ "--r": "2deg", animationDelay: "0.5s" } as React.CSSProperties}
-              />
-              <Image
-                src="/products/vialimg/ghk-cu.png"
-                alt="GHK-Cu research peptide vial"
-                width={210}
-                height={263}
-                priority
-                className="w-[32%] max-w-[200px] h-auto vial-3d-dark animate-vial-a"
-                style={{ "--r": "6deg", animationDelay: "1.1s" } as React.CSSProperties}
-              />
+            {/* Vials on a glass pedestal */}
+            <div className="relative order-last pt-4 pb-2">
+              <div className="relative mx-auto max-w-[560px]">
+                {/* spotlight glow behind the vials */}
+                <div
+                  className="absolute left-1/2 top-[6%] h-[78%] w-[72%] -translate-x-1/2 rounded-full blur-3xl"
+                  style={{ background: "radial-gradient(circle, rgba(43,196,230,0.22), transparent 70%)" }}
+                  aria-hidden="true"
+                />
+
+                {/* vials, bases aligned */}
+                <div className="relative z-10 flex items-end justify-center gap-1.5 sm:gap-2.5 px-2">
+                  <Image
+                    src="/products/vialimg/bacteriostatic-water.png"
+                    alt="Bacteriostatic Water sterile solution vial"
+                    width={300}
+                    height={375}
+                    priority
+                    className="w-[27%] max-w-[150px] h-auto vial-3d-dark"
+                  />
+                  <Image
+                    src="/products/vialimg/bpc-157-tb-500-wolverine.png"
+                    alt="BPC-157 / TB-500 research peptide vial"
+                    width={340}
+                    height={425}
+                    priority
+                    className="relative z-10 w-[44%] max-w-[245px] h-auto vial-3d-dark"
+                  />
+                  <Image
+                    src="/products/vialimg/ghk-cu.png"
+                    alt="GHK-Cu research peptide vial"
+                    width={300}
+                    height={375}
+                    priority
+                    className="w-[30%] max-w-[168px] h-auto vial-3d-dark"
+                  />
+                </div>
+
+                {/* glass pedestal */}
+                <div className="relative z-0 -mt-5">
+                  <div
+                    className="mx-auto h-12 w-[88%] rounded-[100%] border border-white/15 bg-white/[0.06]"
+                    style={{ boxShadow: "inset 0 2px 10px rgba(255,255,255,0.14), 0 -1px 24px rgba(43,196,230,0.16)" }}
+                  />
+                  <div className="mx-auto -mt-9 h-9 w-[62%] rounded-[100%] bg-cyan-400/15 blur-2xl" aria-hidden="true" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ===== Stats / credibility band ===== */}
-      <section className="relative overflow-hidden bg-ink-950">
+      <section className="relative overflow-hidden bg-ink-950 border-t border-white/10">
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute -top-10 left-1/3 w-80 h-80 rounded-full blur-3xl" style={{ background: "rgba(43,196,230,0.12)" }} />
           <div className="absolute -bottom-10 right-1/4 w-72 h-72 rounded-full blur-3xl" style={{ background: "rgba(18,135,210,0.10)" }} />
@@ -177,16 +220,21 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4 divide-x divide-white/10">
             {[
-              { v: "99.7%", l: "Average identity purity" },
-              { v: "28+", l: "Research compounds" },
-              { v: "24h", l: "Shipped within 24 hours" },
-              { v: "50", l: "U.S. states served" },
+              { v: "99.7%", l: "Average identity purity", d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" },
+              { v: "28+", l: "Research compounds", d: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" },
+              { v: "24h", l: "Shipped within 24 hours", d: "M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M9 17a2 2 0 11-4 0 2 2 0 014 0zm10 0a2 2 0 11-4 0 2 2 0 014 0z" },
+              { v: "50", l: "U.S. states served", d: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" },
             ].map((s) => (
-              <div key={s.l} className="text-center px-2">
-                <p className="font-display font-extrabold text-white text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-none">
-                  {s.v}
-                </p>
-                <p className="text-teal-200 text-xs sm:text-sm mt-2 font-medium">{s.l}</p>
+              <div key={s.l} className="flex items-center justify-center gap-3 sm:gap-4 px-2">
+                <svg className="w-9 h-9 sm:w-10 sm:h-10 text-teal-300/90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={s.d} />
+                </svg>
+                <div className="text-left">
+                  <p className="font-display font-extrabold text-white text-3xl sm:text-4xl lg:text-[2.7rem] tracking-tight leading-none">
+                    {s.v}
+                  </p>
+                  <p className="text-teal-200/80 text-xs sm:text-sm mt-1.5 font-medium">{s.l}</p>
+                </div>
               </div>
             ))}
           </div>
