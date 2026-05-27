@@ -120,11 +120,11 @@ export default function AboutPage() {
             </p>
             <p>
               Before any product reaches you, it passes independent identity and
-              content testing — and the analytical results travel with it. No
-              guesswork about what's in the vial.
+              content testing, and the analytical results travel with it. No
+              guesswork about what&apos;s in the vial.
             </p>
             <p>
-              Rigorous documentation and fair, research-friendly pricing aren't a
+              Rigorous documentation and fair, research-friendly pricing aren&apos;t a
               trade-off here. We built KJD BioLabs so labs of any size can get
               consistent, verified material without paying a premium for it.
             </p>

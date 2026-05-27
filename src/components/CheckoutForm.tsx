@@ -214,7 +214,7 @@ export default function CheckoutForm({
         const data = await res.json();
         if (res.ok && data.ok && data.url) {
           clear();
-          window.location.href = data.url; // Coinbase hosted checkout
+          window.location.assign(data.url); // Coinbase hosted checkout
           return;
         }
         setError(data.error || "Could not start crypto checkout. Please try again.");
