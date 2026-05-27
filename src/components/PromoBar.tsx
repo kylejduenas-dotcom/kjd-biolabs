@@ -12,10 +12,10 @@ export default function PromoBar() {
   if (!show) return null;
 
   return (
-    <div className="relative bg-logo-gradient px-10 py-2.5 text-center font-serif text-[15px] font-medium text-white">
+    <div className="relative bg-logo-gradient px-10 py-2.5 text-center font-serif text-[17px] font-normal text-white">
       <span>
-        <strong className="font-semibold">20% off</strong> your order — use code{" "}
-        <strong className="font-semibold tracking-wide">KJD20</strong> at checkout
+        <strong className="font-medium">20% off</strong> your order — use code{" "}
+        <strong className="font-medium tracking-wide">KJD20</strong> at checkout
       </span>
       <button
         type="button"
