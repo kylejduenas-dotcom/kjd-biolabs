@@ -34,7 +34,12 @@ export default function Footer() {
             <p className="text-ink-950 font-display font-bold text-2xl sm:text-[1.7rem] leading-[1.18] tracking-tight">
               Research-grade peptides, third-party tested to 99%+ purity.
             </p>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 leading-relaxed mt-8">
+            <address className="not-italic text-sm text-slate-600 leading-relaxed mt-7">
+              KJD Capital LLC<br />
+              180 Talmadge Road, IGO Bldg Suite #545<br />
+              Edison, NJ 08817, United States
+            </address>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 leading-relaxed mt-6">
               Part of the KJD Capital, LLC family of brands
             </p>
           </div>

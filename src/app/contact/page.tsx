@@ -64,8 +64,8 @@ export default function ContactPage() {
                 icon="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               />
               <InfoRow
-                title="Location"
-                value="United States"
+                title="Address"
+                value="KJD Capital LLC · 180 Talmadge Road, IGO Bldg Suite #545, Edison, NJ 08817, United States"
                 icon="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
               />
             </div>
