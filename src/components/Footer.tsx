@@ -34,12 +34,7 @@ export default function Footer() {
             <p className="text-ink-950 font-display font-bold text-2xl sm:text-[1.7rem] leading-[1.18] tracking-tight">
               Research-grade peptides, third-party tested to 99%+ purity.
             </p>
-            <address className="not-italic text-sm text-slate-600 leading-relaxed mt-7">
-              KJD Capital LLC<br />
-              180 Talmadge Road, IGO Bldg Suite #545<br />
-              Edison, NJ 08817, United States
-            </address>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 leading-relaxed mt-6">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 leading-relaxed mt-8">
               Part of the KJD Capital, LLC family of brands
             </p>
           </div>
@@ -50,11 +45,18 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-slate-200/70">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-slate-500">
-            &copy; {new Date().getFullYear()} KJD BioLabs. All rights reserved.
-          </p>
-          <p className="text-xs text-slate-500 sm:text-right sm:max-w-2xl leading-relaxed">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-3">
+            <p className="text-xs text-slate-500">
+              &copy; {new Date().getFullYear()} KJD BioLabs. All rights reserved.
+            </p>
+            <address className="not-italic text-xs text-slate-500 leading-relaxed text-center sm:text-right">
+              KJD Capital LLC<br />
+              180 Talmadge Road, IGO Bldg Suite #545<br />
+              Edison, NJ 08817, United States
+            </address>
+          </div>
+          <p className="text-xs text-slate-500 leading-relaxed mt-4 text-center sm:text-left">
             For laboratory research use only &mdash; not for human or veterinary use, and not evaluated by the U.S. Food &amp; Drug Administration.{" "}
             <Link href="/disclaimer" className="text-teal-600 hover:text-teal-700 underline">
               Full disclaimer
