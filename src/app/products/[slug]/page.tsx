@@ -60,7 +60,7 @@ export default async function ProductPage({
             className="rounded-[2rem] relative overflow-hidden aspect-[4/5] self-start"
             style={{ background: style.bg }}
           >
-            <span className="absolute top-5 left-5 z-10 text-[11px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full bg-white/70 backdrop-blur text-ink-900">
+            <span className="absolute top-5 left-5 z-10 text-xs uppercase tracking-wider font-semibold px-3 py-1 rounded-full bg-white/70 backdrop-blur text-ink-900">
               {product.category}
             </span>
             {photo ? (
@@ -137,7 +137,7 @@ export default async function ProductPage({
                     </svg>
                   </span>
                   <span className="text-ink-950 text-xs font-semibold leading-tight">{b.t}</span>
-                  <span className="text-slate-400 text-[11px] mt-0.5">{b.s}</span>
+                  <span className="text-slate-400 text-xs mt-0.5">{b.s}</span>
                 </div>
               ))}
             </div>

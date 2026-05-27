@@ -70,6 +70,7 @@ export default function ProductsPage() {
       {/* Grid */}
       <section className="py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="sr-only">All compounds</h2>
           {filtered.length === 0 ? (
             <div className="text-center py-24">
               <p className="text-slate-500 text-lg">No products found.</p>
@@ -108,7 +109,7 @@ function FilterPill({
   return (
     <button
       onClick={onClick}
-      className={`shrink-0 whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+      className={`shrink-0 whitespace-nowrap px-5 py-3 rounded-full text-sm font-semibold transition-all ${
         active
           ? "bg-ink-950 text-white"
           : "bg-slate-100 text-slate-600 hover:bg-slate-200"
