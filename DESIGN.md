@@ -17,10 +17,14 @@ Never pure `#000`/`#fff`.
 
 ## Typography
 
-- **Sans / display:** Nacelle (`--font-nacelle`, self-hosted, weights 300–900). Headings: `font-display`, tracking `-0.03em`, weight 700+.
-- **Serif (editorial accent):** Newsreader (`font-serif`, `--font-newsreader`). Used for large editorial headlines and italic emphasis words ("certainty."). Pair Nacelle eyebrows + Newsreader headline for the premium register.
+- **Sans / display:** Nacelle (`--font-nacelle`, self-hosted, weights 300–900).
+- **Serif (editorial accent):** Newsreader (`font-serif`, `--font-newsreader`).
+- **Heading role convention (keep consistent):**
+  - **Page-title H1** (the main title at the top of a route, and the home hero): Nacelle, `font-display font-extrabold`, `tracking-[-0.02em]`.
+  - **Section / subsection headings (H2/H3) and editorial accents:** Newsreader, `font-serif font-semibold`, `tracking-[-0.02em]`. Also the italic emphasis words ("certainty.", "every vial.") and the big serif step numbers.
+  - Do not mix: never make a page-title H1 serif or a section H2 Nacelle-bold.
 - Eyebrow pattern: `text-teal-700 text-xs font-semibold uppercase tracking-[0.18em]`.
-- Hero headlines: serif, `tracking-[-0.025em]`, leading ~1.05. Cap body line length ~65–75ch.
+- Cap body line length ~65–75ch.
 
 ## Elevation & shape
 

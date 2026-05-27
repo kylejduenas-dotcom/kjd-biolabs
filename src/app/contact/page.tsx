@@ -40,7 +40,7 @@ export default function ContactPage() {
       <section className="bg-soft-cream border-b border-slate-200/70 py-16 sm:py-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-teal-700 font-semibold text-xs uppercase tracking-[0.18em] mb-4">Contact</p>
-          <h1 className="text-4xl sm:text-6xl font-serif font-semibold text-ink-950 tracking-[-0.025em] leading-[1.05] max-w-2xl">
+          <h1 className="text-4xl sm:text-6xl font-display font-extrabold text-ink-950 tracking-[-0.02em] leading-[1.05] max-w-2xl">
             Talk to our research team.
           </h1>
           <p className="text-slate-500 text-lg leading-relaxed max-w-xl mt-6">
@@ -218,11 +218,12 @@ export default function ContactPage() {
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  // Label wraps the control for implicit association (no id juggling needed).
   return (
-    <div>
-      <label className="block text-ink-950 text-sm font-medium mb-2">{label}</label>
+    <label className="block">
+      <span className="block text-ink-950 text-sm font-medium mb-2">{label}</span>
       {children}
-    </div>
+    </label>
   );
 }
 

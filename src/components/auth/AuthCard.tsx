@@ -72,9 +72,11 @@ export function SubmitButton({
   );
 }
 
-export function FieldLabel({ children }: { children: React.ReactNode }) {
+// Wraps its control so the label is implicitly associated (a11y) with no id wiring.
+export function FieldLabel({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <label className="block text-ink-950 text-sm font-medium mb-1.5">
+    <label className="block">
+      <span className="block text-ink-950 text-sm font-medium mb-1.5">{label}</span>
       {children}
     </label>
   );

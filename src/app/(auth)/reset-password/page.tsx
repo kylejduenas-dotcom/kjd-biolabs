@@ -70,8 +70,7 @@ export default function ResetPasswordPage() {
     >
       {error && <AuthError message={error} />}
       <form onSubmit={handleUpdate} className="space-y-4">
-        <div>
-          <FieldLabel>New password</FieldLabel>
+        <FieldLabel label="New password">
           <input
             type="password"
             required
@@ -80,9 +79,8 @@ export default function ResetPasswordPage() {
             placeholder="At least 8 characters"
             className="field-input"
           />
-        </div>
-        <div>
-          <FieldLabel>Confirm password</FieldLabel>
+        </FieldLabel>
+        <FieldLabel label="Confirm password">
           <input
             type="password"
             required
@@ -91,7 +89,7 @@ export default function ResetPasswordPage() {
             placeholder="Re-enter your password"
             className="field-input"
           />
-        </div>
+        </FieldLabel>
         <SubmitButton loading={loading}>Update Password</SubmitButton>
       </form>
     </AuthCard>

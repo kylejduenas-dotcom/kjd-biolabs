@@ -66,7 +66,7 @@ const homeFaqs = [
   },
   {
     q: "How fast do you ship, and is cold shipping required?",
-    a: "Orders are typically dispatched within 1–2 business days. Because compounds ship as a stable lyophilized powder, cold shipping isn't required — every order is sealed and protected, and you should store it at -20°C once it arrives.",
+    a: "Orders are processed and dispatched within 24 hours, with tracking sent the moment they leave our facility. Because compounds ship as a stable lyophilized powder, cold shipping isn't required — every order is sealed and protected, and you should store it at -20°C once it arrives.",
   },
   {
     q: "How does shipment protection work?",

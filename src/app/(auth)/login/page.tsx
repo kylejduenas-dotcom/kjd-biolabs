@@ -105,8 +105,7 @@ function LoginForm() {
           {error && <AuthError message={error} />}
 
           <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <FieldLabel>Email</FieldLabel>
+            <FieldLabel label="Email">
               <input
                 type="email"
                 required
@@ -115,9 +114,8 @@ function LoginForm() {
                 placeholder="you@laboratory.com"
                 className="field-input"
               />
-            </div>
-            <div>
-              <FieldLabel>Password</FieldLabel>
+            </FieldLabel>
+            <FieldLabel label="Password">
               <div className="relative">
                 <input
                   type={showPw ? "text" : "password"}
@@ -140,7 +138,7 @@ function LoginForm() {
                   )}
                 </button>
               </div>
-            </div>
+            </FieldLabel>
 
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">

@@ -85,8 +85,7 @@ export default function SignupPage() {
     >
       {error && <AuthError message={error} />}
       <form onSubmit={handleSignup} className="space-y-4">
-        <div>
-          <FieldLabel>Full name</FieldLabel>
+        <FieldLabel label="Full name">
           <input
             type="text"
             required
@@ -95,9 +94,8 @@ export default function SignupPage() {
             placeholder="Dr. Jane Doe"
             className="field-input"
           />
-        </div>
-        <div>
-          <FieldLabel>Organization / Laboratory</FieldLabel>
+        </FieldLabel>
+        <FieldLabel label="Organization / Laboratory">
           <input
             type="text"
             value={organization}
@@ -105,9 +103,8 @@ export default function SignupPage() {
             placeholder="Optional"
             className="field-input"
           />
-        </div>
-        <div>
-          <FieldLabel>Email</FieldLabel>
+        </FieldLabel>
+        <FieldLabel label="Email">
           <input
             type="email"
             required
@@ -116,9 +113,8 @@ export default function SignupPage() {
             placeholder="you@laboratory.com"
             className="field-input"
           />
-        </div>
-        <div>
-          <FieldLabel>Password</FieldLabel>
+        </FieldLabel>
+        <FieldLabel label="Password">
           <input
             type="password"
             required
@@ -127,7 +123,7 @@ export default function SignupPage() {
             placeholder="At least 8 characters"
             className="field-input"
           />
-        </div>
+        </FieldLabel>
         <SubmitButton loading={loading}>Create Account</SubmitButton>
       </form>
       <p className="text-slate-400 text-xs mt-4 leading-relaxed">

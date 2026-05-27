@@ -159,22 +159,22 @@ export default function AffiliatePage() {
               {error && (
                 <div className="rounded-xl bg-red-50 border border-red-200 px-3.5 py-3 text-red-700 text-sm">{error}</div>
               )}
-              <div>
-                <label className="block text-ink-950 text-sm font-medium mb-1.5">Name</label>
+              <label className="block">
+                <span className="block text-ink-950 text-sm font-medium mb-1.5">Name</span>
                 <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="field-input" placeholder="Your name" />
-              </div>
-              <div>
-                <label className="block text-ink-950 text-sm font-medium mb-1.5">Email</label>
+              </label>
+              <label className="block">
+                <span className="block text-ink-950 text-sm font-medium mb-1.5">Email</span>
                 <input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="field-input" placeholder="you@email.com" />
-              </div>
-              <div>
-                <label className="block text-ink-950 text-sm font-medium mb-1.5">Your platform / audience</label>
+              </label>
+              <label className="block">
+                <span className="block text-ink-950 text-sm font-medium mb-1.5">Your platform / audience</span>
                 <input required value={form.platform} onChange={(e) => setForm({ ...form, platform: e.target.value })} className="field-input" placeholder="e.g. YouTube channel, lab network, newsletter" />
-              </div>
-              <div>
-                <label className="block text-ink-950 text-sm font-medium mb-1.5">Tell us more</label>
+              </label>
+              <label className="block">
+                <span className="block text-ink-950 text-sm font-medium mb-1.5">Tell us more</span>
                 <textarea rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="field-input resize-none" placeholder="How do you plan to promote KJD BioLabs?" />
-              </div>
+              </label>
               <button type="submit" disabled={loading} className="w-full bg-ink-950 text-white py-3.5 rounded-full font-semibold hover:bg-teal-600 transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2">
                 {loading && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
                 {loading ? "Submitting…" : "Submit Application"}

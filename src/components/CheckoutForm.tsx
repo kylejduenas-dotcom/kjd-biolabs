@@ -12,8 +12,8 @@ import Vial from "@/components/Vial";
 import NmiCardFields, { type NmiHandle } from "@/components/NmiCardFields";
 import { SHIPPING_OPTIONS as SHIPPING, FREE_SHIPPING_THRESHOLD } from "@/data/shipping";
 
-const HANDLING_MIN_DAYS = 1; // business days to dispatch (ships by)
-const HANDLING_MAX_DAYS = 2;
+const HANDLING_MIN_DAYS = 1; // business days to dispatch (ships by) — within 24h
+const HANDLING_MAX_DAYS = 1;
 const NMI_ENABLED = !!process.env.NEXT_PUBLIC_NMI_TOKENIZATION_KEY;
 const CRYPTO_ENABLED = !!process.env.NEXT_PUBLIC_CRYPTO_CHECKOUT;
 
@@ -258,38 +258,31 @@ export default function CheckoutForm({
           <StepHeader n={1} title="Shipping details" active={step === 1} done={step > 1} onEdit={() => setStep(1)} />
           {step === 1 && (
             <div className="mt-5 space-y-4">
-              <div>
-                <Label>Full name</Label>
+              <Label label="Full name">
                 <input value={form.name} onChange={set("name")} className="field-input" placeholder="Dr. Jane Doe" />
-              </div>
-              <div>
-                <Label>Street address</Label>
+              </Label>
+              <Label label="Street address">
                 <input value={form.address} onChange={set("address")} className="field-input" placeholder="123 Research Park Dr, Suite 400" />
-              </div>
+              </Label>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <Label>City</Label>
+                <Label label="City">
                   <input value={form.city} onChange={set("city")} className="field-input" placeholder="Boston" />
-                </div>
-                <div>
-                  <Label>State / Province</Label>
+                </Label>
+                <Label label="State / Province">
                   <input value={form.state} onChange={set("state")} className="field-input" placeholder="MA" />
-                </div>
+                </Label>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <Label>ZIP / Postal code</Label>
+                <Label label="ZIP / Postal code">
                   <input value={form.zip} onChange={set("zip")} className="field-input" placeholder="02115" />
-                </div>
-                <div>
-                  <Label>Country</Label>
+                </Label>
+                <Label label="Country">
                   <input value={form.country} onChange={set("country")} className="field-input" />
-                </div>
+                </Label>
               </div>
-              <div>
-                <Label>Order notes (optional)</Label>
+              <Label label="Order notes (optional)">
                 <textarea value={form.notes} onChange={set("notes")} rows={2} className="field-input resize-none" placeholder="Anything we should know about this order" />
-              </div>
+              </Label>
               <button type="button" onClick={continueFromShipping} className={CONTINUE_BTN}>Continue to delivery</button>
             </div>
           )}
@@ -569,8 +562,14 @@ export default function CheckoutForm({
   );
 }
 
-function Label({ children }: { children: React.ReactNode }) {
-  return <label className="block text-ink-950 text-sm font-medium mb-1.5">{children}</label>;
+function Label({ label, children }: { label: string; children: React.ReactNode }) {
+  // Wraps the control for implicit label/input association (a11y).
+  return (
+    <label className="block">
+      <span className="block text-ink-950 text-sm font-medium mb-1.5">{label}</span>
+      {children}
+    </label>
+  );
 }
 
 function StepHeader({ n, title, active, done, onEdit }: { n: number; title: string; active: boolean; done: boolean; onEdit: () => void }) {

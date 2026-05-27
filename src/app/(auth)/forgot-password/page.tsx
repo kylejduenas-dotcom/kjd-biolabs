@@ -62,8 +62,7 @@ export default function ForgotPasswordPage() {
     >
       {error && <AuthError message={error} />}
       <form onSubmit={handleReset} className="space-y-4">
-        <div>
-          <FieldLabel>Email</FieldLabel>
+        <FieldLabel label="Email">
           <input
             type="email"
             required
@@ -72,7 +71,7 @@ export default function ForgotPasswordPage() {
             placeholder="you@laboratory.com"
             className="field-input"
           />
-        </div>
+        </FieldLabel>
         <SubmitButton loading={loading}>Send Reset Link</SubmitButton>
       </form>
     </AuthCard>

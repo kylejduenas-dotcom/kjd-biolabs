@@ -75,7 +75,7 @@ export default async function CheckoutSuccessPage({
           <p className="text-teal-700 font-semibold text-xs uppercase tracking-[0.18em] mb-3">
             {paid ? "Payment confirmed" : "Order received"}
           </p>
-          <h1 className="text-3xl sm:text-[2.4rem] font-serif font-semibold text-ink-950 tracking-[-0.02em] leading-tight mb-3">
+          <h1 className="text-3xl sm:text-[2.4rem] font-display font-extrabold text-ink-950 tracking-[-0.02em] leading-tight mb-3">
             {paid ? "You're all set." : "Thank you for your order."}
           </h1>
           <p className="text-slate-500 text-[15px] leading-relaxed max-w-md mx-auto">
