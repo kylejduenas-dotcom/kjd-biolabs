@@ -84,128 +84,60 @@ export default function Home() {
     <>
       {/* ===== Hero ===== */}
       <section className="relative overflow-hidden bg-ink-950">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          {/* aurora depth */}
-          <div className="absolute -top-10 right-[10%] w-[38rem] h-[38rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(43,196,230,0.16), transparent 68%)" }} />
-          <div className="absolute bottom-[-24%] left-[4%] w-[30rem] h-[30rem] rounded-full blur-3xl" style={{ background: "radial-gradient(circle, rgba(18,135,210,0.12), transparent 70%)" }} />
-          {/* light rays from the upper right */}
-          <div className="absolute inset-0" style={{ background: "conic-gradient(from 208deg at 90% -8%, rgba(186,230,253,0.16), transparent 22%)" }} />
-          <div className="absolute inset-0" style={{ background: "conic-gradient(from 198deg at 99% -2%, rgba(255,255,255,0.08), transparent 14%)" }} />
-          {/* molecular network */}
-          <svg className="absolute right-[-4%] top-[4%] h-[82%] w-[60%] text-teal-300" viewBox="0 0 500 500" fill="none" preserveAspectRatio="xMidYMid meet">
-            {(() => {
-              const n: [number, number][] = [[60,90],[150,46],[250,86],[205,168],[108,182],[300,196],[382,120],[432,228],[338,300],[240,286],[150,320],[404,360],[300,402],[176,430]];
-              const l = [[0,1],[1,2],[2,3],[3,4],[4,0],[2,5],[5,6],[6,7],[5,8],[8,7],[3,9],[9,8],[4,10],[10,9],[8,11],[11,12],[12,9],[10,13],[13,12],[1,4]];
-              return (
-                <>
-                  <g stroke="currentColor" strokeWidth="1" opacity="0.28">
-                    {l.map(([a, b], i) => (
-                      <line key={i} x1={n[a][0]} y1={n[a][1]} x2={n[b][0]} y2={n[b][1]} />
-                    ))}
-                  </g>
-                  <g fill="currentColor" opacity="0.5">
-                    {n.map(([x, y], i) => (
-                      <circle key={i} cx={x} cy={y} r={i % 4 === 0 ? 3.2 : 2} />
-                    ))}
-                  </g>
-                </>
-              );
-            })()}
-          </svg>
-        </div>
+        {/* photorealistic 3D hero scene */}
+        <Image
+          src="/hero-3d.png"
+          alt="KJD BioLabs research peptide vials — Bacteriostatic Water, BPC-157/TB-500, and GHK-Cu — on a laboratory pedestal"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[72%_center] lg:object-right"
+        />
+        {/* navy gradients keep the headline legible over the scene */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/90 to-ink-950/25 lg:via-ink-950/55 lg:to-transparent" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink-950 to-transparent" aria-hidden="true" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pt-8 pb-14 lg:pt-10 lg:pb-16 lg:min-h-[calc(100vh-12rem)]">
-            <div>
-              <h1 className="fade-up stagger-1 text-4xl sm:text-5xl lg:text-[4.6rem] font-display font-extrabold text-white leading-[1.04] sm:leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
-                Research begins with{" "}
-                <em className="font-serif italic font-semibold text-white">certainty.</em>
-              </h1>
+          <div className="flex min-h-[600px] max-w-xl flex-col justify-center py-20 sm:py-24 lg:min-h-[680px] lg:max-w-2xl lg:py-28">
+            <h1 className="fade-up stagger-1 text-4xl sm:text-5xl lg:text-[4.6rem] font-display font-extrabold text-white leading-[1.04] sm:leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
+              Research begins with{" "}
+              <em className="font-serif italic font-semibold text-white">certainty.</em>
+            </h1>
 
-              <p className="fade-up stagger-2 text-lg text-white/80 leading-relaxed mb-8 max-w-lg">
-                99%+ purity, third-party verified. Every compound backed by
-                independent lab testing and a Certificate of Analysis — so your
-                research starts from a known standard.
-              </p>
+            <p className="fade-up stagger-2 text-lg text-white/80 leading-relaxed mb-8 max-w-lg">
+              99%+ purity, third-party verified. Every compound backed by
+              independent lab testing and a Certificate of Analysis — so your
+              research starts from a known standard.
+            </p>
 
-              <div className="fade-up stagger-3 flex flex-col sm:flex-row gap-3 mb-8">
-                <Link
-                  href="/products"
-                  className="group inline-flex items-center justify-center gap-2.5 bg-white text-ink-950 px-9 py-4 rounded-full font-semibold hover:bg-teal-50 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
-                >
-                  Shop Compounds
-                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-              </div>
-
-              <div className="fade-up stagger-4 flex flex-wrap gap-2.5">
-                {[
-                  { d: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", t: "Independent Lab Testing" },
-                  { d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z", t: "CoA on Request" },
-                  { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", t: "Ships Within 24h" },
-                ].map((p) => (
-                  <span
-                    key={p.t}
-                    className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.06] py-1.5 pl-1.5 pr-4 text-sm font-medium text-white/95 ring-1 ring-inset ring-white/15 transition-colors hover:bg-white/[0.12]"
-                  >
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-400/15 text-teal-300 ring-1 ring-inset ring-teal-300/20">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={p.d} /></svg>
-                    </span>
-                    {p.t}
-                  </span>
-                ))}
-              </div>
+            <div className="fade-up stagger-3 flex flex-col sm:flex-row gap-3 mb-8">
+              <Link
+                href="/products"
+                className="group inline-flex items-center justify-center gap-2.5 bg-white text-ink-950 px-9 py-4 rounded-full font-semibold hover:bg-teal-50 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
+              >
+                Shop Compounds
+                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
             </div>
 
-            {/* Vials on a glass pedestal */}
-            <div className="relative order-last pt-4 pb-2">
-              <div className="relative mx-auto max-w-[560px]">
-                {/* spotlight glow behind the vials */}
-                <div
-                  className="absolute left-1/2 top-[6%] h-[78%] w-[72%] -translate-x-1/2 rounded-full blur-3xl"
-                  style={{ background: "radial-gradient(circle, rgba(43,196,230,0.22), transparent 70%)" }}
-                  aria-hidden="true"
-                />
-
-                {/* vials, bases aligned */}
-                <div className="relative z-10 flex items-end justify-center gap-1.5 sm:gap-2.5 px-2">
-                  <Image
-                    src="/products/vialimg/bacteriostatic-water.png"
-                    alt="Bacteriostatic Water sterile solution vial"
-                    width={300}
-                    height={375}
-                    priority
-                    className="w-[27%] max-w-[150px] h-auto vial-3d-dark"
-                  />
-                  <Image
-                    src="/products/vialimg/bpc-157-tb-500-wolverine.png"
-                    alt="BPC-157 / TB-500 research peptide vial"
-                    width={340}
-                    height={425}
-                    priority
-                    className="relative z-10 w-[44%] max-w-[245px] h-auto vial-3d-dark"
-                  />
-                  <Image
-                    src="/products/vialimg/ghk-cu.png"
-                    alt="GHK-Cu research peptide vial"
-                    width={300}
-                    height={375}
-                    priority
-                    className="w-[30%] max-w-[168px] h-auto vial-3d-dark"
-                  />
-                </div>
-
-                {/* glass pedestal */}
-                <div className="relative z-0 -mt-5">
-                  <div
-                    className="mx-auto h-12 w-[88%] rounded-[100%] border border-white/15 bg-white/[0.06]"
-                    style={{ boxShadow: "inset 0 2px 10px rgba(255,255,255,0.14), 0 -1px 24px rgba(43,196,230,0.16)" }}
-                  />
-                  <div className="mx-auto -mt-9 h-9 w-[62%] rounded-[100%] bg-cyan-400/15 blur-2xl" aria-hidden="true" />
-                </div>
-              </div>
+            <div className="fade-up stagger-4 flex flex-wrap gap-2.5">
+              {[
+                { d: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", t: "Independent Lab Testing" },
+                { d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z", t: "CoA on Request" },
+                { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", t: "Ships Within 24h" },
+              ].map((p) => (
+                <span
+                  key={p.t}
+                  className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.06] py-1.5 pl-1.5 pr-4 text-sm font-medium text-white/95 ring-1 ring-inset ring-white/15 transition-colors hover:bg-white/[0.12]"
+                >
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-400/15 text-teal-300 ring-1 ring-inset ring-teal-300/20">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={p.d} /></svg>
+                  </span>
+                  {p.t}
+                </span>
+              ))}
             </div>
           </div>
         </div>
