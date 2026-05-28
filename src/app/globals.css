@@ -171,24 +171,6 @@ body {
 .animate-float-slow { animation: float-slow 9.5s ease-in-out infinite; }
 .animate-marquee { animation: marquee 30s linear infinite; }
 
-/* Hero: slow cinematic drift on the 3D scene + rising glow particles */
-@keyframes hero-pan { 0%, 100% { transform: scale(1.02); } 50% { transform: scale(1.05) translate3d(-1%, -0.8%, 0); } }
-.animate-hero-pan { animation: hero-pan 26s ease-in-out infinite; will-change: transform; }
-@keyframes particle-rise {
-  0% { transform: translateY(10px) scale(0.7); opacity: 0; }
-  20% { opacity: 0.85; }
-  80% { opacity: 0.5; }
-  100% { transform: translateY(-72px) scale(1.4); opacity: 0; }
-}
-.hero-particle {
-  position: absolute;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgba(186,230,253,0.95), rgba(43,196,230,0.2) 65%, transparent 75%);
-  animation: particle-rise 8s ease-in-out infinite;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
 /* Hero aurora — slow, GPU-composited drifting glows (transform-only) */
 @keyframes aurora-a { 0%, 100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(7%, -9%, 0) scale(1.18); } }
 @keyframes aurora-b { 0%, 100% { transform: translate3d(0,0,0) scale(1.06); } 50% { transform: translate3d(-9%, 7%, 0) scale(1); } }
@@ -241,8 +223,7 @@ body {
 /* Respect reduced-motion: stop all motion to cut compositor load */
 @media (prefers-reduced-motion: reduce) {
   .animate-float, .animate-float-slow, .animate-vial-a, .animate-vial-b, .animate-marquee,
-  .aurora-a, .aurora-b, .text-gradient-anim, .text-aqua-anim, .fade-up,
-  .animate-hero-pan, .hero-particle {
+  .aurora-a, .aurora-b, .text-gradient-anim, .text-aqua-anim, .fade-up {
     animation: none !important;
   }
   .fade-up { opacity: 1; }

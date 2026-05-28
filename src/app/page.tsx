@@ -91,20 +91,11 @@ export default function Home() {
           fill
           priority
           sizes="100vw"
-          className="animate-hero-pan object-cover object-[72%_center] lg:object-right"
+          className="object-cover object-[72%_center] lg:object-right"
         />
         {/* navy gradients keep the headline legible over the scene */}
         <div className="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/90 to-ink-950/25 lg:via-ink-950/55 lg:to-transparent" aria-hidden="true" />
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink-950 to-transparent" aria-hidden="true" />
-        {/* rising glow particles over the scene */}
-        <div className="absolute inset-0 hidden overflow-hidden sm:block" aria-hidden="true">
-          <span className="hero-particle" style={{ left: "59%", top: "56%", width: "8px", height: "8px", animationDelay: "0s", animationDuration: "8s" }} />
-          <span className="hero-particle" style={{ left: "71%", top: "38%", width: "5px", height: "5px", animationDelay: "1.6s", animationDuration: "7s" }} />
-          <span className="hero-particle" style={{ left: "83%", top: "60%", width: "10px", height: "10px", animationDelay: "0.8s", animationDuration: "9s" }} />
-          <span className="hero-particle" style={{ left: "67%", top: "28%", width: "4px", height: "4px", animationDelay: "3s", animationDuration: "6.5s" }} />
-          <span className="hero-particle" style={{ left: "90%", top: "46%", width: "6px", height: "6px", animationDelay: "2.2s", animationDuration: "8.5s" }} />
-          <span className="hero-particle" style={{ left: "77%", top: "70%", width: "7px", height: "7px", animationDelay: "4.2s", animationDuration: "7.5s" }} />
-        </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex min-h-[600px] max-w-xl flex-col justify-center py-20 sm:py-24 lg:min-h-[680px] lg:max-w-2xl lg:py-28">
