@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function AuthCard({
   title,
@@ -14,12 +15,15 @@ export default function AuthCard({
   return (
     <div className="w-full max-w-md animate-fade-in">
       <Link href="/" className="flex flex-col items-center mb-7 group">
-        <div className="w-14 h-14 rounded-2xl bg-ink-950 flex items-center justify-center mb-4 group-hover:bg-teal-600 transition-colors">
-          <span className="text-white font-display font-bold text-2xl">K</span>
-        </div>
-        <span className="text-ink-950 text-2xl font-display font-bold tracking-tight">
-          KJD <span className="text-teal-600">BioLabs</span>
-        </span>
+        <Image
+          src="/kjd-logo-stacked-trans.png"
+          alt="KJD BioLabs"
+          width={120}
+          height={120}
+          priority
+          className="transition-transform group-hover:scale-105"
+          style={{ width: "6.5rem", height: "auto" }}
+        />
       </Link>
 
       <div className="bg-white rounded-3xl border border-slate-200/80 shadow-soft-lg p-8">
