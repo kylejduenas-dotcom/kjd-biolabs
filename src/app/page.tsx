@@ -84,60 +84,71 @@ export default function Home() {
     <>
       {/* ===== Hero ===== */}
       <section className="relative overflow-hidden bg-ink-950">
-        {/* photorealistic 3D hero scene */}
-        <Image
-          src="/hero-3d.png"
-          alt="KJD BioLabs research peptide vials — Bacteriostatic Water, BPC-157/TB-500, and GHK-Cu — on a laboratory pedestal"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[72%_center] lg:object-right"
-        />
-        {/* left-anchored navy gradient: keeps the headline legible but leaves the vials clear */}
-        <div className="absolute inset-y-0 left-0 w-full lg:w-[58%] bg-gradient-to-r from-ink-950 via-ink-950/80 to-transparent" aria-hidden="true" />
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink-950/85 to-transparent" aria-hidden="true" />
-
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex min-h-[600px] max-w-xl flex-col justify-center py-20 sm:py-24 lg:min-h-[680px] lg:max-w-2xl lg:py-28">
-            <h1 className="fade-up stagger-1 text-4xl sm:text-5xl lg:text-[4.6rem] font-display font-extrabold text-white leading-[1.04] sm:leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
-              Research begins with{" "}
-              <em className="font-serif italic font-semibold text-white">certainty.</em>
-            </h1>
+          <div className="grid items-center gap-2 lg:grid-cols-2 lg:gap-8 lg:min-h-[640px]">
+            {/* LEFT — text */}
+            <div className="pt-14 pb-2 lg:py-16">
+              <h1 className="fade-up stagger-1 text-4xl sm:text-5xl lg:text-[4.6rem] font-display font-extrabold text-white leading-[1.04] sm:leading-[1.02] tracking-[-0.03em] mb-6 text-balance">
+                Research begins with{" "}
+                <em className="font-serif italic font-semibold text-white">certainty.</em>
+              </h1>
 
-            <p className="fade-up stagger-2 text-lg text-white/80 leading-relaxed mb-8 max-w-lg">
-              99%+ purity, third-party verified. Every compound backed by
-              independent lab testing and a Certificate of Analysis — so your
-              research starts from a known standard.
-            </p>
+              <p className="fade-up stagger-2 text-lg text-white/80 leading-relaxed mb-8 max-w-lg">
+                99%+ purity, third-party verified. Every compound backed by
+                independent lab testing and a Certificate of Analysis — so your
+                research starts from a known standard.
+              </p>
 
-            <div className="fade-up stagger-3 flex flex-col sm:flex-row gap-3 mb-8">
-              <Link
-                href="/products"
-                className="group inline-flex items-center justify-center gap-2.5 bg-white text-ink-950 px-9 py-4 rounded-full font-semibold hover:bg-teal-50 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
-              >
-                Shop Compounds
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
+              <div className="fade-up stagger-3 flex flex-col sm:flex-row gap-3 mb-8">
+                <Link
+                  href="/products"
+                  className="group inline-flex items-center justify-center gap-2.5 bg-white text-ink-950 px-9 py-4 rounded-full font-semibold hover:bg-teal-50 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20 transition-all duration-300"
+                >
+                  Shop Compounds
+                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
+
+              <div className="fade-up stagger-4 flex flex-wrap gap-2.5">
+                {[
+                  { d: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", t: "Independent Lab Testing" },
+                  { d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z", t: "CoA on Request" },
+                  { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", t: "Ships Within 24h" },
+                ].map((p) => (
+                  <span
+                    key={p.t}
+                    className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.06] py-1.5 pl-1.5 pr-4 text-sm font-medium text-white/95 ring-1 ring-inset ring-white/15 transition-colors hover:bg-white/[0.12]"
+                  >
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-400/15 text-teal-300 ring-1 ring-inset ring-teal-300/20">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={p.d} /></svg>
+                    </span>
+                    {p.t}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            <div className="fade-up stagger-4 flex flex-wrap gap-2.5">
-              {[
-                { d: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", t: "Independent Lab Testing" },
-                { d: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z", t: "CoA on Request" },
-                { d: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", t: "Ships Within 24h" },
-              ].map((p) => (
-                <span
-                  key={p.t}
-                  className="inline-flex items-center gap-2.5 rounded-full bg-white/[0.06] py-1.5 pl-1.5 pr-4 text-sm font-medium text-white/95 ring-1 ring-inset ring-white/15 transition-colors hover:bg-white/[0.12]"
-                >
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-400/15 text-teal-300 ring-1 ring-inset ring-teal-300/20">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={p.d} /></svg>
-                  </span>
-                  {p.t}
-                </span>
-              ))}
+            {/* RIGHT — AI stage (DNA + glare + glass pedestal) with our real vials placed on it */}
+            <div className="relative">
+              <div className="relative mx-auto w-full max-w-[680px]">
+                <Image
+                  src="/hero-stage.png"
+                  alt="Research peptide vials on a laboratory pedestal with a DNA helix backdrop"
+                  width={1376}
+                  height={768}
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="h-auto w-full"
+                />
+                {/* real vials standing on the pedestal */}
+                <div className="absolute bottom-[15%] left-[42%] right-[2%] flex items-end justify-center gap-0.5">
+                  <Image src="/products/vialimg/bacteriostatic-water.png" alt="Bacteriostatic Water vial" width={300} height={375} className="h-auto w-[29%] vial-3d-dark animate-vial-b" />
+                  <Image src="/products/vialimg/bpc-157-tb-500-wolverine.png" alt="BPC-157 / TB-500 vial" width={340} height={425} className="relative z-10 h-auto w-[41%] vial-3d-dark animate-vial-a" />
+                  <Image src="/products/vialimg/ghk-cu.png" alt="GHK-Cu vial" width={300} height={375} className="h-auto w-[32%] vial-3d-dark animate-vial-a" style={{ animationDelay: "0.6s" }} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
