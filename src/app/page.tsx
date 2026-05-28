@@ -132,15 +132,21 @@ export default function Home() {
 
             {/* RIGHT — AI stage (DNA + glare + glass pedestal) with our real vials placed on it */}
             <div className="relative">
-              <div className="relative mx-auto w-full max-w-[680px]">
+              <div className="relative w-full lg:-mr-6 xl:-mr-12">
                 <Image
                   src="/hero-stage.png"
                   alt="Research peptide vials on a laboratory pedestal with a DNA helix backdrop"
                   width={1376}
                   height={768}
                   priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="(max-width: 1024px) 100vw, 55vw"
                   className="h-auto w-full"
+                  style={{
+                    WebkitMaskImage:
+                      "radial-gradient(78% 86% at 62% 54%, #000 30%, rgba(0,0,0,0.45) 58%, transparent 80%)",
+                    maskImage:
+                      "radial-gradient(78% 86% at 62% 54%, #000 30%, rgba(0,0,0,0.45) 58%, transparent 80%)",
+                  }}
                 />
                 {/* real vials standing on the pedestal */}
                 <div className="absolute bottom-[15%] left-[42%] right-[2%] flex items-end justify-center gap-0.5">
