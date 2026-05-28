@@ -3,7 +3,6 @@ import Image from "next/image";
 import { products, type Product } from "@/data/products";
 import FeaturedCarousel from "@/components/FeaturedCarousel";
 import TrustedByResearchers from "@/components/TrustedByResearchers";
-import HeroVialsScene from "@/components/HeroVialsScene";
 
 const featuredSlugs = [
   "bpc-157", "tb-500", "ghk-cu", "glp-3-rt", "tesamorelin",
@@ -131,9 +130,54 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RIGHT — real interactive 3D glass vials (React Three Fiber) */}
-            <div className="relative">
-              <HeroVialsScene />
+            {/* RIGHT — our real product vials */}
+            <div className="relative flex items-end justify-center pt-6 pb-8 lg:py-10">
+              {/* soft glow behind the vials */}
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
+                <div
+                  className="h-[360px] w-[360px] sm:h-[460px] sm:w-[460px] rounded-full blur-3xl"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(43,196,230,0.22), rgba(18,135,210,0.10) 45%, transparent 70%)",
+                  }}
+                />
+              </div>
+
+              {/* the vials */}
+              <div className="relative z-10 flex items-end justify-center gap-2 sm:gap-4">
+                <Image
+                  src="/products/vialimg/bacteriostatic-water.png"
+                  alt="Bacteriostatic Water research vial"
+                  width={585}
+                  height={732}
+                  sizes="(max-width: 1024px) 30vw, 180px"
+                  className="w-28 sm:w-36 lg:w-44 h-auto vial-3d-dark animate-vial-b"
+                />
+                <Image
+                  src="/products/vialimg/bpc-157-tb-500-wolverine.png"
+                  alt="BPC-157 / TB-500 research vial"
+                  width={585}
+                  height={732}
+                  priority
+                  sizes="(max-width: 1024px) 42vw, 270px"
+                  className="-mb-3 w-40 sm:w-52 lg:w-[16.5rem] h-auto vial-3d-dark animate-vial-a"
+                />
+                <Image
+                  src="/products/vialimg/ghk-cu.png"
+                  alt="GHK-Cu research vial"
+                  width={585}
+                  height={732}
+                  sizes="(max-width: 1024px) 32vw, 180px"
+                  className="w-28 sm:w-36 lg:w-44 h-auto vial-3d-dark animate-vial-a"
+                  style={{ animationDelay: "0.6s" }}
+                />
+              </div>
+
+              {/* grounding reflection */}
+              <div
+                className="pointer-events-none absolute bottom-5 left-1/2 h-9 w-2/3 -translate-x-1/2 rounded-[50%] bg-black/40 blur-2xl"
+                aria-hidden="true"
+              />
             </div>
           </div>
         </div>
