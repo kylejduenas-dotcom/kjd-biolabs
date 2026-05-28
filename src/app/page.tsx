@@ -93,9 +93,9 @@ export default function Home() {
           sizes="100vw"
           className="object-cover object-[72%_center] lg:object-right"
         />
-        {/* navy gradients keep the headline legible over the scene */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/90 to-ink-950/25 lg:via-ink-950/55 lg:to-transparent" aria-hidden="true" />
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink-950 to-transparent" aria-hidden="true" />
+        {/* left-anchored navy gradient: keeps the headline legible but leaves the vials clear */}
+        <div className="absolute inset-y-0 left-0 w-full lg:w-[58%] bg-gradient-to-r from-ink-950 via-ink-950/80 to-transparent" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink-950/85 to-transparent" aria-hidden="true" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex min-h-[600px] max-w-xl flex-col justify-center py-20 sm:py-24 lg:min-h-[680px] lg:max-w-2xl lg:py-28">
