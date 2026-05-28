@@ -3,6 +3,7 @@ import Image from "next/image";
 import { products, type Product } from "@/data/products";
 import FeaturedCarousel from "@/components/FeaturedCarousel";
 import TrustedByResearchers from "@/components/TrustedByResearchers";
+import HeroVialsScene from "@/components/HeroVialsScene";
 
 const featuredSlugs = [
   "bpc-157", "tb-500", "ghk-cu", "glp-3-rt", "tesamorelin",
@@ -130,31 +131,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RIGHT — AI stage (DNA + glare + glass pedestal) with our real vials placed on it */}
+            {/* RIGHT — real interactive 3D glass vials (React Three Fiber) */}
             <div className="relative">
-              <div className="relative w-full lg:-mr-6 xl:-mr-12">
-                <Image
-                  src="/hero-stage.png"
-                  alt="Research peptide vials on a laboratory pedestal with a DNA helix backdrop"
-                  width={1376}
-                  height={768}
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="h-auto w-full"
-                  style={{
-                    WebkitMaskImage:
-                      "radial-gradient(78% 86% at 62% 54%, #000 30%, rgba(0,0,0,0.45) 58%, transparent 80%)",
-                    maskImage:
-                      "radial-gradient(78% 86% at 62% 54%, #000 30%, rgba(0,0,0,0.45) 58%, transparent 80%)",
-                  }}
-                />
-                {/* real vials standing on the pedestal */}
-                <div className="absolute bottom-[15%] left-[42%] right-[2%] flex items-end justify-center gap-0.5">
-                  <Image src="/products/vialimg/bacteriostatic-water.png" alt="Bacteriostatic Water vial" width={300} height={375} className="h-auto w-[29%] vial-3d-dark animate-vial-b" />
-                  <Image src="/products/vialimg/bpc-157-tb-500-wolverine.png" alt="BPC-157 / TB-500 vial" width={340} height={425} className="relative z-10 h-auto w-[41%] vial-3d-dark animate-vial-a" />
-                  <Image src="/products/vialimg/ghk-cu.png" alt="GHK-Cu vial" width={300} height={375} className="h-auto w-[32%] vial-3d-dark animate-vial-a" style={{ animationDelay: "0.6s" }} />
-                </div>
-              </div>
+              <HeroVialsScene />
             </div>
           </div>
         </div>
